@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Coordinator.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Gateway.h" />
     <ClInclude Include="LizurdModule.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Notification.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Gateway.cpp" />
     <ClCompile Include="LizurdModule.cpp" />

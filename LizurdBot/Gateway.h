@@ -8,6 +8,6 @@ public:
 	Gateway(void);
 	~Gateway(void);
 
-	Status ProcessNotification(const Notification &notification) const;
+	Status RegisterNotification(const Notification *pNotification) const;
 };
 

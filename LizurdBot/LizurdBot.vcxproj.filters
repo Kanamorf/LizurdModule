@@ -30,6 +30,9 @@
     <ClInclude Include="Notification.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Coordinator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LizurdModule.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Notification.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Coordinator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
