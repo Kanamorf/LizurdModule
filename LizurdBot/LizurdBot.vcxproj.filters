@@ -33,6 +33,12 @@
     <ClInclude Include="Coordinator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UnitDiscoveryCoordinator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceDescriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LizurdModule.cpp">
@@ -51,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Coordinator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitDiscoveryCoordinator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceDescriptor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

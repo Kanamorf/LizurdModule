@@ -8,7 +8,7 @@ public:
 	Coordinator(void);
 	virtual ~Coordinator(void);
 
-	Status ProcessNotification(const Notification *pNotification) const;
+	virtual Status ProcessNotification(const Notification *pNotification) const = 0;
 
 };
 

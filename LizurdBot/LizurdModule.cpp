@@ -1,4 +1,5 @@
 #include "LizurdModule.h"
+#include "RaceDescriptor.h"
 
 using namespace BWAPI;
 using namespace Filter;
@@ -7,6 +8,9 @@ void LizurdModule::onStart()
 {
   // Hello World!
   Broodwar->sendText("Hello world!");
+  //Initialise everythig once we know what race we are playing
+  BWAPI::Race race = Broodwar->self()->getRace();
+  RaceDescriptor::GetInstance().Initialise(race);
 }
 
 void LizurdModule::onEnd(bool isWinner)

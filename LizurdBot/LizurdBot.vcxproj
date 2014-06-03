@@ -74,6 +74,8 @@
     <ClInclude Include="LizurdModule.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Notification.h" />
+    <ClInclude Include="RaceDescriptor.h" />
+    <ClInclude Include="UnitDiscoveryCoordinator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp" />
@@ -82,6 +84,8 @@
     <ClCompile Include="LizurdModule.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Notification.cpp" />
+    <ClCompile Include="RaceDescriptor.cpp" />
+    <ClCompile Include="UnitDiscoveryCoordinator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

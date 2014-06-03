@@ -1,4 +1,7 @@
 #pragma once
+#include "BWAPI.h"
+
+
 namespace
 {
 	enum Status
