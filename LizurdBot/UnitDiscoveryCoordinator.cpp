@@ -2,7 +2,8 @@
 #include "RaceDescriptor.h"
 
 
-UnitDiscoveryCoordinator::UnitDiscoveryCoordinator(void)
+UnitDiscoveryCoordinator::UnitDiscoveryCoordinator(Gateway &gateway) :
+	Coordinator(gateway, "UnitDiscoveryCoordinator")
 {
 }
 
@@ -11,15 +12,35 @@ UnitDiscoveryCoordinator::~UnitDiscoveryCoordinator(void)
 {
 }
 
+bool UnitDiscoveryCoordinator::UpdateInternal()
+{ 
+	return false;
+}
 
+bool UnitDiscoveryCoordinator::AfterUpdateInternal()
+{
+	return false;
+}
+
+bool UnitDiscoveryCoordinator::ProcessNotification(const Notification &notification)
+{
+	bool retVal = false;
+	if(notification.size() == 1)
+	{
+		RegisterUnit(notification.back());
+		retVal = true;
+	}
+	
+	return retVal;
+}
 
 /// <summary>
-/// Registers the unit in preperation for the next update.
+/// Registers the unit in preparation for the next update.
 /// </summary>
 /// <param name="unit">The unit.</param>
 void UnitDiscoveryCoordinator::RegisterUnit(BWAPI::Unit unit)
 {
-	if(unit->getType() == RaceDescriptor::GetInstance().GetCommandCenterType())
+	if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 	{
 		_commandCentres.push_back(unit);
 	}

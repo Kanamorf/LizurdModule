@@ -1,5 +1,6 @@
 #include "LizurdModule.h"
 #include "RaceDescriptor.h"
+#include "Notification.h"
 
 using namespace BWAPI;
 using namespace Filter;
@@ -8,9 +9,9 @@ void LizurdModule::onStart()
 {
   // Hello World!
   Broodwar->sendText("Hello world!");
-  //Initialise everythig once we know what race we are playing
+  //Initialise everything once we know what race we are playing
   BWAPI::Race race = Broodwar->self()->getRace();
-  RaceDescriptor::GetInstance().Initialise(race);
+  _gateway.Initialise(race);
 }
 
 void LizurdModule::onEnd(bool isWinner)
@@ -25,7 +26,7 @@ void LizurdModule::onEnd(bool isWinner)
 void LizurdModule::onFrame()
 {
   // Called once every game frame
-
+	_gateway.Update();
 }
 
 void LizurdModule::onSendText(std::string text)
@@ -89,6 +90,15 @@ void LizurdModule::onUnitHide(BWAPI::Unit unit)
 
 void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 {
+	if (!Broodwar->isReplay())
+	{
+		if(unit->getPlayer() == Broodwar->self())
+		{
+			Notification notification("UnitDiscoveryCoordinator");
+			notification.push_back(unit);
+			_gateway.RegisterNotification(notification);
+		}
+	}
 }
 
 void LizurdModule::onUnitDestroy(BWAPI::Unit unit)

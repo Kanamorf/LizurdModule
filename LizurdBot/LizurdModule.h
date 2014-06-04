@@ -1,5 +1,6 @@
 #pragma once
 #include "BWAPI.h"
+#include "Gateway.h"
 
 class LizurdModule : public BWAPI::AIModule
 {
@@ -24,6 +25,9 @@ public:
   virtual void onUnitRenegade(BWAPI::Unit unit) override;
   virtual void onSaveGame(std::string gameName) override;
   virtual void onUnitComplete(BWAPI::Unit unit) override;
+
+private:
+	Gateway _gateway;
 
 };
 

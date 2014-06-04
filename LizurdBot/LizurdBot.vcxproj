@@ -69,13 +69,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Coordinator.h" />
-    <ClInclude Include="Defines.h" />
     <ClInclude Include="Gateway.h" />
     <ClInclude Include="LizurdModule.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Notification.h" />
     <ClInclude Include="RaceDescriptor.h" />
     <ClInclude Include="UnitDiscoveryCoordinator.h" />
+    <ClInclude Include="WorkerCoordinator.h" />
+    <ClInclude Include="ZergDescriptor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp" />
@@ -86,6 +87,8 @@
     <ClCompile Include="Notification.cpp" />
     <ClCompile Include="RaceDescriptor.cpp" />
     <ClCompile Include="UnitDiscoveryCoordinator.cpp" />
+    <ClCompile Include="WorkerCoordinator.cpp" />
+    <ClCompile Include="ZergDescriptor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
