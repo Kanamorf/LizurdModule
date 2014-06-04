@@ -13,12 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Coordinators">
+      <UniqueIdentifier>{b7becb37-05a5-4f3d-938e-b803fb9f6e2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Coordinators">
+      <UniqueIdentifier>{a0352635-112a-4c9c-b3fc-b32063b17815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Descriptors">
+      <UniqueIdentifier>{73694da6-70a2-40fd-a9e2-17d7a4ef9271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Descriptors">
+      <UniqueIdentifier>{93673ddd-70a6-4a75-b279-d4046067f95c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{24206751-6bda-4fa7-ae5d-6745ffcf63c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{eb7950df-019e-400c-9667-b3d35199ad05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LizurdModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gateway.h">
@@ -28,19 +43,22 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Coordinator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitDiscoveryCoordinator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceDescriptor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Coordinators</Filter>
     </ClInclude>
     <ClInclude Include="WorkerCoordinator.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitDiscoveryCoordinator.h">
+      <Filter>Header Files\Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceDescriptor.h">
+      <Filter>Header Files\Descriptors</Filter>
     </ClInclude>
     <ClInclude Include="ZergDescriptor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Descriptors</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,9 +68,6 @@
     <ClCompile Include="Dll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Gateway.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,19 +75,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Coordinator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Coordinators</Filter>
     </ClCompile>
     <ClCompile Include="UnitDiscoveryCoordinator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RaceDescriptor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Coordinators</Filter>
     </ClCompile>
     <ClCompile Include="WorkerCoordinator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Coordinators</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceDescriptor.cpp">
+      <Filter>Source Files\Descriptors</Filter>
     </ClCompile>
     <ClCompile Include="ZergDescriptor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

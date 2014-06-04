@@ -107,6 +107,7 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 
 void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 {
+	 Broodwar->sendText("A unit morphed.");
 }
 
 void LizurdModule::onUnitRenegade(BWAPI::Unit unit)
