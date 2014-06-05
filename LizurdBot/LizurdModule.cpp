@@ -94,7 +94,8 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 	{
 		if(unit->getPlayer() == Broodwar->self())
 		{
-			Notification notification("UnitDiscoveryCoordinator");
+			Notification notification(UnitDiscoveryCoord);
+			notification.SetAction(Notification::Action::RegisterUnit);
 			notification.push_back(unit);
 			_gateway.RegisterNotification(notification);
 		}
@@ -103,6 +104,16 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 
 void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 {
+	if (!Broodwar->isReplay())
+	{
+		if(unit->getPlayer() == Broodwar->self())
+		{
+			Notification notification(UnitDiscoveryCoord);
+			notification.SetAction(Notification::Action::DeRegisterUnit);
+			notification.push_back(unit);
+			_gateway.RegisterNotification(notification);
+		}
+	}
 }
 
 void LizurdModule::onUnitMorph(BWAPI::Unit unit)

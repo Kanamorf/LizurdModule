@@ -9,13 +9,15 @@ public:
 	~UnitDiscoveryCoordinator(void);
 
 	
-	virtual bool ProcessNotification(const Notification &notification) override;
+	virtual bool ProcessNotification(Notification &notification) override;
 
 	virtual bool UpdateInternal() override;
 	virtual bool AfterUpdateInternal() override;
 
 private:
-	void RegisterUnit(BWAPI::Unit unit);
+	void RegisterUnit(Notification &notification);
+	void DeRegisterUnit(Notification &notification);
+	
 
 private:
 	std::vector<BWAPI::Unit> _commandCentres;

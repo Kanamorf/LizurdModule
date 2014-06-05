@@ -3,6 +3,7 @@
 #include <ctime>
 #include <sstream>
 #include <BWAPI.h>
+#include <iomanip>
 
 #include "Logger.h"
 
@@ -14,8 +15,7 @@ Logger* Logger::_instance = 0;
 /// <summary>
 /// Prevents a default instance of the <see cref="Logger" /> class from being created.
 /// </summary>
-Logger::Logger(void):
-_tabCount(0)
+Logger::Logger(void)
 {
 	std::stringstream ss;
 	ss << "c:\\SCLog\\";
@@ -48,39 +48,21 @@ Logger& Logger::GetInstance()
 /// Logs the specified string.
 /// </summary>
 /// <param name="log">The string to log.</param>
-void Logger::StartLog(const string &log)
-{
-	_tabCount = 0;
-	ofstream logfile;
-	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
-	logfile << GetTime() << " " << log << endl;
-	logfile.close();
-}
-
-/// <summary>
-/// Logs the specified string.
-/// </summary>
-/// <param name="log">The string to log.</param>
-void Logger::Log(const string &log)
-{
-	_tabCount++;
-	ofstream logfile;
-	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
-	logfile << GetTime() << " ";
-	for(int i = 0; i< _tabCount;i++)
-	{
-		logfile << "\t";
-	}
-	logfile << log << endl;
-	logfile.close();
-}
-
-void Logger::CriticalLog(const string &log)
+void Logger::Log(const std::string &source, const string &log)
 {
 	ofstream logfile;
 	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
 	logfile << GetTime() << " ";
-	logfile << log << endl << endl;
+	logfile << "[" << source << "]" << std::setw(20) << " " << log << endl;
+	logfile.close();
+}
+
+void Logger::CriticalLog(const std::string &source, const string &log)
+{
+	ofstream logfile;
+	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
+	logfile << GetTime() << " ";
+	logfile << "[" << source << "]" << std::setw(20) << " " << log << endl << endl;
 	logfile.close();
 	BWAPI::Broodwar->sendText(log.c_str());
 }
@@ -108,11 +90,3 @@ std::string Logger::GetTime()
 	return ss.str();
 }
 
-void Logger::TimerLog(const string &log)
-{
-	ofstream logfile;
-	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
-	logfile << GetTime() << " ";
-	logfile << log << endl << endl;
-	logfile.close();
-}

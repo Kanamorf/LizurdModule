@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{eb7950df-019e-400c-9667-b3d35199ad05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Orders">
+      <UniqueIdentifier>{f6171e58-c30c-45b1-8085-0b40a1d4135b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Orders">
+      <UniqueIdentifier>{1528f13c-3e3d-49eb-9aa1-a5391f304cab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LizurdModule.h">
@@ -59,6 +65,15 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>Header Files\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="GatherOrder.h">
+      <Filter>Header Files\Orders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +106,12 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Order.cpp">
+      <Filter>Source Files\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="GatherOrder.cpp">
+      <Filter>Source Files\Orders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

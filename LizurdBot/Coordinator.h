@@ -2,6 +2,8 @@
 #include "BWAPI.h"
 #include "Notification.h"
 #include "Gateway.h"
+#include "Defines.h"
+#include "Logger.h"
 
 class Coordinator
 {
@@ -9,7 +11,7 @@ public:
 	Coordinator(Gateway &gateway, std::string name);
 	virtual ~Coordinator(void);
 
-	virtual bool ProcessNotification(const Notification &notification) = 0;
+	virtual bool ProcessNotification(Notification &notification) = 0;
 	virtual bool UpdateInternal() = 0;
 	virtual bool AfterUpdateInternal() = 0;
 
@@ -19,7 +21,7 @@ public:
 
 
 protected:
-
+	void VectorRemove(std::vector<BWAPI::Unit> &vector, BWAPI::Unit unit);
 	Gateway &_gateway;
 private:
 
