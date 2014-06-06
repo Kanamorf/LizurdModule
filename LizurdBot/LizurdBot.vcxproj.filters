@@ -16,6 +16,9 @@
     <Filter Include="Main">
       <UniqueIdentifier>{fab41206-04d4-4b23-b8a1-e9d9599ff5d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Building">
+      <UniqueIdentifier>{73d7ad3e-2a9d-402e-8df7-5efb1292eeb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RaceDescriptor.h">
@@ -60,6 +63,10 @@
     <ClInclude Include="TypeSafeEnum.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="BuildingPlacer.h" />
+    <ClInclude Include="RectangleArray.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -101,5 +108,6 @@
     <ClCompile Include="ResourceCoordinator.cpp">
       <Filter>Coordinators</Filter>
     </ClCompile>
+    <ClCompile Include="BuildingPlacer.cpp" />
   </ItemGroup>
 </Project>

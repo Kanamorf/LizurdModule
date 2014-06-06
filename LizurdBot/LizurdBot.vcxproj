@@ -70,6 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BuildingPlacer.h" />
     <ClInclude Include="Coordinator.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Gateway.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="Notification.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="RaceDescriptor.h" />
+    <ClInclude Include="RectangleArray.h" />
     <ClInclude Include="ResourceCoordinator.h" />
     <ClInclude Include="TypeSafeEnum.h" />
     <ClInclude Include="UnitDiscoveryCoordinator.h" />
@@ -86,6 +88,7 @@
     <ClInclude Include="ZergDescriptor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BuildingPlacer.cpp" />
     <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Gateway.cpp" />
