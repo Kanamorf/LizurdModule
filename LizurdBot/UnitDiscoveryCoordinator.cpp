@@ -17,30 +17,30 @@ UnitDiscoveryCoordinator::~UnitDiscoveryCoordinator(void)
 {
 }
 
-bool UnitDiscoveryCoordinator::UpdateInternal()
+Result UnitDiscoveryCoordinator::UpdateInternal()
 { 
-	return false;
+	return Result::Failure;
 }
 
-bool UnitDiscoveryCoordinator::AfterUpdateInternal()
+Result UnitDiscoveryCoordinator::AfterUpdateInternal()
 {
-	return false;
+	return Result::Failure;
 }
 
-bool UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notification)
+Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notification)
 {
-	bool retVal = false;
+	Result retVal = Result::Failure;
 	if(notification.size() == 1)
 	{
 		if(notification.GetAction() == Action::RegisterUnit)
 		{
 			RegisterUnit(notification);
-			retVal = true;
+			retVal = Result::Success;
 		}
 		else if(notification.GetAction() == Action::DeRegisterUnit)
 		{
 			DeRegisterUnit(notification);
-			retVal = true;
+			retVal = Result::Success;
 		}
 	}
 	

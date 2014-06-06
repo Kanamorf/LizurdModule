@@ -20,9 +20,9 @@ public:
 	Gateway(void);
 	~Gateway(void);
 
-	void Initialise(BWAPI::Game *game, BWAPI::Race race);
-	bool Update();
-	bool RegisterNotification(Notification &notification) const;
+	Result Initialise(BWAPI::Game *game, BWAPI::Race race);
+	Result Update();
+	Result RegisterNotification(Notification &notification) const;
 	RaceDescriptor &GetRaceDescriptor() const { return *_raceDescriptor; }
 
 	void AddOrder(Order *order);

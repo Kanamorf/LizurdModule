@@ -22,8 +22,18 @@ struct ActionDef
 	};
 };
 
+struct ResultDef
+{
+	enum type
+	{
+		Failure,
+		Success
+	};
+};
+
 typedef TypeSafeEnum<TaskPriorityDef> TaskPriority;
 typedef TypeSafeEnum<ActionDef> Action;
+typedef TypeSafeEnum<ResultDef> Result;
 
 struct ResourceValue
 {

@@ -22,17 +22,17 @@ ResourceCoordinator::~ResourceCoordinator(void)
 {
 }
 
-bool ResourceCoordinator::ProcessNotificationInternal(Notification &notification)
+Result ResourceCoordinator::ProcessNotificationInternal(Notification &notification)
 {
-	return false;
+	return Result::Failure;
 }
 
-bool ResourceCoordinator::UpdateInternal()
+Result ResourceCoordinator::UpdateInternal()
 {
-	return false;
+	return Result::Failure;
 }
 
-bool ResourceCoordinator::AfterUpdateInternal()
+Result ResourceCoordinator::AfterUpdateInternal()
 {
-	return false;
+	return Result::Failure;
 }

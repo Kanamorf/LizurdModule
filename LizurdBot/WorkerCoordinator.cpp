@@ -20,7 +20,7 @@ WorkerCoordinator::~WorkerCoordinator(void)
 {
 }
 
-bool WorkerCoordinator::UpdateInternal()
+Result WorkerCoordinator::UpdateInternal()
 { 
 	for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)
 	{
@@ -30,28 +30,28 @@ bool WorkerCoordinator::UpdateInternal()
 			_gateway.AddOrder(order);
 		}
 	}
-	return true;
+	return Result::Success;
 }
 
-bool WorkerCoordinator::AfterUpdateInternal()
+Result WorkerCoordinator::AfterUpdateInternal()
 {
-	return false;
+	return Result::Failure;
 }
 
-bool WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
+Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
 {
-	bool retVal = false;
+	Result retVal = Result::Failure;
 	if(notification.size() == 1)
 	{
 		if(notification.GetAction() == Action::RegisterUnit)
 		{
 			RegisterWorker(notification);
-			retVal = true;
+			retVal = Result::Success;
 		}
 		else if(notification.GetAction() == Action::DeRegisterUnit)
 		{
 			DeRegisterWorker(notification);
-			retVal = true;
+			retVal = Result::Success;
 		}
 	}
 

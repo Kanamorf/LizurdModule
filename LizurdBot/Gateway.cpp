@@ -25,19 +25,22 @@ Gateway::~Gateway(void)
 	}
 }
 
-void Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
+Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 {
+	Result retVal = Result::Failure;
 	_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
 	_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
 	if( race == BWAPI::Races::Zerg)
 	{
 		_raceDescriptor = new ZergDescriptor();
+		retVal = Result::Success;
 	}
+	return retVal;
 }
 
-bool Gateway::Update()
+Result Gateway::Update()
 {
-	bool retVal = false;
+	Result retVal = Result::Failure;
 	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
 	{
 		it->second->Update();
@@ -45,8 +48,8 @@ bool Gateway::Update()
 	std::vector<Order*> completeOrders;
 	for(std::vector<Order*>::iterator it = _orders.begin(); it != _orders.end(); ++it)
 	{
-		retVal = (*it)->Execute();
-		if(retVal)
+		bool success = (*it)->Execute();
+		if(success)
 		{
 			completeOrders.push_back(*it);
 		}
@@ -60,19 +63,19 @@ bool Gateway::Update()
 	}
 
 	ResourceValue(GetGame().self()->minerals(), GetGame().self()->gas(), GetGame().self()->supplyUsed(), GetGame().self()->supplyTotal());
-
+	retVal = Result::Success;
 	return retVal;
 }
 
-bool Gateway::RegisterNotification(Notification &notification) const
+Result Gateway::RegisterNotification(Notification &notification) const
 {
-	bool retVal = false;
+	Result retVal = Result::Failure;
 	std::string target = notification.GetTarget();
 	std::map<std::string, Coordinator*>::const_iterator found = _coordinators.find(target);
 	if(found != _coordinators.end())
 	{
 		found->second->ProcessNotificationInternal(notification);
-		retVal = true;
+		retVal = Result::Success;
 	}
 	return retVal;
 }

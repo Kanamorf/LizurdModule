@@ -7,9 +7,9 @@ public:
 	ResourceCoordinator(Gateway &gateway);
 	~ResourceCoordinator(void);
 
-	virtual bool ProcessNotificationInternal(Notification &notification) override;
-	virtual bool UpdateInternal() override;
-	virtual bool AfterUpdateInternal() override;
+	virtual Result ProcessNotificationInternal(Notification &notification) override;
+	virtual Result UpdateInternal() override;
+	virtual Result AfterUpdateInternal() override;
 
 	ResourceValue GetCurrentResources() const;
 

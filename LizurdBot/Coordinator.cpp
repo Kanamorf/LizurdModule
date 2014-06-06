@@ -13,10 +13,10 @@ Coordinator::~Coordinator(void)
 }
 
 
-bool Coordinator::Update()
+Result Coordinator::Update()
 {
-	bool retVal = false;
-	if(UpdateInternal())
+	Result retVal = Result::Failure;
+	if(UpdateInternal() == Result::Success)
 		retVal = AfterUpdateInternal();
 	return retVal;
 }

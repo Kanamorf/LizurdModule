@@ -11,11 +11,11 @@ public:
 	Coordinator(Gateway &gateway, std::string name);
 	virtual ~Coordinator(void);
 
-	virtual bool ProcessNotificationInternal(Notification &notification) = 0;
-	virtual bool UpdateInternal() = 0;
-	virtual bool AfterUpdateInternal() = 0;
+	virtual Result ProcessNotificationInternal(Notification &notification) = 0;
+	virtual Result UpdateInternal() = 0;
+	virtual Result AfterUpdateInternal() = 0;
 
-	bool Update();
+	Result Update();
 	std::string GetName() const { return _name; }
 	inline bool operator==(const Coordinator & m) const { return m._name == _name; }
 
