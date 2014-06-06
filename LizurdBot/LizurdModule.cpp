@@ -11,7 +11,7 @@ void LizurdModule::onStart()
   Broodwar->sendText("Hello world!");
   //Initialise everything once we know what race we are playing
   BWAPI::Race race = Broodwar->self()->getRace();
-  _gateway.Initialise(race);
+  _gateway.Initialise(BroodwarPtr, race);
 }
 
 void LizurdModule::onEnd(bool isWinner)

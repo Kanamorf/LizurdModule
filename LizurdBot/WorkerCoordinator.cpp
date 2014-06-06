@@ -1,3 +1,12 @@
+// The WorkerCoordinator is the only thing that keeps track of all of the
+// worker units in the game. It will issue Orders to these workers so they 
+// gather minerals and vespyne. Workers can be requested by other coordinators
+// for example the BuildingCoordinator may need a worker to build a building,
+// in this case the WorkerCoordinator will select a worker and pass control of
+// if to the BuildingCoordinator for the life of the build order, at which point 
+// control passes back to the WorkerCoordinator.
+
+
 #include "WorkerCoordinator.h"
 #include "GatherOrder.h"
 
@@ -29,7 +38,7 @@ bool WorkerCoordinator::AfterUpdateInternal()
 	return false;
 }
 
-bool WorkerCoordinator::ProcessNotification(Notification &notification)
+bool WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
 {
 	bool retVal = false;
 	if(notification.size() == 1)

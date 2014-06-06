@@ -11,7 +11,7 @@ public:
 	Coordinator(Gateway &gateway, std::string name);
 	virtual ~Coordinator(void);
 
-	virtual bool ProcessNotification(Notification &notification) = 0;
+	virtual bool ProcessNotificationInternal(Notification &notification) = 0;
 	virtual bool UpdateInternal() = 0;
 	virtual bool AfterUpdateInternal() = 0;
 

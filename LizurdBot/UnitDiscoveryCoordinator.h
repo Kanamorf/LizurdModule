@@ -9,7 +9,7 @@ public:
 	~UnitDiscoveryCoordinator(void);
 
 	
-	virtual bool ProcessNotification(Notification &notification) override;
+	virtual bool ProcessNotificationInternal(Notification &notification) override;
 
 	virtual bool UpdateInternal() override;
 	virtual bool AfterUpdateInternal() override;

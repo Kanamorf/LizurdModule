@@ -1,117 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\Coordinators">
-      <UniqueIdentifier>{b7becb37-05a5-4f3d-938e-b803fb9f6e2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Coordinators">
+    <Filter Include="Coordinators">
       <UniqueIdentifier>{a0352635-112a-4c9c-b3fc-b32063b17815}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Descriptors">
+    <Filter Include="Descriptors">
       <UniqueIdentifier>{73694da6-70a2-40fd-a9e2-17d7a4ef9271}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Descriptors">
-      <UniqueIdentifier>{93673ddd-70a6-4a75-b279-d4046067f95c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils">
-      <UniqueIdentifier>{24206751-6bda-4fa7-ae5d-6745ffcf63c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{eb7950df-019e-400c-9667-b3d35199ad05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Orders">
+    <Filter Include="Orders">
       <UniqueIdentifier>{f6171e58-c30c-45b1-8085-0b40a1d4135b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Orders">
-      <UniqueIdentifier>{1528f13c-3e3d-49eb-9aa1-a5391f304cab}</UniqueIdentifier>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{24206751-6bda-4fa7-ae5d-6745ffcf63c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{fab41206-04d4-4b23-b8a1-e9d9599ff5d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LizurdModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Gateway.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Notification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Coordinator.h">
-      <Filter>Header Files\Coordinators</Filter>
-    </ClInclude>
-    <ClInclude Include="WorkerCoordinator.h">
-      <Filter>Header Files\Coordinators</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitDiscoveryCoordinator.h">
-      <Filter>Header Files\Coordinators</Filter>
-    </ClInclude>
     <ClInclude Include="RaceDescriptor.h">
-      <Filter>Header Files\Descriptors</Filter>
+      <Filter>Descriptors</Filter>
     </ClInclude>
     <ClInclude Include="ZergDescriptor.h">
-      <Filter>Header Files\Descriptors</Filter>
+      <Filter>Descriptors</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Defines.h">
-      <Filter>Header Files</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Order.h">
-      <Filter>Header Files\Orders</Filter>
+      <Filter>Orders</Filter>
     </ClInclude>
     <ClInclude Include="GatherOrder.h">
-      <Filter>Header Files\Orders</Filter>
+      <Filter>Orders</Filter>
     </ClInclude>
+    <ClInclude Include="Coordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitDiscoveryCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkerCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Gateway.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="LizurdModule.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Notification.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceCoordinator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LizurdModule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Dll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Gateway.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Notification.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Coordinator.cpp">
-      <Filter>Source Files\Coordinators</Filter>
+      <Filter>Coordinators</Filter>
     </ClCompile>
     <ClCompile Include="UnitDiscoveryCoordinator.cpp">
-      <Filter>Source Files\Coordinators</Filter>
+      <Filter>Coordinators</Filter>
     </ClCompile>
     <ClCompile Include="WorkerCoordinator.cpp">
-      <Filter>Source Files\Coordinators</Filter>
+      <Filter>Coordinators</Filter>
     </ClCompile>
     <ClCompile Include="RaceDescriptor.cpp">
-      <Filter>Source Files\Descriptors</Filter>
+      <Filter>Descriptors</Filter>
     </ClCompile>
     <ClCompile Include="ZergDescriptor.cpp">
-      <Filter>Source Files\Descriptors</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Order.cpp">
-      <Filter>Source Files\Orders</Filter>
+      <Filter>Descriptors</Filter>
     </ClCompile>
     <ClCompile Include="GatherOrder.cpp">
-      <Filter>Source Files\Orders</Filter>
+      <Filter>Orders</Filter>
     </ClCompile>
+    <ClCompile Include="Order.cpp">
+      <Filter>Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Dll.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Gateway.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="LizurdModule.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Notification.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceCoordinator.cpp" />
   </ItemGroup>
 </Project>

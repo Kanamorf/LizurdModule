@@ -1,3 +1,8 @@
+// The UnitDiscoveryCoordinator controls the flow of all new and destroyed units.
+// It will pass control of each new unit to the correct Coordinator, i.e. new workers
+// will be passed to the WorkerCoordinator. This also happens in reverse when units are
+// destroyed.
+
 #include "UnitDiscoveryCoordinator.h"
 #include "RaceDescriptor.h"
 
@@ -22,7 +27,7 @@ bool UnitDiscoveryCoordinator::AfterUpdateInternal()
 	return false;
 }
 
-bool UnitDiscoveryCoordinator::ProcessNotification(Notification &notification)
+bool UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notification)
 {
 	bool retVal = false;
 	if(notification.size() == 1)

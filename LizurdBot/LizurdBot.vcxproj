@@ -79,6 +79,7 @@
     <ClInclude Include="Notification.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="RaceDescriptor.h" />
+    <ClInclude Include="ResourceCoordinator.h" />
     <ClInclude Include="UnitDiscoveryCoordinator.h" />
     <ClInclude Include="WorkerCoordinator.h" />
     <ClInclude Include="ZergDescriptor.h" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Notification.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="RaceDescriptor.cpp" />
+    <ClCompile Include="ResourceCoordinator.cpp" />
     <ClCompile Include="UnitDiscoveryCoordinator.cpp" />
     <ClCompile Include="WorkerCoordinator.cpp" />
     <ClCompile Include="ZergDescriptor.cpp" />
