@@ -54,7 +54,12 @@
     <ClInclude Include="Notification.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceCoordinator.h" />
+    <ClInclude Include="ResourceCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeSafeEnum.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -93,6 +98,8 @@
     <ClCompile Include="Notification.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceCoordinator.cpp" />
+    <ClCompile Include="ResourceCoordinator.cpp">
+      <Filter>Coordinators</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

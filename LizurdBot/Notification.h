@@ -7,12 +7,6 @@
 class Notification
 {
 public:
-	enum Action
-	{
-		None,
-		RegisterUnit,
-		DeRegisterUnit
-	};
 
 	Notification(std::string target);
 	~Notification(void);

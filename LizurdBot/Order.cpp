@@ -2,14 +2,14 @@
 #include "Order.h"
 
 int Order::_instanceCount = 0;
-Order::Order(std::string name, TaskPriority::Priority priority):
+Order::Order(std::string name, TaskPriority priority):
 _name(name), _priority(priority),  _isUnderway(false), _cost(ResourceValue(0,0,0)), _isUnique(false)
 {
 	_executor = NULL;
 	_instanceId = _instanceCount++;
 }
 
-Order::Order( std::string name, BWAPI::Unit executor, TaskPriority::Priority priority ):
+Order::Order( std::string name, BWAPI::Unit executor, TaskPriority priority ):
 _name(name), _priority(priority), _executor(executor), _isUnderway(false), _cost(ResourceValue(0,0,0)), _isUnique(false)
 {
 	_instanceId = _instanceCount++;

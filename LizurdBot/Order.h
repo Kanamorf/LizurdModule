@@ -14,13 +14,13 @@ namespace
 class Order
 {
 public:
-	Order(std::string name, TaskPriority::Priority priority);
-	Order(std::string name, BWAPI::Unit executor, TaskPriority::Priority priority);
+	Order(std::string name, TaskPriority priority);
+	Order(std::string name, BWAPI::Unit executor, TaskPriority priority);
 	virtual ~Order(void);
 	virtual bool IsUnderway() const { return _isUnderway; };
 	std::string GetNameWithID() const;
 	void SetIsUnderway(const bool underway) { _isUnderway = underway; };
-	TaskPriority::Priority GetPriority() const { return  _priority; };
+	TaskPriority GetPriority() const { return  _priority; };
 	bool IsUnique() const { return  _isUnique; };	
 	void SetExecutor(const BWAPI::Unit executor) { _executor = executor; };
 	BWAPI::Unit GetExecutor() const { return _executor; };
@@ -40,7 +40,7 @@ public:
 
 protected:
 	std::string _name;
-	TaskPriority::Priority _priority;
+	TaskPriority _priority;
 	BWAPI::Unit _executor;
 	BWAPI::Unit _result;
 	BWAPI::TilePosition _predictedPosition;

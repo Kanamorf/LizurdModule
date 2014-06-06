@@ -80,6 +80,7 @@
     <ClInclude Include="Order.h" />
     <ClInclude Include="RaceDescriptor.h" />
     <ClInclude Include="ResourceCoordinator.h" />
+    <ClInclude Include="TypeSafeEnum.h" />
     <ClInclude Include="UnitDiscoveryCoordinator.h" />
     <ClInclude Include="WorkerCoordinator.h" />
     <ClInclude Include="ZergDescriptor.h" />

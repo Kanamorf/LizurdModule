@@ -32,12 +32,12 @@ bool UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notific
 	bool retVal = false;
 	if(notification.size() == 1)
 	{
-		if(notification.GetAction() == Notification::Action::RegisterUnit)
+		if(notification.GetAction() == Action::RegisterUnit)
 		{
 			RegisterUnit(notification);
 			retVal = true;
 		}
-		else if(notification.GetAction() == Notification::Action::DeRegisterUnit)
+		else if(notification.GetAction() == Action::DeRegisterUnit)
 		{
 			DeRegisterUnit(notification);
 			retVal = true;
@@ -94,7 +94,7 @@ void UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 	{
 		if(unit->getType().isWorker())
 		{
-			notification.SetTarget("WorkerCoordinator");
+			notification.SetTarget(WorkerCoord);
 			_gateway.RegisterNotification(notification);
 		}
 		else

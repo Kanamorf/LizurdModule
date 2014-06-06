@@ -1,16 +1,29 @@
 #pragma once
+#include "TypeSafeEnum.h"
 
 
-namespace TaskPriority
+struct TaskPriorityDef
 {
-	enum Priority
+	enum type
 	{
 		High,
 		Gather,
 		Medium,
 		Low
 	};
-}
+};
+struct ActionDef
+{
+	enum type
+	{
+		None,
+		RegisterUnit,
+		DeRegisterUnit
+	};
+};
+
+typedef TypeSafeEnum<TaskPriorityDef> TaskPriority;
+typedef TypeSafeEnum<ActionDef> Action;
 
 struct ResourceValue
 {

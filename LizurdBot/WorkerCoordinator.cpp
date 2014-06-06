@@ -43,12 +43,12 @@ bool WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
 	bool retVal = false;
 	if(notification.size() == 1)
 	{
-		if(notification.GetAction() == Notification::Action::RegisterUnit)
+		if(notification.GetAction() == Action::RegisterUnit)
 		{
 			RegisterWorker(notification);
 			retVal = true;
 		}
-		else if(notification.GetAction() == Notification::Action::DeRegisterUnit)
+		else if(notification.GetAction() == Action::DeRegisterUnit)
 		{
 			DeRegisterWorker(notification);
 			retVal = true;
