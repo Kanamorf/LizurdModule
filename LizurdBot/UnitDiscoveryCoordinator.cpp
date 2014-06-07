@@ -58,34 +58,19 @@ void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 	Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
 	if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 	{
-		Base* pBase = _gateway.GetRaceDescriptor().CreateBaseFromCommandCentre(unit);
-		pBase->SetRaceDescriptor(&_gateway.GetRaceDescriptor());
-		_bases.push_back(pBase);
-
-		UnitVector attachedUnit;
-		for(UnitVector::iterator it = _orphanedUnits.begin(); it != _orphanedUnits.end(); ++it)
-		{
-			Base* pBase = FindClosestFriendlyBase(*it);
-			if(pBase && (*it)->exists())
-			{
-				pBase->AddUnit(*it);
-				attachedUnit.push_back(*it);
-			}
-		}
-		LizurdModule::VectorRemove(_orphanedUnits, attachedUnit);
-
+		CreateNewBase(unit);
 	}
 	else if(unit->getType().isBuilding() == false)
 	{
 		if(unit->getType().isWorker())
-		{
-			Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
+		{	
 			notification.SetTarget(WorkerCoord);
 			_gateway.RegisterNotification(notification);
 		}
 		Base* pBase = FindClosestFriendlyBase(unit);
 		if(pBase == nullptr)
 		{
+			Logger::GetInstance().Log(GetName(), "Orphaned unit: " + unit->getType().getName());
 			_orphanedUnits.push_back(unit);
 		}
 		else
@@ -170,5 +155,22 @@ Base* UnitDiscoveryCoordinator::FindClosestFriendlyBase(const BWAPI::Unit unit) 
 
 	return foundUnit;
 }
+void UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
+{
+	Base* pBase = _gateway.GetRaceDescriptor().CreateBaseFromCommandCentre(unit);
+	pBase->SetRaceDescriptor(&_gateway.GetRaceDescriptor());
+	_bases.push_back(pBase);
 
+	UnitVector attachedUnit;
+	for(UnitVector::iterator it = _orphanedUnits.begin(); it != _orphanedUnits.end(); ++it)
+	{
+		Base* pBase = FindClosestFriendlyBase(*it);
+		if(pBase && (*it)->exists())
+		{
+			pBase->AddUnit(*it);
+			attachedUnit.push_back(*it);
+		}
+	}
+	LizurdModule::VectorRemove(_orphanedUnits, attachedUnit);
+}
 

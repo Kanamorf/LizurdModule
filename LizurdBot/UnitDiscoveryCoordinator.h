@@ -18,6 +18,7 @@ public:
 
 private:
 	void RegisterUnit(Notification &notification);
+	void CreateNewBase(BWAPI::Unit unit);
 	void DeRegisterUnit(Notification &notification);
 	Base* FindClosestFriendlyBase(const BWAPI::Unit unit) const;
 

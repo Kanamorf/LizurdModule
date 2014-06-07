@@ -18,7 +18,7 @@ Base::~Base(void)
 bool Base::AddUnit(BWAPI::Unit unit)
 {
 	bool success = false;
-	if(unit->exists() && unit->getType() == GetRaceDescriptor().GetWorkerType())
+	if(unit->exists())
 	{
 		UnitMap::iterator it = _unitMap.find(unit->getType());
 		if(it == _unitMap.end()) 
@@ -59,6 +59,11 @@ void Base::DrawDebugInfo()
 		for(UnitMap::const_iterator it = _unitMap.begin(); it != _unitMap.end(); ++it)
 		{
 			count += (*it).second.size();
+			for(UnitVector::const_iterator u = (*it).second.begin(); u != (*it).second.end(); ++u)
+			{
+				BWAPI::Broodwar->drawCircleMap((*u)->getPosition().x -3, (*u)->getPosition().y-3, 20, playerColor);
+				BWAPI::Broodwar->drawLineMap((*u)->getPosition().x, (*u)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
+			}
 
 		}
 		BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Units: %u", count);
