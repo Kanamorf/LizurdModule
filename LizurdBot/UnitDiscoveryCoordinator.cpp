@@ -33,16 +33,24 @@ Result UnitDiscoveryCoordinator::AfterUpdateInternal()
 Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notification)
 {
 	Result retVal = Result::Failure;
-	if(notification.size() == 1)
+
+	if(notification.GetAction() == Action::RegisterUnit)
 	{
-		if(notification.GetAction() == Action::RegisterUnit)
+		RegisterUnit(notification);
+		retVal = Result::Success;
+	}
+	else if(notification.GetAction() == Action::DeRegisterUnit)
+	{
+		DeRegisterUnit(notification);
+		retVal = Result::Success;
+	}
+	else if(notification.GetAction() == Action::RequestIdleUnit)
+	{
+		Logger::GetInstance().Log(UnitDiscoveryCoord, "Running  Action::RequestIdleUnit");
+		BWAPI::Unit unit = FindIdleUnit(notification);
+		if(unit != nullptr)
 		{
-			RegisterUnit(notification);
-			retVal = Result::Success;
-		}
-		else if(notification.GetAction() == Action::DeRegisterUnit)
-		{
-			DeRegisterUnit(notification);
+			notification.AddUnit(unit);
 			retVal = Result::Success;
 		}
 	}
@@ -56,34 +64,39 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 /// <param name="unit">The unit.</param>
 void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 {
-	BWAPI::Unit unit = notification.back();
-	Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
-	if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
+	if(notification.UnitSize() == 1)
 	{
-		CreateNewBase(unit);
-	}
-	else if(unit->getType().isBuilding() == false)
-	{
-		if(unit->getType().isWorker())
-		{	
-			notification.SetTarget(WorkerCoord);
-			_gateway.RegisterNotification(notification);
-		}
-		Base* pBase = FindClosestFriendlyBase(unit);
-		if(pBase == nullptr)
+		BWAPI::Unit unit = notification.GetLastUnit();
+		Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
+		if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 		{
-			Logger::GetInstance().Log(GetName(), "Orphaned unit: " + unit->getType().getName());
-			_orphanedUnits.push_back(unit);
+			CreateNewBase(unit);
+		}
+		else if(unit->getType().isBuilding() == false)
+		{
+			if(unit->getType().isWorker())
+			{	
+				notification.SetTarget(WorkerCoord);
+				notification.SetAction(Action::RegisterUnit);
+				notification.AddUnit(unit);
+				_gateway.RegisterNotification(notification);
+			}
+			Base* pBase = FindClosestFriendlyBase(unit);
+			if(pBase == nullptr)
+			{
+				Logger::GetInstance().Log(GetName(), "Orphaned unit: " + unit->getType().getName());
+				_orphanedUnits.push_back(unit);
+			}
+			else
+			{
+				pBase->AddUnit(unit);
+			}
+
 		}
 		else
 		{
-			pBase->AddUnit(unit);
+			_localBuildings.push_back(unit);
 		}
-
-	}
-	else
-	{
-		_localBuildings.push_back(unit);
 	}
 }
 
@@ -93,27 +106,30 @@ void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 /// <param name="unit">The unit.</param>
 void UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 {
-	BWAPI::Unit unit = notification.back();
-	Logger::GetInstance().Log(GetName(), "DeRegistering unit: " + unit->getType().getName());
-	if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
+	if(notification.UnitSize() == 1)
 	{
-		//command centre is saved inside a base...work out how to find the correct base and remove the command centre
-	}
-	else if(unit->getType().isBuilding() == false)
-	{
-		if(unit->getType().isWorker())
+		BWAPI::Unit unit = notification.GetLastUnit();
+		Logger::GetInstance().Log(GetName(), "DeRegistering unit: " + unit->getType().getName());
+		if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 		{
-			notification.SetTarget(WorkerCoord);
-			_gateway.RegisterNotification(notification);
+			//command centre is saved inside a base...work out how to find the correct base and remove the command centre
+		}
+		else if(unit->getType().isBuilding() == false)
+		{
+			if(unit->getType().isWorker())
+			{
+				notification.SetTarget(WorkerCoord);
+				_gateway.RegisterNotification(notification);
+			}
+			else
+			{
+				VectorRemove(_orphanedUnits, unit);
+			}
 		}
 		else
 		{
-			VectorRemove(_orphanedUnits, unit);
+			VectorRemove(_localBuildings, unit);
 		}
-	}
-	else
-	{
-		VectorRemove(_localBuildings, unit);
 	}
 }
 
@@ -174,5 +190,17 @@ void UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
 		}
 	}
 	LizurdModule::VectorRemove(_orphanedUnits, attachedUnit);
+}
+
+BWAPI::Unit UnitDiscoveryCoordinator::FindIdleUnit(Notification &notification)
+{
+	BWAPI::Unit unit = nullptr;
+	for(BaseVector::iterator it = _bases.begin(); it != _bases.end(); ++it)
+	{
+		unit = (*it)->FindIdleUnit(notification.GetUnitType());
+		if(unit != nullptr)
+			break;
+	}
+	return unit;
 }
 

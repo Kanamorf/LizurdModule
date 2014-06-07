@@ -24,6 +24,7 @@ namespace Lizurd
 		void CreateNewBase(BWAPI::Unit unit);
 		void DeRegisterUnit(Notification &notification);
 		Base* FindClosestFriendlyBase(const BWAPI::Unit unit) const;
+		BWAPI::Unit FindIdleUnit(Notification &notification);
 
 	private:
 		BaseVector _bases;

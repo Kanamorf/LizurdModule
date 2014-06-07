@@ -93,11 +93,18 @@
     <ClInclude Include="Strategy.h">
       <Filter>Strategy</Filter>
     </ClInclude>
-    <ClInclude Include="Goal.h" />
     <ClInclude Include="StrategyCoordinator.h">
       <Filter>Coordinators</Filter>
     </ClInclude>
-    <ClInclude Include="ProductionCoordinator.h" />
+    <ClInclude Include="ProductionCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductionOrder.h">
+      <Filter>Orders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -154,10 +161,17 @@
     <ClCompile Include="Strategy.cpp">
       <Filter>Strategy</Filter>
     </ClCompile>
-    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="StrategyCoordinator.cpp">
       <Filter>Coordinators</Filter>
     </ClCompile>
-    <ClCompile Include="ProductionCoordinator.cpp" />
+    <ClCompile Include="ProductionCoordinator.cpp">
+      <Filter>Coordinators</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductionOrder.cpp">
+      <Filter>Orders</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

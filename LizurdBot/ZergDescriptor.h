@@ -14,7 +14,7 @@ namespace Lizurd
 		virtual BWAPI::UnitType GetWorkerType() const override  { return BWAPI::UnitTypes::Zerg_Drone; }
 		virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) override;
 		virtual Strategy* GetDefaultStrategy() const override;
-		virtual GoalMapPair GetSupplyGoal() const override;
+		virtual Goal* GetSupplyGoal() const override;
 	};
 
 }

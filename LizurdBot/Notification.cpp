@@ -13,17 +13,23 @@ Notification::~Notification(void)
 }
 
 
-void Notification::push_back(BWAPI::Unit unit)
+void Notification::AddUnit(BWAPI::Unit unit)
 {
 	_units.push_back(unit);
 }
 
-BWAPI::Unit Notification::back() const
+BWAPI::Unit Notification::GetLastUnit()
 {
-	return _units.back();
+	BWAPI::Unit unit = nullptr;
+	if(_units.size() > 0)
+	{
+		unit = _units.back();
+		_units.pop_back();
+	}	
+	return unit;
 }
 
-size_t Notification::size() const
+size_t Notification::UnitSize() const
 {
 	return _units.size();
 }

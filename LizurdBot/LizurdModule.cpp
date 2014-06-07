@@ -33,6 +33,7 @@ void LizurdModule::onFrame()
 	// Called once every game frame
 	if(Broodwar->getFrameCount()%FRAMESPERAI == 0)
 	{
+		Logger::GetInstance().Log("LizurdModule", "Starting Update");
 		_gateway.Update();
 	}
 	if(Broodwar->getFrameCount() > FRAMESPERAI)
@@ -121,7 +122,7 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 		{
 			Notification notification(UnitDiscoveryCoord);
 			notification.SetAction(Action::RegisterUnit);
-			notification.push_back(unit);
+			notification.AddUnit(unit);
 			_gateway.RegisterNotification(notification);
 		}
 	}
@@ -135,7 +136,7 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 		{
 			Notification notification(UnitDiscoveryCoord);
 			notification.SetAction(Action::DeRegisterUnit);
-			notification.push_back(unit);
+			notification.AddUnit(unit);
 			_gateway.RegisterNotification(notification);
 		}
 	}

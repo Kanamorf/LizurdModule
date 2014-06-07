@@ -26,6 +26,7 @@ namespace Lizurd
 		virtual BWAPI::UnitType GetType() const = 0;
 		virtual Order* CreateBuildOrder(BWAPI::TilePosition position) =0;
 		virtual bool CanBuild(BWAPI::UnitType type) =0;
+		BWAPI::Unit GetUnderLying() const {return _building; }
 
 	private:
 

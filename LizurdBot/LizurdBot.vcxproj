@@ -84,6 +84,7 @@
     <ClInclude Include="Notification.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="ProductionCoordinator.h" />
+    <ClInclude Include="ProductionOrder.h" />
     <ClInclude Include="RaceDescriptor.h" />
     <ClInclude Include="RectangleArray.h" />
     <ClInclude Include="ResourceCoordinator.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="Notification.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="ProductionCoordinator.cpp" />
+    <ClCompile Include="ProductionOrder.cpp" />
     <ClCompile Include="RaceDescriptor.cpp" />
     <ClCompile Include="ResourceCoordinator.cpp" />
     <ClCompile Include="Strategy.cpp" />

@@ -3,7 +3,6 @@
 
 namespace Lizurd
 {
-
 	class ProductionCoordinator :
 		public Coordinator
 	{
@@ -14,6 +13,9 @@ namespace Lizurd
 		virtual Result ProcessNotificationInternal(Notification &notification) override;
 		virtual Result UpdateInternal() override;
 		virtual Result AfterUpdateInternal() override;
+
+	private:
+		Goal* _currentGoal;
 	};
 
 }

@@ -1,4 +1,5 @@
 #include "Strategy.h"
+#include "Logger.h"
 
 using namespace Lizurd;
 
@@ -12,53 +13,55 @@ Strategy::~Strategy(void)
 }
 
 
-void Strategy::AddOrUpdate(const StrategyType &type, const GoalMapPair &add)
+void Strategy::AddOrUpdate(const StrategyType &type, Goal *add)
 {
-	GoalMap *pGoalMap = nullptr;
+	Logger::GetInstance().Log("Strategy", "AddOrUpdate");
+	GoalQueue *pGoalQueue = nullptr;
 	switch(type.Underlying())
 	{
 	case StrategyType::BuildingStrategy :
-		pGoalMap = &_buildingStrategy;
+		pGoalQueue = &_buildingStrategy;
 		break;
 	case StrategyType::UnitStrategy :
-		pGoalMap = &_unitStrategy;
+		pGoalQueue = &_unitStrategy;
 		break;
 	case StrategyType::UpgrateStrategy :
-		pGoalMap = &_upgrateStrategy;
+		pGoalQueue = &_upgrateStrategy;
 		break;
 	}
 
-	GoalMap::iterator lb = pGoalMap->lower_bound(add.first);
+	if(add != nullptr)
+	{
+		if(add->GetState() == GoalState::Extend)
+		{
+			pGoalQueue->emplace(add);
+		}
+		else if(add->GetState() == GoalState::Replace)
+		{
+			// first off empty the container
+			while(!pGoalQueue->empty())
+			{
+				Goal* goal = pGoalQueue->front();
+				pGoalQueue->pop();
+				if(goal)
+				{
+					delete goal;
+					goal = nullptr;
+				}
+			}
+			pGoalQueue->emplace(add);
+		}
+	}
 
-	if(lb != pGoalMap->end() && !(pGoalMap->key_comp()(add.first, lb->first)))
+}
+
+Lizurd::Goal* Lizurd::Strategy::GetNextUnitGoal()
+{
+	Goal* goal = nullptr;
+	if(_unitStrategy.size() > 0)
 	{
-		// key already exists
-		// update lb->second if you care to
-		if((add.second)->GetState() == GoalState::Replace)
-		{
-			GoalVector vec;
-			vec.push_back(add.second);
-			(*pGoalMap)[add.first] = vec;
-		}
-		else
-		{
-			if(std::find((lb->second).begin(), (lb->second).end(), add.second) != (lb->second).end()) 
-			{
-				/* goalMap contains item */
-			} 
-			else 
-			{
-				(lb->second).push_back(add.second);
-			}	
-		}
+		goal = _unitStrategy.front();
+		_unitStrategy.pop();
 	}
-	else
-	{
-		// the key does not exist in the map
-		// add it to the map
-		GoalVector vec;
-		vec.push_back(add.second);
-		pGoalMap->insert(lb, GoalMap::value_type(add.first, vec));    // Use lb as a hint to insert,
-		// so it can avoid another lookup
-	}
+	return goal;
 }

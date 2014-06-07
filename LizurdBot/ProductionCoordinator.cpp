@@ -3,13 +3,17 @@
 // Buildings are built by the ConstructionCoordinator.
 
 #include "ProductionCoordinator.h"
+#include "ProductionOrder.h"
+#include "Goal.h"
+#include "Logger.h"
+#include <string>
 
 using namespace Lizurd;
 
 ProductionCoordinator::ProductionCoordinator(Gateway &gateway) :
-	Coordinator(gateway, ProductionCoord)
+	Coordinator(gateway, ProductionCoord),
+	_currentGoal(nullptr)
 {
-
 }
 
 
@@ -24,7 +28,65 @@ Result ProductionCoordinator::ProcessNotificationInternal(Notification &notifica
 
 Result ProductionCoordinator::UpdateInternal()
 {
-	return Result::Failure;
+	Result retVal = Result::Failure;
+	// first we need to check we have a goal;
+	if(_currentGoal == nullptr || _currentGoal->GetExecutingUnitType() == BWAPI::UnitTypes::Enum::None)
+	{
+
+		Logger::GetInstance().Log(ProductionCoord, "Looking for a goal.");
+		Notification notification(StrategyCoord);
+		notification.SetAction(Action::GetNextProductionGoal);
+		if(_gateway.RegisterNotification(notification) == Result::Success)
+		{
+			Logger::GetInstance().Log(ProductionCoord, "Found a goal.");
+			_currentGoal = notification.GetGoal();
+		}
+	}
+	if(_currentGoal != nullptr)
+	{
+		Logger::GetInstance().Log(ProductionCoord, "We have a goal. " + _currentGoal->GetExecutingUnitType().getName());
+		// now we have a goal attempt to reserve some resources.
+		Notification notification(ResourceCoord);
+		notification.SetAction(Action::ResourceRequest);
+		notification.SetResourceValue(_currentGoal->GetCost());
+		if(_gateway.RegisterNotification(notification) == Result::Success)
+		{
+			// next we need to get a unit to execute the order
+			notification.SetTarget(UnitDiscoveryCoord);
+			notification.SetAction(Action::RequestIdleUnit);
+			notification.SetUnitType(_currentGoal->GetExecutingUnitType());
+			if(_gateway.RegisterNotification(notification) == Result::Success)
+			{
+				Logger::GetInstance().Log(ProductionCoord, "Found a unit to execute the goal.");
+				BWAPI::Unit executingUnit = notification.GetLastUnit();
+				if(executingUnit != nullptr)
+				{
+					// we have all the bits we need....
+					ProductionOrder *order = new ProductionOrder("ProductionOrder", executingUnit, TaskPriority::Medium );
+					order->SetResultUnit(_currentGoal->GetGoalType());
+					_gateway.AddOrder(order);
+
+					//current goal is complete so remove it
+					delete _currentGoal;
+					_currentGoal = nullptr;
+				}
+			}
+			else
+			{
+				// we failed to find a unit to build so release the reservation.
+				notification.SetTarget(ResourceCoord);
+				notification.SetAction(Action::ResourceRelease);
+				notification.SetResourceValue(_currentGoal->GetCost());
+				if(_gateway.RegisterNotification(notification) != Result::Success)
+				{
+					Logger::GetInstance().Log(ProductionCoord, "Failed to release a resource reservation.");
+				}
+			}
+		}
+		
+		
+	}
+	return retVal;
 }
 
 Result ProductionCoordinator::AfterUpdateInternal()

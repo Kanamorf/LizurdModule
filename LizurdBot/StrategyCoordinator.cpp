@@ -1,5 +1,6 @@
 #include "StrategyCoordinator.h"
 #include "RaceDescriptor.h"
+#include "Strategy.h"
 
 using namespace Lizurd;
 
@@ -26,7 +27,17 @@ Result Lizurd::StrategyCoordinator::AfterUpdateInternal()
 
 Result Lizurd::StrategyCoordinator::ProcessNotificationInternal(Notification &notification)
 {
-	return Result::Failure;
+	Result retVal = Result::Failure;
+	if(notification.GetAction() == Action::GetNextProductionGoal)
+	{
+		Goal* goal = _strategy->GetNextUnitGoal();
+		if(goal != nullptr)
+		{
+			notification.SetGoal(goal);
+			retVal = Result::Success;
+		}
+	}
+	return retVal;
 }
 
 void StrategyCoordinator::LoadDefaultStrategy()

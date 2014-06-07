@@ -24,12 +24,13 @@ namespace Lizurd
 		~Strategy(void);
 
 		void SetName(std::string name) { _name = name; }
-		void AddOrUpdate(const StrategyType &type, const GoalMapPair &add);
+		void AddOrUpdate(const StrategyType &type, Goal* add);
+		Goal* GetNextUnitGoal();
 	private:
 		std::string _name;
-		GoalMap _buildingStrategy;
-		GoalMap _unitStrategy;
-		GoalMap _upgrateStrategy;
+		GoalQueue _buildingStrategy;
+		GoalQueue _unitStrategy;
+		GoalQueue _upgrateStrategy;
 		
 	};
 }

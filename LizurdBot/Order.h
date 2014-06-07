@@ -33,7 +33,6 @@ namespace Lizurd
 		ResourceValue GetCost() const { return _cost; };
 		void SetCost(const ResourceValue cost) { _cost = cost; };
 		void SetIsUnique(const bool unique) { _isUnique = unique; };
-		BWAPI::Unit GetResultUnit() const { return _result; };
 		int GetID() const { return _instanceId; }
 		std::string GetName() const { return _name; }
 
@@ -46,7 +45,7 @@ namespace Lizurd
 		std::string _name;
 		TaskPriority _priority;
 		BWAPI::Unit _executor;
-		BWAPI::Unit _result;
+		
 		BWAPI::TilePosition _predictedPosition;
 		bool _isUnique;
 	private:	

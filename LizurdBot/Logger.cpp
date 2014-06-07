@@ -54,7 +54,7 @@ void Logger::Log(const std::string &source, const string &log)
 	ofstream logfile;
 
 	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
-	logfile << GetTime() << " ";
+	logfile << std::setw(11) << std::setfill(' ') << std::left << GetTime() << " ";
 	logfile  << std::setw(35) << std::setfill(' ') << std::left  << source  << std::right << log << endl;
 	logfile.close();
 }

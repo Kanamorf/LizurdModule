@@ -24,6 +24,7 @@ WorkerCoordinator::~WorkerCoordinator(void)
 
 Result WorkerCoordinator::UpdateInternal()
 { 
+	Logger::GetInstance().Log(WorkerCoord, "UpdateInternal");
 	for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)
 	{
 		if((*it)->isIdle())
@@ -42,8 +43,9 @@ Result WorkerCoordinator::AfterUpdateInternal()
 
 Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
 {
+		
 	Result retVal = Result::Failure;
-	if(notification.size() == 1)
+	if(notification.UnitSize() == 1)
 	{
 		if(notification.GetAction() == Action::RegisterUnit)
 		{
@@ -66,7 +68,7 @@ Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification
 /// <param name="unit">The unit.</param>
 void WorkerCoordinator::RegisterWorker(Notification &notification)
 {
-	BWAPI::Unit unit = notification.back();
+	BWAPI::Unit unit = notification.GetLastUnit();
 	Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
 
 		if(unit->getType().isWorker())
@@ -82,7 +84,7 @@ void WorkerCoordinator::RegisterWorker(Notification &notification)
 /// <param name="unit">The unit.</param>
 void WorkerCoordinator::DeRegisterWorker(Notification &notification)
 {
-	BWAPI::Unit unit = notification.back();
+	BWAPI::Unit unit = notification.GetLastUnit();
 	Logger::GetInstance().Log(GetName(), "DeRegistering unit: " + unit->getType().getName());
 	VectorRemove(_workers, unit);
 }

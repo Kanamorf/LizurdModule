@@ -66,8 +66,10 @@ ResourceValue ResourceCoordinator::GetCurrentResources() const
 Result ResourceCoordinator::RequestResources(ResourceValue value)
 {
 	Result retVal = Result::Failure;
-	if(GetCurrentResources() > value)
+	Logger::GetInstance().Log(ResourceCoord, "RequestResources");
+	if(GetCurrentResources() >= value)
 	{
+		Logger::GetInstance().Log(ResourceCoord, "RequestResources found enough");
 		_reservedResources += value;
 		retVal = Result::Success;
 	}
@@ -81,7 +83,7 @@ Result ResourceCoordinator::RequestResources(ResourceValue value)
 Result ResourceCoordinator::ReleaseResources(ResourceValue value)
 {
 	Result retVal = Result::Failure;
-	if(_reservedResources > value)
+	if(_reservedResources >= value)
 	{
 		_reservedResources -= value;
 		retVal = Result::Success;

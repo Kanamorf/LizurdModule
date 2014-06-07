@@ -9,9 +9,9 @@ namespace Lizurd
 	class RaceDescriptor;
 
 	typedef std::vector<Building*> BuildingVector;
-	typedef std::map<BWAPI::UnitType, BuildingVector> BuildingMap;
+	typedef std::map<BWAPI::UnitType, BuildingVector*> BuildingMap;
 	typedef std::vector<BWAPI::Unit> UnitVector;
-	typedef std::map<BWAPI::UnitType, UnitVector> UnitMap;
+	typedef std::map<BWAPI::UnitType, UnitVector*> UnitMap;
 
 
 	class Base
@@ -27,6 +27,8 @@ namespace Lizurd
 		bool RemoveUnit(BWAPI::Unit unit);
 		void SetRaceDescriptor(RaceDescriptor *descriptor) { _descriptor = descriptor; }
 		RaceDescriptor& GetRaceDescriptor() const { return *_descriptor; }
+		BWAPI::Unit FindIdleUnit(const BWAPI::UnitType &type);
+		BWAPI::Unit FindIdleBuilding(const BWAPI::UnitType &type);
 	private:
 
 		Building *_commandCentre;

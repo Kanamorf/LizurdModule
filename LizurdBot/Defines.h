@@ -1,8 +1,12 @@
 #pragma once
 #include "TypeSafeEnum.h"
+#include "BWAPI.h"
+#include <queue>
 
 namespace Lizurd
 {
+	class Goal;
+	typedef std::queue<Goal*> GoalQueue;
 
 	struct TaskPriorityDef
 	{
@@ -22,9 +26,11 @@ namespace Lizurd
 			RegisterUnit,
 			DeRegisterUnit,
 			ResourceUpdate,
+			RequestIdleUnit,
 			ResourceRequest,
 			ResourceRelease,
-			CurrentResources
+			CurrentResources,
+			GetNextProductionGoal
 		};
 	};
 

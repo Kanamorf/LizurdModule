@@ -9,7 +9,9 @@
 #include "Coordinator.h"
 #include "UnitDiscoveryCoordinator.h"
 #include "WorkerCoordinator.h"
+#include "StrategyCoordinator.h"
 #include "ResourceCoordinator.h"
+#include "ProductionCoordinator.h"
 #include "RaceDescriptor.h"
 #include "ZergDescriptor.h"
 
@@ -31,15 +33,18 @@ Gateway::~Gateway(void)
 Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 {
 	Result retVal = Result::Failure;
-	_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
-	_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
-	_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
+	
 	if( race == BWAPI::Races::Zerg)
 	{
 		_raceDescriptor = new ZergDescriptor();
 		retVal = Result::Success;
 	}
 	_game = game;
+	_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
+	_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
+	_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
+	_coordinators.insert(std::pair<std::string, Coordinator*>(ProductionCoord, new ProductionCoordinator(*this)));
+	_coordinators.insert(std::pair<std::string, Coordinator*>(StrategyCoord, new StrategyCoordinator(*this)));
 	return retVal;
 }
 

@@ -24,8 +24,8 @@ namespace Lizurd
 		virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) = 0;
 		virtual BWAPI::UnitType GetWorkerType() const = 0;
 		virtual Strategy* GetDefaultStrategy() const = 0;
-		virtual GoalMapPair GetSupplyGoal() const =0;
-		void AddOrUpdate(GoalMap& goalMap, const GoalMapPair &add) const;
+		virtual Goal* GetSupplyGoal() const =0;
+		void AddOrUpdate(GoalQueue& goalMap, const Goal *add) const;
 		
 	};
 

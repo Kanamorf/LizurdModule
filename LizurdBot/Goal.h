@@ -5,27 +5,24 @@
 
 namespace Lizurd
 {
-	class Goal;
-	typedef std::vector<Goal*> GoalVector;
-	typedef std::map<BWAPI::UnitType, GoalVector> GoalMap;
-	typedef std::pair<BWAPI::UnitType, Goal*> GoalMapPair;
-
 	class Goal
 	{
 	public:
-		Goal(GoalType type, GoalState state);
-		Goal(GoalType type, GoalState state, float ratio);
-		Goal(GoalType type, GoalState state, float ratio, int total);
+		Goal(BWAPI::UnitType unit, BWAPI::UnitType type, GoalState state, ResourceValue cost);
+		Goal(BWAPI::UnitType unit, BWAPI::UnitType type, GoalState state, ResourceValue cost, float ratio);
+		Goal(BWAPI::UnitType unit, BWAPI::UnitType type, GoalState state, ResourceValue cost, float ratio, int total);
 		virtual ~Goal(void);
-		BWAPI::Unit GetUnit();
-		GoalType GetGoalType() const;
+		BWAPI::UnitType GetExecutingUnitType() const { return _unitType; }
+		BWAPI::UnitType GetGoalType() const;
 		GoalState GetState() const;
 		float GetRatio() const { return _ratio; }
-
+		ResourceValue GetCost() const { return _cost; }
 	private:
-		GoalType _goalType;
+		BWAPI::UnitType _goalType;
 		GoalState _goalState;
 		float _ratio;
 		int _total;
+		BWAPI::UnitType _unitType;
+		ResourceValue _cost;
 	};
 }

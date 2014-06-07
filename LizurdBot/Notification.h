@@ -14,21 +14,26 @@ namespace Lizurd
 		Notification(std::string target);
 		~Notification(void);
 
-		void push_back(BWAPI::Unit);
-		BWAPI::Unit back() const;
-		size_t size() const;
+		void AddUnit(BWAPI::Unit);
+		BWAPI::Unit GetLastUnit();
+		size_t UnitSize() const;
 		std::string GetTarget() const { return _target; }
 		void SetTarget(const std::string &target) { _target = target; }
 		void SetAction(const Action &action) { _action = action; }
 		Action GetAction() const { return _action; }
 		void SetResourceValue(const ResourceValue &value) { _value = value; }
 		ResourceValue GetResourceValue() const { return _value; }
-
+		Goal* GetGoal() { return _goal; }
+		void SetGoal(Goal* goal) { _goal = goal; }
+		BWAPI::UnitType GetUnitType() const { return _type; }
+		void SetUnitType(BWAPI::UnitType type) { _type = type; }
 	private:
+		BWAPI::UnitType _type;
 		std::string _target;
 		std::vector<BWAPI::Unit> _units;
 		Action _action;
 		ResourceValue _value;
+		Goal* _goal;
 	};
 
 }

@@ -26,18 +26,16 @@ Base* ZergDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit)
 
 Strategy* Lizurd::ZergDescriptor::GetDefaultStrategy() const
 {
+	Logger::GetInstance().Log("ZergDescriptor", "GetDefaultStrategy");
 	Strategy* strategy = new Strategy();
 	strategy->SetName(DefaultStrategy);
-	strategy->AddOrUpdate(StrategyType::BuildingStrategy, GoalMapPair(BWAPI::UnitTypes::Zerg_Drone, 
-		new Goal(GoalType::BuildSpawningPool, GoalState::Replace)));
-	strategy->AddOrUpdate(StrategyType::UnitStrategy, GoalMapPair(BWAPI::UnitTypes::Zerg_Larva, 
-		new Goal(GoalType::TrainWorker, GoalState::Replace, 1.0, 20)));
-	strategy->AddOrUpdate(StrategyType::UnitStrategy, GoalMapPair(BWAPI::UnitTypes::Zerg_Larva, 
-		new Goal(GoalType::TrainZergling, GoalState::Extend, 1)));
+	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new Goal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Spawning_Pool, GoalState::Replace, ResourceValue(200,0,0)));
+	strategy->AddOrUpdate(StrategyType::UnitStrategy, new Goal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Drone, GoalState::Replace, ResourceValue(50, 0, 2), 1.0, 20));
+	strategy->AddOrUpdate(StrategyType::UnitStrategy, new Goal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Zergling, GoalState::Extend, ResourceValue(50, 0, 2), 1.0));
 	return strategy;
 }
 
-GoalMapPair Lizurd::ZergDescriptor::GetSupplyGoal() const 
+Goal* Lizurd::ZergDescriptor::GetSupplyGoal() const 
 {
-	return GoalMapPair(BWAPI::UnitTypes::Zerg_Larva, new Goal(GoalType::TrainOverlord, GoalState::Extend));
+	return new Goal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Overlord, GoalState::Extend, ResourceValue(100, 0, 0));
 }
