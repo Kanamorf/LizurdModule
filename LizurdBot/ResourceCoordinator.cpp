@@ -12,8 +12,8 @@
 
 
 ResourceCoordinator::ResourceCoordinator(Gateway &gateway) :
-	Coordinator(gateway, ResoueceCoord),
-	_resources(ResourceValue::Zero())
+	Coordinator(gateway, ResourceCoord),
+	_totalResources(ResourceValue::Zero())
 {
 }
 
@@ -24,7 +24,26 @@ ResourceCoordinator::~ResourceCoordinator(void)
 
 Result ResourceCoordinator::ProcessNotificationInternal(Notification &notification)
 {
-	return Result::Failure;
+	Result retVal = Result::Failure;
+	if(notification.GetAction() == Action::ResourceUpdate)
+	{
+		_totalResources = notification.GetResourceValue();
+		retVal = Result::Success;
+	}
+	if(notification.GetAction() == Action::ResourceRequest)
+	{
+		retVal = RequestResources(notification.GetResourceValue());
+	}
+	if(notification.GetAction() == Action::ResourceRelease)
+	{
+		retVal = ReleaseResources(notification.GetResourceValue());
+	}
+	if(notification.GetAction() == Action::CurrentResources)
+	{
+		notification.SetResourceValue(GetCurrentResources());
+		retVal = Result::Success;
+	}
+	return retVal;
 }
 
 Result ResourceCoordinator::UpdateInternal()
@@ -35,4 +54,40 @@ Result ResourceCoordinator::UpdateInternal()
 Result ResourceCoordinator::AfterUpdateInternal()
 {
 	return Result::Failure;
+}
+
+ResourceValue ResourceCoordinator::GetCurrentResources() const
+{
+	ResourceValue perceivedResources = _totalResources - _reservedResources;
+	return perceivedResources;
+}
+
+Result ResourceCoordinator::RequestResources(ResourceValue value)
+{
+	Result retVal = Result::Failure;
+	if(GetCurrentResources() > value)
+	{
+		_reservedResources += value;
+		retVal = Result::Success;
+	}
+	else
+	{
+		retVal = Result::InsufficientResources;
+	}
+	return retVal;
+}
+
+Result ResourceCoordinator::ReleaseResources(ResourceValue value)
+{
+	Result retVal = Result::Failure;
+	if(_reservedResources > value)
+	{
+		_reservedResources -= value;
+		retVal = Result::Success;
+	}
+	else
+	{
+		retVal = Result::InsufficientReservedResources;
+	}
+	return retVal;
 }

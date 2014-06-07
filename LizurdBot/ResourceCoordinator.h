@@ -14,6 +14,12 @@ public:
 	ResourceValue GetCurrentResources() const;
 
 private:
-	ResourceValue _resources;
+
+	Result RequestResources(ResourceValue value);
+	Result ReleaseResources(ResourceValue value);
+
+private:
+	ResourceValue _totalResources;
+	ResourceValue _reservedResources;
 };
 

@@ -8,7 +8,7 @@ namespace
 {
 	const std::string UnitDiscoveryCoord = "UnitDiscoveryCoordinator";
 	const std::string WorkerCoord = "WorkerCoordinator";
-	const std::string ResoueceCoord = "ResourceCoordinator";
+	const std::string ResourceCoord = "ResourceCoordinator";
 }
 
 class RaceDescriptor;

@@ -9,6 +9,7 @@
 #include "Coordinator.h"
 #include "UnitDiscoveryCoordinator.h"
 #include "WorkerCoordinator.h"
+#include "ResourceCoordinator.h"
 #include "RaceDescriptor.h"
 #include "ZergDescriptor.h"
 
@@ -30,11 +31,13 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 	Result retVal = Result::Failure;
 	_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
 	_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
+	_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
 	if( race == BWAPI::Races::Zerg)
 	{
 		_raceDescriptor = new ZergDescriptor();
 		retVal = Result::Success;
 	}
+	_game = game;
 	return retVal;
 }
 
@@ -62,7 +65,11 @@ Result Gateway::Update()
 		delete *it;
 	}
 
-	ResourceValue(GetGame().self()->minerals(), GetGame().self()->gas(), GetGame().self()->supplyUsed(), GetGame().self()->supplyTotal());
+	ResourceValue update(GetGame().self()->minerals(), GetGame().self()->gas(), GetGame().self()->supplyUsed(), GetGame().self()->supplyTotal());
+	Notification notification(ResourceCoord);
+	notification.SetAction(Action::ResourceUpdate);
+	notification.SetResourceValue(update);
+	RegisterNotification(notification);
 	retVal = Result::Success;
 	return retVal;
 }
@@ -74,8 +81,7 @@ Result Gateway::RegisterNotification(Notification &notification) const
 	std::map<std::string, Coordinator*>::const_iterator found = _coordinators.find(target);
 	if(found != _coordinators.end())
 	{
-		found->second->ProcessNotificationInternal(notification);
-		retVal = Result::Success;
+		retVal = found->second->ProcessNotificationInternal(notification);
 	}
 	return retVal;
 }

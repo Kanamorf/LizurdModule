@@ -19,12 +19,15 @@
     <Filter Include="Building">
       <UniqueIdentifier>{73d7ad3e-2a9d-402e-8df7-5efb1292eeb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Zerg">
+      <UniqueIdentifier>{d61136b3-9de9-42e6-905c-221742b01e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zerg\Buildings">
+      <UniqueIdentifier>{dae460e2-10eb-4202-993c-4472351a2d17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RaceDescriptor.h">
-      <Filter>Descriptors</Filter>
-    </ClInclude>
-    <ClInclude Include="ZergDescriptor.h">
       <Filter>Descriptors</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
@@ -63,9 +66,26 @@
     <ClInclude Include="TypeSafeEnum.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="BuildingPlacer.h" />
     <ClInclude Include="RectangleArray.h">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Building</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingPlacer.h">
+      <Filter>Building</Filter>
+    </ClInclude>
+    <ClInclude Include="Base.h">
+      <Filter>Building</Filter>
+    </ClInclude>
+    <ClInclude Include="ZergHatchery.h">
+      <Filter>Zerg\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="ZergDescriptor.h">
+      <Filter>Zerg</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingNames.h">
+      <Filter>Building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +99,6 @@
       <Filter>Coordinators</Filter>
     </ClCompile>
     <ClCompile Include="RaceDescriptor.cpp">
-      <Filter>Descriptors</Filter>
-    </ClCompile>
-    <ClCompile Include="ZergDescriptor.cpp">
       <Filter>Descriptors</Filter>
     </ClCompile>
     <ClCompile Include="GatherOrder.cpp">
@@ -108,6 +125,20 @@
     <ClCompile Include="ResourceCoordinator.cpp">
       <Filter>Coordinators</Filter>
     </ClCompile>
-    <ClCompile Include="BuildingPlacer.cpp" />
+    <ClCompile Include="Building.cpp">
+      <Filter>Building</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingPlacer.cpp">
+      <Filter>Building</Filter>
+    </ClCompile>
+    <ClCompile Include="Base.cpp">
+      <Filter>Building</Filter>
+    </ClCompile>
+    <ClCompile Include="ZergHatchery.cpp">
+      <Filter>Zerg\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="ZergDescriptor.cpp">
+      <Filter>Zerg</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

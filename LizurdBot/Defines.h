@@ -18,7 +18,11 @@ struct ActionDef
 	{
 		None,
 		RegisterUnit,
-		DeRegisterUnit
+		DeRegisterUnit,
+		ResourceUpdate,
+		ResourceRequest,
+		ResourceRelease,
+		CurrentResources
 	};
 };
 
@@ -27,7 +31,9 @@ struct ResultDef
 	enum type
 	{
 		Failure,
-		Success
+		Success,
+		InsufficientResources,
+		InsufficientReservedResources
 	};
 };
 
@@ -44,11 +50,18 @@ struct ResourceValue
 	int Supply;
 	int Vespene;
 	int MaxSupply;
-	inline bool operator>=( const ResourceValue &other ) {return Minerals >= other.Minerals && Supply >= other.Supply && Vespene >= other.Vespene && MaxSupply - Supply >= other.Supply; };
-	inline bool operator>( const ResourceValue &other ) {return Minerals > other.Minerals && Supply > other.Supply && Vespene > other.Vespene;};
-	inline bool operator!=( const ResourceValue &other ){return Minerals != other.Minerals && Supply || other.Supply && Vespene != other.Vespene || Supply != other.Supply;};
+	inline bool operator==( const ResourceValue &other ) { return Minerals == other.Minerals && Supply == other.Supply && Vespene == other.Vespene; };
+	inline bool operator>=( const ResourceValue &other ) { return Minerals >= other.Minerals && MaxSupply >= other.Supply + Supply && Vespene >= other.Vespene; };
+	inline bool operator>( const ResourceValue &other ) { return Minerals > other.Minerals && MaxSupply > other.Supply + Supply && Vespene > other.Vespene; };
+	inline bool operator<( const ResourceValue &other ) { return !operator>=(other); };
+	inline bool operator<=( const ResourceValue &other ) { return !operator>(other); };
+	inline bool operator!=( const ResourceValue &other ){ return !operator==(other); };
+
 	inline ResourceValue operator+=( const ResourceValue &other ) {return ResourceValue(Minerals += other.Minerals, Vespene += other.Vespene, Supply += other.Supply, MaxSupply += other.MaxSupply); };
 	inline ResourceValue operator-=( const ResourceValue &other ) {return ResourceValue(Minerals -= other.Minerals, Vespene -= other.Vespene, Supply -= other.Supply, MaxSupply -= other.MaxSupply); };
 	inline ResourceValue operator-( const ResourceValue &other ) {return ResourceValue(Minerals - other.Minerals, Vespene - other.Vespene, Supply -other.Supply, MaxSupply - other.MaxSupply); };
+	inline ResourceValue operator-( const ResourceValue &other ) const {return ResourceValue(Minerals - other.Minerals, Vespene - other.Vespene, Supply -other.Supply, MaxSupply - other.MaxSupply); };
+	inline ResourceValue operator+( const ResourceValue &other ) {return ResourceValue(Minerals + other.Minerals, Vespene + other.Vespene, Supply + other.Supply, MaxSupply + other.MaxSupply); };
+	inline ResourceValue operator+( const ResourceValue &other ) const {return ResourceValue(Minerals + other.Minerals, Vespene + other.Vespene, Supply + other.Supply, MaxSupply + other.MaxSupply); };
 	static ResourceValue Zero() { return ResourceValue(0, 0, 0, 0); };
 };

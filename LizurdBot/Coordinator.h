@@ -14,11 +14,12 @@ public:
 	virtual Result ProcessNotificationInternal(Notification &notification) = 0;
 	virtual Result UpdateInternal() = 0;
 	virtual Result AfterUpdateInternal() = 0;
-
+	virtual void DrawDebugInfo(){}
 	Result Update();
 	std::string GetName() const { return _name; }
 	inline bool operator==(const Coordinator & m) const { return m._name == _name; }
 
+	
 
 protected:
 	void VectorRemove(std::vector<BWAPI::Unit> &vector, BWAPI::Unit unit);

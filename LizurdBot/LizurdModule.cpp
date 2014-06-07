@@ -2,74 +2,93 @@
 #include "RaceDescriptor.h"
 #include "Notification.h"
 
+#define FRAMESPERAI 15
+
 using namespace BWAPI;
 using namespace Filter;
 
 void LizurdModule::onStart()
 {
-  // Hello World!
-  Broodwar->sendText("Hello world!");
-  //Initialise everything once we know what race we are playing
-  BWAPI::Race race = Broodwar->self()->getRace();
-  _gateway.Initialise(BroodwarPtr, race);
+	// Hello World!
+	Broodwar->sendText("Hello world!");
+	//Initialise everything once we know what race we are playing
+	BWAPI::Race race = Broodwar->self()->getRace();
+	_gateway.Initialise(BroodwarPtr, race);
 }
 
 void LizurdModule::onEnd(bool isWinner)
 {
-  // Called when the game ends
-  if ( isWinner )
-  {
-    // Log your win here!
-  }
+	// Called when the game ends
+	if ( isWinner )
+	{
+		// Log your win here!
+	}
 }
 
 void LizurdModule::onFrame()
 {
-  // Called once every game frame
-	_gateway.Update();
+	// Called once every game frame
+	if(Broodwar->getFrameCount()%FRAMESPERAI == 0)
+	{
+		_gateway.Update();
+	}
+	if(Broodwar->getFrameCount() > FRAMESPERAI)
+	{
+		Broodwar->drawBox(BWAPI::CoordinateType::Screen, 320, 0, 420, 20, BWAPI::Colors::Blue);
+		Notification notification(ResourceCoord);
+		notification.SetAction(Action::CurrentResources);
+		if(_gateway.RegisterNotification(notification) == Result::Success)
+		{
+			std::stringstream ss;
+			//																														  (the internal supply is twice the displayed supply)
+			//																													      (this is because zerglings are half a supply)
+			ss << "M: " << notification.GetResourceValue().Minerals << " V: " << notification.GetResourceValue().Vespene << " S: " << (notification.GetResourceValue().Supply /2 );
+			Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
+		}
+	}
 }
 
 void LizurdModule::onSendText(std::string text)
 {
 
-  // Send the text to the game if it is not being processed.
-  Broodwar->sendText("%s", text.c_str());
+	// Send the text to the game if it is not being processed.
+	Broodwar->sendText("%s", text.c_str());
 
 
-  // Make sure to use %s and pass the text as a parameter,
-  // otherwise you may run into problems when you use the %(percent) character!
+	// Make sure to use %s and pass the text as a parameter,
+	// otherwise you may run into problems when you use the %(percent) character!
 
 }
 
 void LizurdModule::onReceiveText(BWAPI::Player player, std::string text)
 {
-  // Parse the received text
-  Broodwar << player->getName() << " said \"" << text << "\"" << std::endl;
+	// Parse the received text
+	Broodwar << player->getName() << " said \"" << text << "\"" << std::endl;
 }
 
 void LizurdModule::onPlayerLeft(BWAPI::Player player)
 {
-  // Interact verbally with the other players in the game by
-  // announcing that the other player has left.
-  Broodwar->sendText("Goodbye %s!", player->getName().c_str());
+	// Interact verbally with the other players in the game by
+	// announcing that the other player has left.
+	Broodwar->sendText("Goodbye %s!", player->getName().c_str());
 }
 
 void LizurdModule::onNukeDetect(BWAPI::Position target)
 {
 
-  // Check if the target is a valid position
-  if ( target )
-  {
-    // if so, print the location of the nuclear strike target
-    Broodwar << "Nuclear Launch Detected at " << target << std::endl;
-  }
-  else 
-  {
-    // Otherwise, ask other players where the nuke is!
-    Broodwar->sendText("Where's the nuke?");
-  }
+	// Check if the target is a valid position
+	if ( target )
+	{
+		// if so, print the location of the nuclear strike target
+		Broodwar << "Nuclear Launch Detected at " << target << std::endl;
+	}
+	else 
+	{
+		// Otherwise, ask other players where the nuke is!
+		Broodwar->sendText("Where's the nuke?");
+	}
 
-  // You can also retrieve all the nuclear missile targets using Broodwar->getNukeDots()!
+	// You can also retrieve all the nuclear missile targets using Broodwar->getNukeDots()!
 }
 
 void LizurdModule::onUnitDiscover(BWAPI::Unit unit)
@@ -118,7 +137,7 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 
 void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 {
-	 Broodwar->sendText("A unit morphed.");
+	Broodwar->sendText("A unit morphed.");
 }
 
 void LizurdModule::onUnitRenegade(BWAPI::Unit unit)
@@ -127,7 +146,7 @@ void LizurdModule::onUnitRenegade(BWAPI::Unit unit)
 
 void LizurdModule::onSaveGame(std::string gameName)
 {
-  Broodwar << "The game was saved to \"" << gameName << "\"" << std::endl;
+	Broodwar << "The game was saved to \"" << gameName << "\"" << std::endl;
 }
 
 void LizurdModule::onUnitComplete(BWAPI::Unit unit)
