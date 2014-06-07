@@ -28,6 +28,8 @@ Taken from the BWSAL (Broodwar Standard Addon library): http://code.google.com/p
 
 #include "BuildingPlacer.h"
 
+using Lizurd::BuildingPlacer;
+
 BuildingPlacer* BuildingPlacer::_instance = 0;
 
 BuildingPlacer::BuildingPlacer()

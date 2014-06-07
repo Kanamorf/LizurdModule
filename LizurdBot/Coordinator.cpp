@@ -1,5 +1,6 @@
 #include "Coordinator.h"
 
+using namespace Lizurd;
 
 Coordinator::Coordinator(Gateway &gateway, std::string name) :
 	_name(name),

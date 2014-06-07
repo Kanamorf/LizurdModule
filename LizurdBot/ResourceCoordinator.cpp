@@ -10,6 +10,7 @@
 
 #include "ResourceCoordinator.h"
 
+using namespace Lizurd;
 
 ResourceCoordinator::ResourceCoordinator(Gateway &gateway) :
 	Coordinator(gateway, ResourceCoord),

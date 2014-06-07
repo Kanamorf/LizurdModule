@@ -1,30 +1,34 @@
 #pragma once
 #include "Coordinator.h"
 
-class Base;
-typedef std::vector<Base *> BaseVector;
 
-class UnitDiscoveryCoordinator : public Coordinator
+namespace Lizurd
 {
-public:
-	UnitDiscoveryCoordinator(Gateway &gateway);
-	~UnitDiscoveryCoordinator(void);
+	class Base;
+	typedef std::vector<Base *> BaseVector;
 
-	
-	virtual Result ProcessNotificationInternal(Notification &notification) override;
-	virtual Result UpdateInternal() override;
-	virtual Result AfterUpdateInternal() override;
-	virtual void DrawDebugInfo() override;
+	class UnitDiscoveryCoordinator : public Coordinator
+	{
+	public:
+		UnitDiscoveryCoordinator(Gateway &gateway);
+		~UnitDiscoveryCoordinator(void);
 
-private:
-	void RegisterUnit(Notification &notification);
-	void CreateNewBase(BWAPI::Unit unit);
-	void DeRegisterUnit(Notification &notification);
-	Base* FindClosestFriendlyBase(const BWAPI::Unit unit) const;
 
-private:
-	BaseVector _bases;
-	std::vector<BWAPI::Unit> _orphanedUnits;
-	std::vector<BWAPI::Unit> _localBuildings;
-};
+		virtual Result ProcessNotificationInternal(Notification &notification) override;
+		virtual Result UpdateInternal() override;
+		virtual Result AfterUpdateInternal() override;
+		virtual void DrawDebugInfo() override;
 
+	private:
+		void RegisterUnit(Notification &notification);
+		void CreateNewBase(BWAPI::Unit unit);
+		void DeRegisterUnit(Notification &notification);
+		Base* FindClosestFriendlyBase(const BWAPI::Unit unit) const;
+
+	private:
+		BaseVector _bases;
+		std::vector<BWAPI::Unit> _orphanedUnits;
+		std::vector<BWAPI::Unit> _localBuildings;
+	};
+
+}

@@ -2,6 +2,8 @@
 
 #include "Building.h"
 
+using Lizurd::Base;
+
 Base::Base(void)
 {
 }

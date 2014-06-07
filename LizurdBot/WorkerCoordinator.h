@@ -1,22 +1,26 @@
 #pragma once
 #include "Coordinator.h"
 
-class WorkerCoordinator :
-	public Coordinator
+namespace Lizurd
 {
-public:
-	WorkerCoordinator(Gateway &gateway);
-	~WorkerCoordinator(void);
 
-	virtual Result ProcessNotificationInternal(Notification &notification) override;
-	virtual Result UpdateInternal() override;
-	virtual Result AfterUpdateInternal() override;
+	class WorkerCoordinator :
+		public Coordinator
+	{
+	public:
+		WorkerCoordinator(Gateway &gateway);
+		~WorkerCoordinator(void);
 
-private:
-	void RegisterWorker(Notification &notification);
-	void DeRegisterWorker(Notification &notification);
+		virtual Result ProcessNotificationInternal(Notification &notification) override;
+		virtual Result UpdateInternal() override;
+		virtual Result AfterUpdateInternal() override;
+
+	private:
+		void RegisterWorker(Notification &notification);
+		void DeRegisterWorker(Notification &notification);
 
 
-	std::vector<BWAPI::Unit> _workers;
-};
+		std::vector<BWAPI::Unit> _workers;
+	};
 
+}

@@ -1,13 +1,18 @@
 #pragma once
 #include "RaceDescriptor.h"
-class ZergDescriptor :
-	public RaceDescriptor
-{
-public:
-	ZergDescriptor(void);
-	~ZergDescriptor(void);
-	virtual BWAPI::UnitType GetCommandCenterType() const override { return BWAPI::UnitTypes::Zerg_Hatchery; }
-	virtual BWAPI::UnitType GetWorkerType() const override  { return BWAPI::UnitTypes::Zerg_Drone; }
-	virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) override;
-};
 
+namespace Lizurd
+{
+
+	class ZergDescriptor :
+		public RaceDescriptor
+	{
+	public:
+		ZergDescriptor(void);
+		~ZergDescriptor(void);
+		virtual BWAPI::UnitType GetCommandCenterType() const override { return BWAPI::UnitTypes::Zerg_Hatchery; }
+		virtual BWAPI::UnitType GetWorkerType() const override  { return BWAPI::UnitTypes::Zerg_Drone; }
+		virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) override;
+	};
+
+}

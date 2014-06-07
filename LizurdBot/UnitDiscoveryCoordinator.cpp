@@ -8,6 +8,8 @@
 #include "Base.h"
 #include "Building.h"
 
+using namespace Lizurd;
+
 UnitDiscoveryCoordinator::UnitDiscoveryCoordinator(Gateway &gateway) :
 	Coordinator(gateway, UnitDiscoveryCoord)
 {

@@ -1,11 +1,13 @@
 #include "LizurdModule.h"
 #include "RaceDescriptor.h"
 #include "Notification.h"
+#include "Logger.h"
 
 #define FRAMESPERAI 15
 
 using namespace BWAPI;
 using namespace Filter;
+using Lizurd::LizurdModule;
 
 void LizurdModule::onStart()
 {
@@ -14,6 +16,7 @@ void LizurdModule::onStart()
 	//Initialise everything once we know what race we are playing
 	BWAPI::Race race = Broodwar->self()->getRace();
 	_gateway.Initialise(BroodwarPtr, race);
+	Logger::GetInstance().Log("LizurdModule", "We are playing: " + race.getName());
 }
 
 void LizurdModule::onEnd(bool isWinner)

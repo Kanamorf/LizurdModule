@@ -2,6 +2,8 @@
 #include "GatherOrder.h"
 #include "Logger.h"
 
+using namespace Lizurd;
+
 GatherOrder::GatherOrder(BWAPI::Unit unit):
 Order(GATHERORDER, unit, TaskPriority::Gather)
 {

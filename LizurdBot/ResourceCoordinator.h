@@ -1,25 +1,30 @@
 #pragma once
 #include "coordinator.h"
-class ResourceCoordinator :
-	public Coordinator
+
+namespace Lizurd
 {
-public:
-	ResourceCoordinator(Gateway &gateway);
-	~ResourceCoordinator(void);
 
-	virtual Result ProcessNotificationInternal(Notification &notification) override;
-	virtual Result UpdateInternal() override;
-	virtual Result AfterUpdateInternal() override;
+	class ResourceCoordinator :
+		public Coordinator
+	{
+	public:
+		ResourceCoordinator(Gateway &gateway);
+		~ResourceCoordinator(void);
 
-	ResourceValue GetCurrentResources() const;
+		virtual Result ProcessNotificationInternal(Notification &notification) override;
+		virtual Result UpdateInternal() override;
+		virtual Result AfterUpdateInternal() override;
 
-private:
+		ResourceValue GetCurrentResources() const;
 
-	Result RequestResources(ResourceValue value);
-	Result ReleaseResources(ResourceValue value);
+	private:
 
-private:
-	ResourceValue _totalResources;
-	ResourceValue _reservedResources;
-};
+		Result RequestResources(ResourceValue value);
+		Result ReleaseResources(ResourceValue value);
 
+	private:
+		ResourceValue _totalResources;
+		ResourceValue _reservedResources;
+	};
+
+}

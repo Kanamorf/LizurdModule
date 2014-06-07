@@ -4,6 +4,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using namespace Lizurd;
+
 namespace LizurdTests
 {		
 	TEST_CLASS(ResourceValueTestClass)

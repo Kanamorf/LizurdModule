@@ -13,6 +13,8 @@
 #include "RaceDescriptor.h"
 #include "ZergDescriptor.h"
 
+using namespace Lizurd;
+
 Gateway::Gateway(void)
 {
 }

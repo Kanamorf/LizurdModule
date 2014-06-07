@@ -1,5 +1,6 @@
 #include "Notification.h"
 
+using Lizurd::Notification;
 
 Notification::Notification(std::string target) :
 	_target(target)

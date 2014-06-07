@@ -9,6 +9,7 @@
 
 
 using namespace std;
+using namespace Lizurd;
 
 Logger* Logger::_instance = 0;
 
@@ -51,9 +52,10 @@ Logger& Logger::GetInstance()
 void Logger::Log(const std::string &source, const string &log)
 {
 	ofstream logfile;
+
 	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
 	logfile << GetTime() << " ";
-	logfile << "[" << source << "]" << std::setw(20) << " " << log << endl;
+	logfile  << std::setw(35) << std::setfill(' ') << std::left  << source  << std::right << log << endl;
 	logfile.close();
 }
 

@@ -1,22 +1,27 @@
 // Implementation of TypeSafeEnum is my interpretation of code from http://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Type_Safe_Enum
 #pragma once
 
-template<typename T, typename U = typename T::type>
-class TypeSafeEnum : public T
+
+namespace Lizurd
 {
-public:
-	TypeSafeEnum() : mValue() {}
-	TypeSafeEnum(U v) : mValue(v) {}
+	template<typename T, typename U = typename T::type>
+	class TypeSafeEnum : public T
+	{
+	public:
+		TypeSafeEnum() : mValue() {}
+		TypeSafeEnum(U v) : mValue(v) {}
 
-	U underlying() const { return mValue; }
+		U underlying() const { return mValue; }
 
-	bool operator == (const TypeSafeEnum &other) const { return mValue == other.mValue; }
-	bool operator != (const TypeSafeEnum &other) const { return mValue != other.mValue; }
-	bool operator <  (const TypeSafeEnum &other) const { return mValue <  other.mValue; }
-	bool operator <= (const TypeSafeEnum &other) const { return mValue <= other.mValue; }
-	bool operator >  (const TypeSafeEnum &other) const { return mValue >  other.mValue; }
-	bool operator >= (const TypeSafeEnum &other) const { return mValue >= other.mValue; }
+		bool operator == (const TypeSafeEnum &other) const { return mValue == other.mValue; }
+		bool operator != (const TypeSafeEnum &other) const { return mValue != other.mValue; }
+		bool operator <  (const TypeSafeEnum &other) const { return mValue <  other.mValue; }
+		bool operator <= (const TypeSafeEnum &other) const { return mValue <= other.mValue; }
+		bool operator >  (const TypeSafeEnum &other) const { return mValue >  other.mValue; }
+		bool operator >= (const TypeSafeEnum &other) const { return mValue >= other.mValue; }
 
-private:
-	U mValue;
-};
+	private:
+		U mValue;
+	};
+
+}

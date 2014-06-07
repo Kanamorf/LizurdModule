@@ -2,16 +2,20 @@
 #include <vector>
 #include "BWAPI.h"
 
-class Base;
 
-class RaceDescriptor
+namespace Lizurd
 {
-public:
+	class Base;
 
-	RaceDescriptor();
-	virtual ~RaceDescriptor(void);
-	virtual BWAPI::UnitType GetCommandCenterType() const = 0;
-	virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) = 0;
-	virtual BWAPI::UnitType GetWorkerType() const = 0;
-};
+	class RaceDescriptor
+	{
+	public:
 
+		RaceDescriptor();
+		virtual ~RaceDescriptor(void);
+		virtual BWAPI::UnitType GetCommandCenterType() const = 0;
+		virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) = 0;
+		virtual BWAPI::UnitType GetWorkerType() const = 0;
+	};
+
+}

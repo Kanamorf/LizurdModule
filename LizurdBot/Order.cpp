@@ -1,6 +1,8 @@
 #include <sstream>
 #include "Order.h"
 
+using namespace Lizurd;
+
 int Order::_instanceCount = 0;
 Order::Order(std::string name, TaskPriority priority):
 _name(name), _priority(priority),  _isUnderway(false), _cost(ResourceValue(0,0,0)), _isUnique(false)

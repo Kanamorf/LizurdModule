@@ -2,6 +2,7 @@
 #include "Base.h"
 #include "BuildingPlacer.h"
 
+using namespace Lizurd;
 
 Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::string name):
 	_building(building),

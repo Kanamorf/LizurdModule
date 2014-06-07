@@ -10,6 +10,8 @@
 #include "WorkerCoordinator.h"
 #include "GatherOrder.h"
 
+using namespace Lizurd;
+
 WorkerCoordinator::WorkerCoordinator(Gateway &gateway) :
 	Coordinator(gateway, WorkerCoord)
 {

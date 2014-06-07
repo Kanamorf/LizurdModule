@@ -3,6 +3,9 @@
 #include "Base.h"
 #include "Logger.h"
 
+using Lizurd::ZergDescriptor;
+using Lizurd::Base;
+
 ZergDescriptor::ZergDescriptor(void)
 {
 }
