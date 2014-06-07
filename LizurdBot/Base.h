@@ -1,11 +1,12 @@
 #pragma once
 #include "BWAPI.h"
-#include "RaceDescriptor.h"
+
 #include <vector>
 
 namespace Lizurd
 {
 	class Building;
+	class RaceDescriptor;
 
 	typedef std::vector<Building*> BuildingVector;
 	typedef std::map<BWAPI::UnitType, BuildingVector> BuildingMap;

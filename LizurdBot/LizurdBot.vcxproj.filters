@@ -25,6 +25,9 @@
     <Filter Include="Zerg\Buildings">
       <UniqueIdentifier>{dae460e2-10eb-4202-993c-4472351a2d17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strategy">
+      <UniqueIdentifier>{0b13bba9-bed8-4ec4-a6ea-420d312bcc2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RaceDescriptor.h">
@@ -87,6 +90,14 @@
     <ClInclude Include="BuildingNames.h">
       <Filter>Building</Filter>
     </ClInclude>
+    <ClInclude Include="Strategy.h">
+      <Filter>Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h" />
+    <ClInclude Include="StrategyCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductionCoordinator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -140,5 +151,13 @@
     <ClCompile Include="ZergDescriptor.cpp">
       <Filter>Zerg</Filter>
     </ClCompile>
+    <ClCompile Include="Strategy.cpp">
+      <Filter>Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="StrategyCoordinator.cpp">
+      <Filter>Coordinators</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductionCoordinator.cpp" />
   </ItemGroup>
 </Project>

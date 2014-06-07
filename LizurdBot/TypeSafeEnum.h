@@ -11,7 +11,7 @@ namespace Lizurd
 		TypeSafeEnum() : mValue() {}
 		TypeSafeEnum(U v) : mValue(v) {}
 
-		U underlying() const { return mValue; }
+		U Underlying() const { return mValue; }
 
 		bool operator == (const TypeSafeEnum &other) const { return mValue == other.mValue; }
 		bool operator != (const TypeSafeEnum &other) const { return mValue != other.mValue; }

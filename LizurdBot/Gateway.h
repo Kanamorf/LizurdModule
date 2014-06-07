@@ -9,6 +9,8 @@ namespace
 	const std::string UnitDiscoveryCoord = "UnitDiscoveryCoordinator";
 	const std::string WorkerCoord = "WorkerCoordinator";
 	const std::string ResourceCoord = "ResourceCoordinator";
+	const std::string StrategyCoord = "StrategyCoordinator";
+	const std::string ProductionCoord = "ProductionCoordinator";
 }
 
 

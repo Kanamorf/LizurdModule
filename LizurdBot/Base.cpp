@@ -1,5 +1,5 @@
 #include "Base.h"
-
+#include "RaceDescriptor.h"
 #include "Building.h"
 
 using Lizurd::Base;

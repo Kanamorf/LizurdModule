@@ -1,6 +1,7 @@
 #include "RaceDescriptor.h"
+#include "Strategy.h"
 
-using Lizurd::RaceDescriptor;
+using namespace Lizurd;
 
 RaceDescriptor::RaceDescriptor()
 {
@@ -10,6 +11,8 @@ RaceDescriptor::RaceDescriptor()
 RaceDescriptor::~RaceDescriptor(void)
 {
 }
+
+
 
 
 
