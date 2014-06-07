@@ -1,6 +1,8 @@
 #pragma once
 #include "Coordinator.h"
 
+class Base;
+typedef std::vector<Base *> BaseVector;
 
 class UnitDiscoveryCoordinator : public Coordinator
 {
@@ -12,15 +14,16 @@ public:
 	virtual Result ProcessNotificationInternal(Notification &notification) override;
 	virtual Result UpdateInternal() override;
 	virtual Result AfterUpdateInternal() override;
+	virtual void DrawDebugInfo() override;
 
 private:
 	void RegisterUnit(Notification &notification);
 	void DeRegisterUnit(Notification &notification);
-	
+	Base* FindClosestFriendlyBase(const BWAPI::Unit unit) const;
 
 private:
-	std::vector<BWAPI::Unit> _commandCentres;
-	std::vector<BWAPI::Unit> _localUnits;
+	BaseVector _bases;
+	std::vector<BWAPI::Unit> _orphanedUnits;
 	std::vector<BWAPI::Unit> _localBuildings;
 };
 

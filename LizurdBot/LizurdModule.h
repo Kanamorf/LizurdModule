@@ -26,6 +26,22 @@ public:
   virtual void onSaveGame(std::string gameName) override;
   virtual void onUnitComplete(BWAPI::Unit unit) override;
 
+  /// <summary>
+  /// Remove the items in toRemove from vec
+  /// </summary>
+  /// <param name="vec">The vector to remove from.</param>
+  /// <param name="toRemove">The vector of items to remove.</param>
+  template<class T>
+  static void VectorRemove(std::vector<T> &vec, const std::vector<T> &toRemove)
+  {
+	  for(std::vector<T>::const_iterator it = toRemove.begin(); it != toRemove.end(); ++it)
+	  {
+		  std::vector<T>::iterator found = std::find(vec.begin(), vec.end(), *it);
+		  if(found != vec.end())
+			  vec.erase(found);
+	  }
+  }
+
 private:
 	Gateway _gateway;
 

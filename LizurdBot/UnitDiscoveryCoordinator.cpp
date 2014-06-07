@@ -5,7 +5,8 @@
 
 #include "UnitDiscoveryCoordinator.h"
 #include "RaceDescriptor.h"
-
+#include "Base.h"
+#include "Building.h"
 
 UnitDiscoveryCoordinator::UnitDiscoveryCoordinator(Gateway &gateway) :
 	Coordinator(gateway, UnitDiscoveryCoord)
@@ -43,7 +44,7 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 			retVal = Result::Success;
 		}
 	}
-	
+
 	return retVal;
 }
 
@@ -57,7 +58,22 @@ void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 	Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
 	if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 	{
-		_commandCentres.push_back(unit);
+		Base* pBase = _gateway.GetRaceDescriptor().CreateBaseFromCommandCentre(unit);
+		pBase->SetRaceDescriptor(&_gateway.GetRaceDescriptor());
+		_bases.push_back(pBase);
+
+		UnitVector attachedUnit;
+		for(UnitVector::iterator it = _orphanedUnits.begin(); it != _orphanedUnits.end(); ++it)
+		{
+			Base* pBase = FindClosestFriendlyBase(*it);
+			if(pBase && (*it)->exists())
+			{
+				pBase->AddUnit(*it);
+				attachedUnit.push_back(*it);
+			}
+		}
+		LizurdModule::VectorRemove(_orphanedUnits, attachedUnit);
+
 	}
 	else if(unit->getType().isBuilding() == false)
 	{
@@ -67,10 +83,16 @@ void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 			notification.SetTarget(WorkerCoord);
 			_gateway.RegisterNotification(notification);
 		}
+		Base* pBase = FindClosestFriendlyBase(unit);
+		if(pBase == nullptr)
+		{
+			_orphanedUnits.push_back(unit);
+		}
 		else
 		{
-			_localUnits.push_back(unit);
+			pBase->AddUnit(unit);
 		}
+
 	}
 	else
 	{
@@ -88,7 +110,7 @@ void UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 	Logger::GetInstance().Log(GetName(), "DeRegistering unit: " + unit->getType().getName());
 	if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 	{
-		VectorRemove(_commandCentres, unit);
+		//command centre is saved inside a base...work out how to find the correct base and remove the command centre
 	}
 	else if(unit->getType().isBuilding() == false)
 	{
@@ -99,13 +121,54 @@ void UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 		}
 		else
 		{
-			VectorRemove(_localUnits, unit);
+			VectorRemove(_orphanedUnits, unit);
 		}
 	}
 	else
 	{
 		VectorRemove(_localBuildings, unit);
 	}
+}
+
+void UnitDiscoveryCoordinator::DrawDebugInfo()
+{
+	for(std::vector<Base*>::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
+	{
+		if(*it)
+		{
+			(*it)->DrawDebugInfo();
+		}
+	}
+}
+
+/// <summary>
+/// Finds the closest base.
+/// </summary>
+/// <param name="unit">The unit.</param>
+/// <returns>The closest base</returns>
+Base* UnitDiscoveryCoordinator::FindClosestFriendlyBase(const BWAPI::Unit unit) const
+{
+	int smallestDistance = INT_MAX;
+	Base* foundUnit = nullptr;
+	if(unit->exists() == true)
+	{
+
+		for(BaseVector::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
+		{
+			if(unit->getPlayer() != (*it)->GetCommandCentre().GetPlayer())
+			{
+				break;
+			}
+			int distance = (*it)->GetCommandCentre().GetDistance(unit);
+			if(distance < smallestDistance)
+			{
+				smallestDistance = distance;
+				foundUnit = (*it);
+			}
+		}
+	}
+
+	return foundUnit;
 }
 
 

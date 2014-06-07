@@ -15,7 +15,7 @@ GatherOrder::~GatherOrder(void)
 bool GatherOrder::IsReady() const
 {
 	bool result = false;
-	if(_executor != NULL)
+	if(_executor != nullptr)
 	{
 		result = true;
 	}

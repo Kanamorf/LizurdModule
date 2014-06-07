@@ -1,5 +1,6 @@
 #pragma once
 #include "BWAPI.h"
+#include "LizurdModule.h"
 #include "Notification.h"
 #include "Gateway.h"
 #include "Defines.h"
@@ -22,7 +23,13 @@ public:
 	
 
 protected:
-	void VectorRemove(std::vector<BWAPI::Unit> &vector, BWAPI::Unit unit);
+	template<class T>
+	void VectorRemove(std::vector<T> &vector, T unit)
+	{
+		std::vector<T>::iterator found = std::find(vector.begin(), vector.end(),unit);
+		if(found != vector.end())
+			vector.erase(found);
+	}
 	Gateway &_gateway;
 private:
 

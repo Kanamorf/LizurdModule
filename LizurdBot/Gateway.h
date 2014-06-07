@@ -24,7 +24,7 @@ public:
 	Result Update();
 	Result RegisterNotification(Notification &notification) const;
 	RaceDescriptor &GetRaceDescriptor() const { return *_raceDescriptor; }
-
+	void DrawDebugInfo();
 	void AddOrder(Order *order);
 	
 private:

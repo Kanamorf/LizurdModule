@@ -13,8 +13,10 @@ public:
 
 	BWAPI::Position GetPosition() const;
 	BWAPI::TilePosition GetTilePosition() const;
+	BWAPI::Player GetPlayer() const;
 	int GetDistance(BWAPI::Unit unit) const;
 	bool IsIdle() const;
+	Base& GetParentBase() const { return _parentBase; }
 	virtual Order* ProduceUnit(BWAPI::UnitType type) =0;
 	virtual bool IsOkToBuild() const =0;
 	virtual BWAPI::UnitType GetType() const = 0;

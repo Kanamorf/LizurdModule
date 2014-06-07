@@ -90,3 +90,11 @@ void Gateway::AddOrder(Order *order)
 {
 	_orders.push_back(order);
 }
+
+void Gateway::DrawDebugInfo()
+{
+	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
+	{
+		it->second->DrawDebugInfo();
+	}
+}

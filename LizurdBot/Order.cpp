@@ -5,7 +5,7 @@ int Order::_instanceCount = 0;
 Order::Order(std::string name, TaskPriority priority):
 _name(name), _priority(priority),  _isUnderway(false), _cost(ResourceValue(0,0,0)), _isUnique(false)
 {
-	_executor = NULL;
+	_executor = nullptr;
 	_instanceId = _instanceCount++;
 }
 
@@ -17,7 +17,7 @@ _name(name), _priority(priority), _executor(executor), _isUnderway(false), _cost
 
 Order::~Order(void)
 {
-	_executor = NULL;
+	_executor = nullptr;
 }
 
 bool Order::IsComplete() const
@@ -29,11 +29,11 @@ bool Order::IsComplete() const
 bool Order::ShouldRetry()
 {
 	bool retry = false;
-	if(_executor != NULL)
+	if(_executor != nullptr)
 	{
 		if(!_executor->exists())
 		{
-			_executor = NULL;
+			_executor = nullptr;
 		}
 		else
 		{

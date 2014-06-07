@@ -44,7 +44,7 @@ namespace Util
         * @param width Width of the new array.
         * @param height Height of the new array.
         */
-       RectangleArray(unsigned int width = 1, unsigned int height = 1, Type* data = NULL);
+       RectangleArray(unsigned int width = 1, unsigned int height = 1, Type* data = nullptr);
        /** Copy constructor */
        RectangleArray(const RectangleArray<Type>& rectangleArray);
        /** Destorys the array and deletes all content of array. */
@@ -125,7 +125,7 @@ namespace Util
   {
     this->setWidth(width);
     this->setHeight(height);
-    this->owner = (data == NULL);
+    this->owner = (data == nullptr);
     if (this->owner)
       this->data = new Type[this->getWidth()*this->getHeight()];
     else

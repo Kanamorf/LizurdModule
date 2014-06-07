@@ -19,10 +19,13 @@ Building::~Building(void)
 /// Gets the distance to the specified unit.
 /// </summary>
 /// <param name="unit">The unit.</param>
-/// <returns></returns>
+/// <returns>Distance to the unit or -1</returns>
 int Building::GetDistance( BWAPI::Unit unit ) const
 {
-	return _building->getDistance(unit);
+	int distance = -1;
+	if(_building)
+		distance = _building->getDistance(unit);
+	return distance;
 }
 
 /// <summary>
@@ -31,7 +34,10 @@ int Building::GetDistance( BWAPI::Unit unit ) const
 /// <returns></returns>
 BWAPI::Position Building::GetPosition() const
 {
-	return _building->getPosition();
+	BWAPI::Position position;
+	if(_building)
+		position = _building->getPosition();
+	return position;
 }
 
 /// <summary>
@@ -40,7 +46,10 @@ BWAPI::Position Building::GetPosition() const
 /// <returns></returns>
 BWAPI::TilePosition Building::GetTilePosition() const
 {
-	return _building->getTilePosition();
+	BWAPI::TilePosition position;
+	if(_building)
+		position = _building->getTilePosition();
+	return position;
 }
 
 
@@ -50,7 +59,18 @@ BWAPI::TilePosition Building::GetTilePosition() const
 /// <returns>True if the building can produce and is not</returns>
 bool Building::IsIdle() const
 {
-	return _building->isIdle();
+	bool idle = false;
+	if(_building)
+		idle = _building->isIdle();
+	return idle;
+}
+
+BWAPI::Player Building::GetPlayer() const
+{
+	BWAPI::Player player = nullptr;
+	if(_building)
+		player = _building->getPlayer();
+	return player;
 }
 
 
