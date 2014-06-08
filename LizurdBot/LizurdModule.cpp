@@ -19,6 +19,7 @@ void LizurdModule::onStart()
 		Broodwar->sendText("Failed to initialise the bot, most likely as it only works with Zerg.");
 	}
 	Logger::GetInstance().Log("LizurdModule", "We are playing: " + race.getName());
+	Broodwar->setLocalSpeed(10);
 }
 
 void LizurdModule::onEnd(bool isWinner)
