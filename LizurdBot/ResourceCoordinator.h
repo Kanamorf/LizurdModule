@@ -1,5 +1,6 @@
 #pragma once
 #include "coordinator.h"
+#include "ResourceValue.h"
 
 namespace Lizurd
 {

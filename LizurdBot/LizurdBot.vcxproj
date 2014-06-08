@@ -91,6 +91,7 @@
     <ClInclude Include="RaceDescriptor.h" />
     <ClInclude Include="RectangleArray.h" />
     <ClInclude Include="ResourceCoordinator.h" />
+    <ClInclude Include="ResourceValue.h" />
     <ClInclude Include="Strategy.h" />
     <ClInclude Include="StrategyCoordinator.h" />
     <ClInclude Include="TerranCommandCentre.h" />
@@ -121,6 +122,7 @@
     <ClCompile Include="ProtossDescriptor.cpp" />
     <ClCompile Include="RaceDescriptor.cpp" />
     <ClCompile Include="ResourceCoordinator.cpp" />
+    <ClCompile Include="ResourceValue.cpp" />
     <ClCompile Include="Strategy.cpp" />
     <ClCompile Include="StrategyCoordinator.cpp" />
     <ClCompile Include="TerranCommandCentre.cpp" />

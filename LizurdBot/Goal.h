@@ -1,6 +1,7 @@
 #pragma once
 #include "Base.h"
 #include "Defines.h"
+#include "ResourceValue.h"
 #include <BWAPI.h>
 
 namespace Lizurd

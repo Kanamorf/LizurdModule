@@ -78,12 +78,6 @@
     <ClInclude Include="ResourceCoordinator.h">
       <Filter>Coordinators</Filter>
     </ClInclude>
-    <ClInclude Include="TypeSafeEnum.h">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="RectangleArray.h">
-      <Filter>Main</Filter>
-    </ClInclude>
     <ClInclude Include="Building.h">
       <Filter>Building</Filter>
     </ClInclude>
@@ -132,6 +126,15 @@
     <ClInclude Include="TerranCommandCentre.h">
       <Filter>Races\Terran\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceValue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeSafeEnum.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleArray.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -154,9 +157,6 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Dll.cpp">
-      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="Gateway.cpp">
       <Filter>Main</Filter>
@@ -214,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="TerranCommandCentre.cpp">
       <Filter>Races\Terran\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceValue.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Dll.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

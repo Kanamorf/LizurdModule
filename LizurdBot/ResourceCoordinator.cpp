@@ -75,7 +75,7 @@ Result ResourceCoordinator::RequestResources(ResourceValue value)
 	ss << "RequestResources: M:" << value.Minerals << " V:" << value.Vespene << " S:" << value.Supply << " Current Resources M:" 
 		<< GetCurrentResources().Minerals << " V:" << GetCurrentResources().Vespene << " S:" << GetCurrentResources().Supply;
 	Logger::GetInstance().Log(ResourceCoord, ss.str());
-	if(GetCurrentResources() >= value)
+	if(GetCurrentResources().IsAffordable(value))
 	{
 		Logger::GetInstance().Log(ResourceCoord, "RequestResources found enough");
 		_reservedResources += value;

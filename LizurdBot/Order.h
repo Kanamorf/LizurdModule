@@ -2,6 +2,7 @@
 #include <string>
 #include "Defines.h"
 #include "BWAPI.h"
+#include "ResourceValue.h"
 
 namespace
 {

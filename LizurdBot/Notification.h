@@ -3,6 +3,7 @@
 #include <vector>
 #include "Defines.h"
 #include "BWAPI.h"
+#include "ResourceValue.h"
 
 
 namespace Lizurd
