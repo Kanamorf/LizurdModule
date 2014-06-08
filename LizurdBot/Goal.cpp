@@ -8,7 +8,7 @@ Goal::Goal(BWAPI::UnitType unit, BWAPI::UnitType type, GoalState state, Resource
 	_goalType(type), 
 	_cost(cost),
 	_ratio(1),
-	_total(0)
+	_total(1)
 {
 }
 
@@ -18,7 +18,7 @@ Goal::Goal(BWAPI::UnitType unit, BWAPI::UnitType type, GoalState state, Resource
 	_goalType(type), 
 	_cost(cost),
 	_ratio(ratio),
-	_total(0)
+	_total(1)
 {
 
 }

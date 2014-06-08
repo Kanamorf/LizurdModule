@@ -31,6 +31,11 @@ Gateway::~Gateway(void)
 	{
 		delete _raceDescriptor;
 	}
+	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
+	{
+		if(it->second != nullptr)
+			delete it->second;
+	}
 }
 
 Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
@@ -68,10 +73,13 @@ Result Gateway::Update()
 		if(success)
 		{
 			completeOrders.push_back(*it);
-			Notification notification(ResourceCoord);
-			notification.SetAction(Action::ResourceRelease);
-			notification.SetResourceValue((*it)->GetCost());
-			RegisterNotification(notification);
+			if((*it)->GetCost() > ResourceValue::Zero())
+			{
+				Notification notification(ResourceCoord);
+				notification.SetAction(Action::ResourceRelease);
+				notification.SetResourceValue((*it)->GetCost());
+				RegisterNotification(notification);
+			}
 		}
 	}
 	for(std::vector<Order*>::iterator it = completeOrders.begin(); it != completeOrders.end(); ++it)

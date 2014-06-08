@@ -33,7 +33,7 @@ Strategy* Lizurd::ZergDescriptor::GetDefaultStrategy() const
 	strategy->SetName(DefaultStrategy);
 	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Spawning_Pool, GoalState::Replace, ResourceValue(200,0,0)));
 	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Drone, GoalState::Replace, ResourceValue(50, 0, 2), 1.0, 3));
-	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Zergling, GoalState::Extend, ResourceValue(50, 0, 2), 1.0));
+	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Overlord, GoalState::Extend, ResourceValue(100, 0, 0)));
 	return strategy;
 }
 
