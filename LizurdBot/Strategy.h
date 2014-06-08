@@ -26,6 +26,7 @@ namespace Lizurd
 		void SetName(std::string name) { _name = name; }
 		void AddOrUpdate(const StrategyType &type, Goal* add);
 		Goal* GetNextUnitGoal();
+		Goal* GetNextBuildingGoal();
 	private:
 		std::string _name;
 		GoalQueue _buildingStrategy;

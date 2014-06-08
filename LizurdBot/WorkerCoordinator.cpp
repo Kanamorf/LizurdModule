@@ -24,7 +24,6 @@ WorkerCoordinator::~WorkerCoordinator(void)
 
 Result WorkerCoordinator::UpdateInternal()
 { 
-	Logger::GetInstance().Log(WorkerCoord, "UpdateInternal");
 	for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)
 	{
 		if((*it)->isIdle())
@@ -43,22 +42,23 @@ Result WorkerCoordinator::AfterUpdateInternal()
 
 Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
 {
-		
 	Result retVal = Result::Failure;
-	if(notification.UnitSize() == 1)
-	{
-		if(notification.GetAction() == Action::RegisterUnit)
-		{
-			RegisterWorker(notification);
-			retVal = Result::Success;
-		}
-		else if(notification.GetAction() == Action::DeRegisterUnit)
-		{
-			DeRegisterWorker(notification);
-			retVal = Result::Success;
-		}
-	}
 
+	if(notification.GetAction() == Action::RegisterUnit)
+	{
+		RegisterWorker(notification);
+		retVal = Result::Success;
+	}
+	else if(notification.GetAction() == Action::DeRegisterUnit)
+	{
+		DeRegisterWorker(notification);
+		retVal = Result::Success;
+	}
+	else if(notification.GetAction() == Action::RequestIdleUnit)
+	{
+		Logger::GetInstance().Log(GetName(), "Action::RequestIdleUnit");
+		retVal = FindIdleUnit(notification);
+	}
 	return retVal;
 }
 
@@ -68,14 +68,16 @@ Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification
 /// <param name="unit">The unit.</param>
 void WorkerCoordinator::RegisterWorker(Notification &notification)
 {
-	BWAPI::Unit unit = notification.GetLastUnit();
-	Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
+	if(notification.UnitSize() == 1)
+	{
+		BWAPI::Unit unit = notification.GetLastUnit();
+		Logger::GetInstance().Log(GetName(), "Registering unit: " + unit->getType().getName());
 
 		if(unit->getType().isWorker())
 		{
 			_workers.push_back(unit);
 		}
-
+	}
 }
 
 /// <summary>
@@ -84,7 +86,44 @@ void WorkerCoordinator::RegisterWorker(Notification &notification)
 /// <param name="unit">The unit.</param>
 void WorkerCoordinator::DeRegisterWorker(Notification &notification)
 {
-	BWAPI::Unit unit = notification.GetLastUnit();
-	Logger::GetInstance().Log(GetName(), "DeRegistering unit: " + unit->getType().getName());
-	VectorRemove(_workers, unit);
+	if(notification.UnitSize() == 1)
+	{
+		BWAPI::Unit unit = notification.GetLastUnit();
+		Logger::GetInstance().Log(GetName(), "DeRegistering unit: " + unit->getType().getName());
+		VectorRemove(_workers, unit);
+	}
+}
+
+Result WorkerCoordinator::FindIdleUnit(Notification &notification)
+{
+	Logger::GetInstance().Log(GetName(), "FindIdleUnit");
+	Result retVal = Result::Failure;
+	for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)
+	{
+		if((*it)->isIdle())
+		{
+			Logger::GetInstance().Log(GetName(), "FindIdleUnit: Found Idle");
+			notification.AddUnit(*it);
+			retVal = Result::Success;
+			break;
+		}
+	}
+	// We didn't find an idle worker so grab any worker to do the job.
+	// Prefer mineral miners over vespene
+	if(retVal != Result::Success)
+	{
+
+		for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)
+		{
+			if ((*it)->isGatheringMinerals())
+			{
+				Logger::GetInstance().Log(GetName(), "FindIdleUnit: Grabbing none idle");
+				(*it)->returnCargo();
+				notification.AddUnit(*it);
+				retVal = Result::Success;
+				break;
+			}
+		}
+	}
+	return retVal;
 }

@@ -74,7 +74,9 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="BuildingNames.h" />
     <ClInclude Include="BuildingPlacer.h" />
+    <ClInclude Include="ConstructionCoordinator.h" />
     <ClInclude Include="ConstructionGoal.h" />
+    <ClInclude Include="ConstructionOrder.h" />
     <ClInclude Include="Coordinator.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Gateway.h" />
@@ -106,7 +108,9 @@
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingPlacer.cpp" />
+    <ClCompile Include="ConstructionCoordinator.cpp" />
     <ClCompile Include="ConstructionGoal.cpp" />
+    <ClCompile Include="ConstructionOrder.cpp" />
     <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Gateway.cpp" />

@@ -34,3 +34,13 @@ size_t Notification::UnitSize() const
 	return _units.size();
 }
 
+BWAPI::Unit Notification::PeekUnit() const
+{
+	BWAPI::Unit unit = nullptr;
+	if(_units.size() > 0)
+	{
+		unit = _units.back();
+	}	
+	return unit;
+}
+

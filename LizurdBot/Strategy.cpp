@@ -55,13 +55,24 @@ void Strategy::AddOrUpdate(const StrategyType &type, Goal *add)
 
 }
 
-Lizurd::Goal* Lizurd::Strategy::GetNextUnitGoal()
+Goal* Strategy::GetNextUnitGoal()
 {
 	Goal* goal = nullptr;
 	if(_unitStrategy.size() > 0)
 	{
 		goal = _unitStrategy.front();
 		_unitStrategy.pop();
+	}
+	return goal;
+}
+
+Goal* Strategy::GetNextBuildingGoal()
+{
+	Goal* goal = nullptr;
+	if(_buildingStrategy.size() > 0)
+	{
+		goal = _buildingStrategy.front();
+		_buildingStrategy.pop();
 	}
 	return goal;
 }

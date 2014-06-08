@@ -86,7 +86,7 @@ bool BuildingPlacer::canBuildHereWithSpace(BWAPI::TilePosition position, BWAPI::
 	{
 		for(int x = startx; x < endx; x++)
 			for(int y = starty; y < endy; y++)
-				if (!buildable(x, y) || reserveMap[x][y])
+				if (!BWAPI::Broodwar->isBuildable(x, y, true) || reserveMap[x][y])
 					return false;
 	}
 
@@ -183,16 +183,6 @@ BWAPI::TilePosition BuildingPlacer::getBuildLocationNear(BWAPI::TilePosition pos
 	return BWAPI::TilePositions::None;
 }
 
-bool BuildingPlacer::buildable(int x, int y) const
-{
-	//returns true if this tile is currently buildable, takes into account units on tile
-	if (!BWAPI::Broodwar->isBuildable(x,y)) return false;
-	BWAPI::Unitset units = BWAPI::Broodwar->getUnitsOnTile(x, y);
-	for(BWAPI::Unitset::iterator i = units.begin(); i != units.end(); i++)
-		if ((*i)->getType().isBuilding() && !(*i)->isLifted())
-			return false;
-	return true;
-}
 
 void BuildingPlacer::reserveTiles(BWAPI::TilePosition position, int width, int height)
 {
