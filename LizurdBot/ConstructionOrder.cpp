@@ -1,5 +1,6 @@
 #include "ConstructionOrder.h"
 #include "Logger.h"
+#include <sstream>
 
 using namespace Lizurd;
 
@@ -32,6 +33,11 @@ bool ConstructionOrder::IsReady() const
 
 bool ConstructionOrder::Execute()
 {
-	Logger::GetInstance().Log("ProductionOrder", "Executing ProductionOrderbuilding : " + _result.getName());
-	return _executor->build(_result, _position);
+	Logger::GetInstance().Log("ConstructionOrder", "Executing ConstructionOrder building : " + _result.getName());
+	bool success = _executor->build(_result, _position);
+	std::stringstream ss;
+	ss << "Attempting to build using a drone that is at x:" << _executor->getTilePosition().x << " y:" << _executor->getTilePosition().y
+		<< " building location x:" << _position.x << " y:" << _position.y;
+	Logger::GetInstance().Log("ConstructionOrder", "Executing ConstructionOrder " + ss.str());
+	return success;
 }
