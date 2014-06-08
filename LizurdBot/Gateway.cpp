@@ -14,10 +14,13 @@
 #include "ProductionCoordinator.h"
 #include "RaceDescriptor.h"
 #include "ZergDescriptor.h"
+#include "TerranDescriptor.h"
+#include "ProtossDescriptor.h"
 
 using namespace Lizurd;
 
-Gateway::Gateway(void)
+Gateway::Gateway(void):
+	_raceDescriptor(nullptr)
 {
 }
 
@@ -39,12 +42,15 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 		_raceDescriptor = new ZergDescriptor();
 		retVal = Result::Success;
 	}
-	_game = game;
-	_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
-	_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
-	_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
-	_coordinators.insert(std::pair<std::string, Coordinator*>(ProductionCoord, new ProductionCoordinator(*this)));
-	_coordinators.insert(std::pair<std::string, Coordinator*>(StrategyCoord, new StrategyCoordinator(*this)));
+	if(retVal == Result::Success)
+	{
+		_game = game;
+		_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
+		_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
+		_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
+		_coordinators.insert(std::pair<std::string, Coordinator*>(ProductionCoord, new ProductionCoordinator(*this)));
+		_coordinators.insert(std::pair<std::string, Coordinator*>(StrategyCoord, new StrategyCoordinator(*this)));
+	}
 	return retVal;
 }
 

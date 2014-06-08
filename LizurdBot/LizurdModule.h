@@ -1,6 +1,7 @@
 #pragma once
 #include "BWAPI.h"
 #include "Gateway.h"
+#include "Defines.h"
 
 namespace Lizurd
 {
@@ -47,7 +48,7 @@ namespace Lizurd
 
 	private:
 		Gateway _gateway;
-
+		Result _initialised;
 	};
 
 }

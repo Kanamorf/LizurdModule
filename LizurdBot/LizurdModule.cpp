@@ -11,11 +11,13 @@ using Lizurd::LizurdModule;
 
 void LizurdModule::onStart()
 {
-	// Hello World!
-	Broodwar->sendText("Hello world!");
 	//Initialise everything once we know what race we are playing
 	BWAPI::Race race = Broodwar->self()->getRace();
-	_gateway.Initialise(BroodwarPtr, race);
+	_initialised = _gateway.Initialise(BroodwarPtr, race);
+	if(_initialised != Result::Success)
+	{
+		Broodwar->sendText("Failed to initialise the bot, most likely as it only works with Zerg.");
+	}
 	Logger::GetInstance().Log("LizurdModule", "We are playing: " + race.getName());
 }
 
@@ -30,27 +32,30 @@ void LizurdModule::onEnd(bool isWinner)
 
 void LizurdModule::onFrame()
 {
-	// Called once every game frame
-	if(Broodwar->getFrameCount()%FRAMESPERAI == 0)
+	if(_initialised == Result::Success)
 	{
-		Logger::GetInstance().Log("LizurdModule", "Starting Update");
-		_gateway.Update();
-	}
-	if(Broodwar->getFrameCount() > FRAMESPERAI)
-	{
-		Broodwar->drawBox(BWAPI::CoordinateType::Screen, 320, 0, 420, 20, BWAPI::Colors::Blue);
-		Notification notification(ResourceCoord);
-		notification.SetAction(Action::CurrentResources);
-		if(_gateway.RegisterNotification(notification) == Result::Success)
+		// Called once every game frame
+		if(Broodwar->getFrameCount()%FRAMESPERAI == 0)
 		{
-			std::stringstream ss;
-			//																														  (the internal supply is twice the displayed supply)
-			//																													      (this is because zerglings are half a supply)
-			ss << "M: " << notification.GetResourceValue().Minerals << " V: " << notification.GetResourceValue().Vespene << " S: " << (notification.GetResourceValue().Supply /2 );
-			Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
-#ifdef _DEBUG
-			_gateway.DrawDebugInfo();
-#endif
+			Logger::GetInstance().Log("LizurdModule", "Starting Update");
+			_gateway.Update();
+		}
+		if(Broodwar->getFrameCount() > FRAMESPERAI)
+		{
+			Broodwar->drawBox(BWAPI::CoordinateType::Screen, 320, 0, 420, 20, BWAPI::Colors::Blue);
+			Notification notification(ResourceCoord);
+			notification.SetAction(Action::CurrentResources);
+			if(_gateway.RegisterNotification(notification) == Result::Success)
+			{
+				std::stringstream ss;
+				//																														  (the internal supply is twice the displayed supply)
+				//																													      (this is because zerglings are half a supply)
+				ss << "M: " << notification.GetResourceValue().Minerals << " V: " << notification.GetResourceValue().Vespene << " S: " << (notification.GetResourceValue().Supply /2 );
+				Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
+	#ifdef _DEBUG
+				_gateway.DrawDebugInfo();
+	#endif
+			}
 		}
 	}
 }
@@ -116,28 +121,34 @@ void LizurdModule::onUnitHide(BWAPI::Unit unit)
 
 void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 {
-	if (!Broodwar->isReplay())
+	if(_initialised == Result::Success)
 	{
-		if(unit->getPlayer() == Broodwar->self())
+		if (!Broodwar->isReplay())
 		{
-			Notification notification(UnitDiscoveryCoord);
-			notification.SetAction(Action::RegisterUnit);
-			notification.AddUnit(unit);
-			_gateway.RegisterNotification(notification);
+			if(unit->getPlayer() == Broodwar->self())
+			{
+				Notification notification(UnitDiscoveryCoord);
+				notification.SetAction(Action::RegisterUnit);
+				notification.AddUnit(unit);
+				_gateway.RegisterNotification(notification);
+			}
 		}
 	}
 }
 
 void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 {
-	if (!Broodwar->isReplay())
+	if(_initialised == Result::Success)
 	{
-		if(unit->getPlayer() == Broodwar->self())
+		if (!Broodwar->isReplay())
 		{
-			Notification notification(UnitDiscoveryCoord);
-			notification.SetAction(Action::DeRegisterUnit);
-			notification.AddUnit(unit);
-			_gateway.RegisterNotification(notification);
+			if(unit->getPlayer() == Broodwar->self())
+			{
+				Notification notification(UnitDiscoveryCoord);
+				notification.SetAction(Action::DeRegisterUnit);
+				notification.AddUnit(unit);
+				_gateway.RegisterNotification(notification);
+			}
 		}
 	}
 }
@@ -145,14 +156,17 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 {
 	Broodwar->sendText("A unit morphed.");
-	if (!Broodwar->isReplay())
+	if(_initialised == Result::Success)
 	{
-		if(unit->getPlayer() == Broodwar->self())
+		if (!Broodwar->isReplay())
 		{
-			Notification notification(UnitDiscoveryCoord);
-			notification.SetAction(Action::MorphUnit);
-			notification.AddUnit(unit);
-			_gateway.RegisterNotification(notification);
+			if(unit->getPlayer() == Broodwar->self())
+			{
+				Notification notification(UnitDiscoveryCoord);
+				notification.SetAction(Action::MorphUnit);
+				notification.AddUnit(unit);
+				_gateway.RegisterNotification(notification);
+			}
 		}
 	}
 }

@@ -19,14 +19,26 @@
     <Filter Include="Building">
       <UniqueIdentifier>{73d7ad3e-2a9d-402e-8df7-5efb1292eeb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zerg">
-      <UniqueIdentifier>{d61136b3-9de9-42e6-905c-221742b01e15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Zerg\Buildings">
-      <UniqueIdentifier>{dae460e2-10eb-4202-993c-4472351a2d17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Strategy">
       <UniqueIdentifier>{0b13bba9-bed8-4ec4-a6ea-420d312bcc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Races">
+      <UniqueIdentifier>{a9e0fca0-2e39-4c2c-baa7-de35ae978772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Races\Zerg">
+      <UniqueIdentifier>{d61136b3-9de9-42e6-905c-221742b01e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Races\Zerg\Buildings">
+      <UniqueIdentifier>{dae460e2-10eb-4202-993c-4472351a2d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Races\Terran">
+      <UniqueIdentifier>{0e98899f-2453-46c4-a489-92ce91361a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Races\Protoss">
+      <UniqueIdentifier>{de791672-cbea-478b-b21f-b993ffeb170b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Races\Terran\Buildings">
+      <UniqueIdentifier>{9c1f0ffd-fb0f-499c-b995-d0a3816dc83b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,10 +94,10 @@
       <Filter>Building</Filter>
     </ClInclude>
     <ClInclude Include="ZergHatchery.h">
-      <Filter>Zerg\Buildings</Filter>
+      <Filter>Races\Zerg\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="ZergDescriptor.h">
-      <Filter>Zerg</Filter>
+      <Filter>Races\Zerg</Filter>
     </ClInclude>
     <ClInclude Include="BuildingNames.h">
       <Filter>Building</Filter>
@@ -110,6 +122,15 @@
     </ClInclude>
     <ClInclude Include="ConstructionGoal.h">
       <Filter>Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="TerranDescriptor.h">
+      <Filter>Races\Terran</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtossDescriptor.h">
+      <Filter>Races\Protoss</Filter>
+    </ClInclude>
+    <ClInclude Include="TerranCommandCentre.h">
+      <Filter>Races\Terran\Buildings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,10 +180,10 @@
       <Filter>Building</Filter>
     </ClCompile>
     <ClCompile Include="ZergHatchery.cpp">
-      <Filter>Zerg\Buildings</Filter>
+      <Filter>Races\Zerg\Buildings</Filter>
     </ClCompile>
     <ClCompile Include="ZergDescriptor.cpp">
-      <Filter>Zerg</Filter>
+      <Filter>Races\Zerg</Filter>
     </ClCompile>
     <ClCompile Include="Strategy.cpp">
       <Filter>Strategy</Filter>
@@ -184,6 +205,15 @@
     </ClCompile>
     <ClCompile Include="ConstructionGoal.cpp">
       <Filter>Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="TerranDescriptor.cpp">
+      <Filter>Races\Terran</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtossDescriptor.cpp">
+      <Filter>Races\Protoss</Filter>
+    </ClCompile>
+    <ClCompile Include="TerranCommandCentre.cpp">
+      <Filter>Races\Terran\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
