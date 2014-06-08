@@ -13,6 +13,7 @@ namespace Lizurd
 	{
 	public:
 		Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::string name);
+		Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::string name, int buildTime);
 		~Building(void);
 
 		BWAPI::Position GetPosition() const;
@@ -37,5 +38,7 @@ namespace Lizurd
 		unsigned int _quantityPerBase;
 		std::string _name;
 		ResourceValue _cost;
+		int _startTime;
+		int _buildTime;
 	};
 }

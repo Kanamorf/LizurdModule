@@ -8,7 +8,19 @@ Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::st
 	_building(building),
 	_parentBase(base),
 	_cost(cost),
-	_name(name)
+	_name(name),
+	_startTime(0),
+	_buildTime(0)
+{
+}
+
+Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::string name, int buildTime):
+	_building(building),
+	_parentBase(base),
+	_cost(cost),
+	_name(name),
+	_startTime(0),
+	_buildTime(buildTime)
 {
 }
 

@@ -103,6 +103,7 @@
     <ClInclude Include="WorkerCoordinator.h" />
     <ClInclude Include="ZergDescriptor.h" />
     <ClInclude Include="ZergHatchery.h" />
+    <ClInclude Include="ZergSpawningPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="WorkerCoordinator.cpp" />
     <ClCompile Include="ZergDescriptor.cpp" />
     <ClCompile Include="ZergHatchery.cpp" />
+    <ClCompile Include="ZergSpawningPool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

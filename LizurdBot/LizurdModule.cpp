@@ -53,6 +53,7 @@ void LizurdModule::onFrame()
 				//																													      (this is because zerglings are half a supply)
 				ss << "M: " << notification.GetResourceValue().Minerals << " V: " << notification.GetResourceValue().Vespene << " S: " << (notification.GetResourceValue().Supply /2 );
 				Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
+
 	#ifdef _DEBUG
 				_gateway.DrawDebugInfo();
 	#endif
@@ -165,6 +166,7 @@ void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 				Notification notification(UnitDiscoveryCoord);
 				notification.SetAction(Action::MorphUnit);
 				notification.AddUnit(unit);
+				notification.SetFrame(Broodwar->getFrameCount());
 				_gateway.RegisterNotification(notification);
 			}
 		}

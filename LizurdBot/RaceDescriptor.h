@@ -25,6 +25,7 @@ namespace Lizurd
 		virtual BWAPI::UnitType GetWorkerType() const = 0;
 		virtual Strategy* GetDefaultStrategy() const = 0;
 		virtual Goal* GetSupplyGoal() const =0;
+		virtual Building* GetBuildingByType(const BWAPI::UnitType &type) const =0;
 		void AddOrUpdate(GoalQueue& goalMap, const Goal *add) const;
 		
 	};

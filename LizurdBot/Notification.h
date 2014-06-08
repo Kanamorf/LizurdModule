@@ -29,6 +29,7 @@ namespace Lizurd
 		void SetGoal(Goal* goal) { _goal = goal; }
 		BWAPI::UnitType GetUnitType() const { return _type; }
 		void SetUnitType(BWAPI::UnitType type) { _type = type; }
+		void SetFrame(int frame) { _frame = frame; }
 	private:
 		BWAPI::UnitType _type;
 		std::string _target;
@@ -36,6 +37,7 @@ namespace Lizurd
 		Action _action;
 		ResourceValue _value;
 		Goal* _goal;
+		int _frame;
 	};
 
 }

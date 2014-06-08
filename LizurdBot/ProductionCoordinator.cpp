@@ -44,7 +44,7 @@ Result ProductionCoordinator::UpdateInternal()
 	}
 	if(_currentGoal != nullptr)
 	{
-		Logger::GetInstance().Log(ProductionCoord, "We have a goal. " + _currentGoal->GetExecutingUnitType().getName());
+		Logger::GetInstance().Log(ProductionCoord, "We have a goal. " + _currentGoal->GetGoalType());
 		// now we have a goal attempt to reserve some resources.
 		Notification notification(ResourceCoord);
 		notification.SetAction(Action::ResourceRequest);
@@ -67,6 +67,7 @@ Result ProductionCoordinator::UpdateInternal()
 					_currentGoal->DecrementTotal();
 					if(_currentGoal->IsComplete())
 					{
+						Logger::GetInstance().Log(ProductionCoord, _currentGoal->GetGoalType() + " is complete, removing.");
 						//current goal is complete so remove it
 						delete _currentGoal;
 						_currentGoal = nullptr;

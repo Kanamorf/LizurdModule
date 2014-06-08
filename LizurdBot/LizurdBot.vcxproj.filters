@@ -141,6 +141,9 @@
     <ClInclude Include="ConstructionOrder.h">
       <Filter>Orders</Filter>
     </ClInclude>
+    <ClInclude Include="ZergSpawningPool.h">
+      <Filter>Races\Zerg\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -232,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="ConstructionOrder.cpp">
       <Filter>Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="ZergSpawningPool.cpp">
+      <Filter>Races\Zerg\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
