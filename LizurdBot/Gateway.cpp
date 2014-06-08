@@ -62,6 +62,10 @@ Result Gateway::Update()
 		if(success)
 		{
 			completeOrders.push_back(*it);
+			Notification notification(ResourceCoord);
+			notification.SetAction(Action::ResourceRelease);
+			notification.SetResourceValue((*it)->GetCost());
+			RegisterNotification(notification);
 		}
 	}
 	for(std::vector<Order*>::iterator it = completeOrders.begin(); it != completeOrders.end(); ++it)

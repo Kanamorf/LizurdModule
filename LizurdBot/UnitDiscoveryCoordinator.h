@@ -20,9 +20,10 @@ namespace Lizurd
 		virtual void DrawDebugInfo() override;
 
 	private:
-		void RegisterUnit(Notification &notification);
-		void CreateNewBase(BWAPI::Unit unit);
-		void DeRegisterUnit(Notification &notification);
+		Result RegisterUnit(Notification &notification);
+		Result MorphUnit(Notification &notification);
+		Result CreateNewBase(BWAPI::Unit unit);
+		Result DeRegisterUnit(Notification &notification);
 		Base* FindClosestFriendlyBase(const BWAPI::Unit unit) const;
 		BWAPI::Unit FindIdleUnit(Notification &notification);
 

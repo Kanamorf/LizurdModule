@@ -29,6 +29,10 @@ namespace Lizurd
 		RaceDescriptor& GetRaceDescriptor() const { return *_descriptor; }
 		BWAPI::Unit FindIdleUnit(const BWAPI::UnitType &type);
 		BWAPI::Unit FindIdleBuilding(const BWAPI::UnitType &type);
+		bool RemoveUnitByType(BWAPI::Unit unit);
+		bool RemoveUnitByPointer(BWAPI::Unit unit);
+		bool RemoveBuildingByPointer(const BWAPI::Unit unit);
+
 	private:
 
 		Building *_commandCentre;

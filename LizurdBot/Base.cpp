@@ -42,36 +42,38 @@ bool Base::AddUnit(BWAPI::Unit unit)
 
 void Base::DrawDebugInfo()
 {
-	int x = -50;
-	int y = -60;
-	BWAPI::Color playerColor = BWAPI::Broodwar->self()->getColor();
-	BWAPI::Broodwar->drawCircleMap(_commandCentre->GetPosition().x, _commandCentre->GetPosition().y, 80, playerColor);
-	if(_buildingMap.size() > 0)
+	if(_commandCentre != nullptr)
 	{
-		int count = 0;
-		for(BuildingMap::const_iterator it = _buildingMap.begin(); it != _buildingMap.end(); ++it)
+		int x = -50;
+		int y = -60;
+		BWAPI::Color playerColor = BWAPI::Broodwar->self()->getColor();
+		BWAPI::Broodwar->drawCircleMap(_commandCentre->GetPosition().x, _commandCentre->GetPosition().y, 80, playerColor);
+		if(_buildingMap.size() > 0)
 		{
-			count += (*it).second->size();
-		}
-		BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Buildings: %u", count);
-		y += 10;
-	}
-	if(_unitMap.size() > 0)
-	{
-		int count = 0;
-		for(UnitMap::const_iterator it = _unitMap.begin(); it != _unitMap.end(); ++it)
-		{
-			count += (*it).second->size();
-			for(UnitVector::const_iterator u = (*it).second->begin(); u != (*it).second->end(); ++u)
+			int count = 0;
+			for(BuildingMap::const_iterator it = _buildingMap.begin(); it != _buildingMap.end(); ++it)
 			{
-				BWAPI::Broodwar->drawCircleMap((*u)->getPosition().x -3, (*u)->getPosition().y-3, 20, playerColor);
-				BWAPI::Broodwar->drawLineMap((*u)->getPosition().x, (*u)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
+				count += (*it).second->size();
 			}
-
+			BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Buildings: %u", count);
+			y += 10;
 		}
-		BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Units: %u", count);
-	}
+		if(_unitMap.size() > 0)
+		{
+			int count = 0;
+			for(UnitMap::const_iterator it = _unitMap.begin(); it != _unitMap.end(); ++it)
+			{
+				count += (*it).second->size();
+				for(UnitVector::const_iterator u = (*it).second->begin(); u != (*it).second->end(); ++u)
+				{
+					BWAPI::Broodwar->drawCircleMap((*u)->getPosition().x -3, (*u)->getPosition().y-3, 20, playerColor);
+					BWAPI::Broodwar->drawLineMap((*u)->getPosition().x, (*u)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
+				}
 
+			}
+			BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Units: %u", count);
+		}
+	}
 }
 
 BWAPI::Unit Base::FindIdleUnit(const BWAPI::UnitType &type)
@@ -107,7 +109,7 @@ BWAPI::Unit Base::FindIdleBuilding(const BWAPI::UnitType &type)
 	BWAPI::Unit unit = nullptr;
 	if(type.isBuilding())
 	{
-		if(type == _commandCentre->GetType())
+		if(_commandCentre != nullptr && type == _commandCentre->GetType())
 		{
 			if(_commandCentre->IsIdle())
 				unit = _commandCentre->GetUnderLying();
@@ -134,4 +136,99 @@ BWAPI::Unit Base::FindIdleBuilding(const BWAPI::UnitType &type)
 		}
 	}	
 	return unit;
+}
+/// <summary>
+/// Remove the supplied unit from the base using its type as a clue to find it.
+/// This is the faster of the two remove methods.
+/// </summary>
+/// <param name="unit">The unit to remove.</param>
+bool Base::RemoveUnitByType(BWAPI::Unit unit)
+{
+	Logger::GetInstance().Log("Base", "RemoveUnitByType. Code not implemented yet.");
+	return false;
+}
+
+/// <summary>
+/// Remove the supplied unit from the base using its pointer to find it.
+/// This remove method is used when a unit morphs...Its pointer stays the same
+/// but its type will have changed
+/// This is the slower of the two remove methods.
+/// </summary>
+/// <param name="unit">The unit to remove.</param>
+bool Lizurd::Base::RemoveUnitByPointer(BWAPI::Unit unit)
+{
+	bool retVal = false;
+	if(_commandCentre->GetUnderLying() == unit)
+	{
+		Logger::GetInstance().Log("Base", "Removing a command centre from a base by pointer.");
+		delete _commandCentre;
+		_commandCentre = nullptr;
+		retVal = true;
+	}
+	else
+	{
+		// buildings first as there are likely to be less of them
+		retVal = RemoveBuildingByPointer(unit);
+
+		if(retVal == false)
+		{
+			for(UnitMap::iterator it = _unitMap.begin(); it != _unitMap.end(); ++it)
+			{
+				UnitVector *units = it->second;
+				UnitVector::iterator found = units->end();
+				for(UnitVector::iterator itu = units->begin(); itu != units->end(); ++itu)
+				{
+					if((*itu))
+					{
+						if(unit == (*itu))
+						{
+							found = itu;
+							break;
+						}
+					}
+				}
+				if(found != units->end())
+				{
+					Logger::GetInstance().Log("Base", "Removing a unit from a base by pointer.");
+					units->erase(found);
+					retVal = true;
+					break;
+				}
+			}
+		}
+	}
+	return retVal;
+}
+
+
+bool Base::RemoveBuildingByPointer(const BWAPI::Unit unit)
+{
+	bool success = false;
+	for(BuildingMap::iterator it = _buildingMap.begin(); it != _buildingMap.end(); ++it)
+	{
+		BuildingVector *buildings = it->second;
+		BuildingVector::iterator found = buildings->end();
+		for(BuildingVector::iterator building = buildings->begin(); building != buildings->end(); ++building)
+		{
+			if((*building))
+			{
+				if(unit == (*building)->GetUnderLying())
+				{
+					found = building;
+					break;
+				}
+			}
+		}
+		if(found != buildings->end())
+		{
+			Logger::GetInstance().Log("Base", "Removing a building from a base by pointer.");
+			Building* building = *found;
+			buildings->erase(found);
+			delete building;
+			building = nullptr;
+			success = true;
+			break;
+		}
+	}
+	return success;
 }

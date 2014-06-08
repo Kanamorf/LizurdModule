@@ -36,13 +36,15 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 
 	if(notification.GetAction() == Action::RegisterUnit)
 	{
-		RegisterUnit(notification);
-		retVal = Result::Success;
+		retVal = RegisterUnit(notification);
 	}
 	else if(notification.GetAction() == Action::DeRegisterUnit)
 	{
-		DeRegisterUnit(notification);
-		retVal = Result::Success;
+		retVal = DeRegisterUnit(notification);
+	}
+	else if(notification.GetAction() == Action::MorphUnit)
+	{
+		retVal = MorphUnit(notification);
 	}
 	else if(notification.GetAction() == Action::RequestIdleUnit)
 	{
@@ -62,8 +64,9 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 /// Registers the unit in preparation for the next update.
 /// </summary>
 /// <param name="unit">The unit.</param>
-void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
+Result UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 {
+	Result retVal = Result::Failure;
 	if(notification.UnitSize() == 1)
 	{
 		BWAPI::Unit unit = notification.GetLastUnit();
@@ -79,7 +82,7 @@ void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 				notification.SetTarget(WorkerCoord);
 				notification.SetAction(Action::RegisterUnit);
 				notification.AddUnit(unit);
-				_gateway.RegisterNotification(notification);
+				retVal = _gateway.RegisterNotification(notification);
 			}
 			Base* pBase = FindClosestFriendlyBase(unit);
 			if(pBase == nullptr)
@@ -97,15 +100,18 @@ void UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 		{
 			_localBuildings.push_back(unit);
 		}
+		retVal = Result::Success;
 	}
+	return retVal;
 }
 
 /// <summary>
 /// DeRegisters the unit in preparation for the next update.
 /// </summary>
 /// <param name="unit">The unit.</param>
-void UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
+Result UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 {
+	Result retVal = Result::Failure;
 	if(notification.UnitSize() == 1)
 	{
 		BWAPI::Unit unit = notification.GetLastUnit();
@@ -130,7 +136,9 @@ void UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 		{
 			VectorRemove(_localBuildings, unit);
 		}
+		retVal = Result::Success;
 	}
+	return retVal;
 }
 
 void UnitDiscoveryCoordinator::DrawDebugInfo()
@@ -173,8 +181,10 @@ Base* UnitDiscoveryCoordinator::FindClosestFriendlyBase(const BWAPI::Unit unit) 
 
 	return foundUnit;
 }
-void UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
+
+Result UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
 {
+	Result retVal = Result::Failure;
 	Base* pBase = _gateway.GetRaceDescriptor().CreateBaseFromCommandCentre(unit);
 	pBase->SetRaceDescriptor(&_gateway.GetRaceDescriptor());
 	_bases.push_back(pBase);
@@ -187,9 +197,11 @@ void UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
 		{
 			pBase->AddUnit(*it);
 			attachedUnit.push_back(*it);
+			retVal = Result::Success;
 		}
 	}
 	LizurdModule::VectorRemove(_orphanedUnits, attachedUnit);
+	return retVal;
 }
 
 BWAPI::Unit UnitDiscoveryCoordinator::FindIdleUnit(Notification &notification)
@@ -202,5 +214,31 @@ BWAPI::Unit UnitDiscoveryCoordinator::FindIdleUnit(Notification &notification)
 			break;
 	}
 	return unit;
+}
+
+Result UnitDiscoveryCoordinator::MorphUnit(Notification &notification)
+{
+	Result retVal = Result::Failure;
+	BWAPI::Unit unit = notification.GetLastUnit();
+	if(unit != nullptr)
+	{
+		bool success = false;
+		//Making an assumption here that a unit cannot morph unless it is already registered with a base.
+		for(BaseVector::iterator it = _bases.begin(); it != _bases.end(); ++it)
+		{
+			if((*it) != nullptr)
+			{
+				success = (*it)->RemoveUnitByPointer(unit);
+			}
+			if(success == true)
+				break;
+		}
+		if(success == true)
+		{
+			notification.AddUnit(unit);
+			retVal = RegisterUnit(notification);
+		}
+	}
+	return retVal;
 }
 

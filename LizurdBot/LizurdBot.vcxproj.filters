@@ -105,6 +105,10 @@
     <ClInclude Include="ProductionOrder.h">
       <Filter>Orders</Filter>
     </ClInclude>
+    <ClInclude Include="ProductionGoal.h">
+      <Filter>Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructionGoal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -173,5 +177,9 @@
     <ClCompile Include="ProductionOrder.cpp">
       <Filter>Orders</Filter>
     </ClCompile>
+    <ClCompile Include="ProductionGoal.cpp">
+      <Filter>Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructionGoal.cpp" />
   </ItemGroup>
 </Project>

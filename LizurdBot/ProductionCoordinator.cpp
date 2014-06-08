@@ -62,13 +62,15 @@ Result ProductionCoordinator::UpdateInternal()
 				if(executingUnit != nullptr)
 				{
 					// we have all the bits we need....
-					ProductionOrder *order = new ProductionOrder("ProductionOrder", executingUnit, TaskPriority::Medium );
-					order->SetResultUnit(_currentGoal->GetGoalType());
+					Order *order = _currentGoal->CreateOrder(executingUnit);
 					_gateway.AddOrder(order);
-
-					//current goal is complete so remove it
-					delete _currentGoal;
-					_currentGoal = nullptr;
+					_currentGoal->DecrementTotal();
+					if(_currentGoal->IsComplete())
+					{
+						//current goal is complete so remove it
+						delete _currentGoal;
+						_currentGoal = nullptr;
+					}
 				}
 			}
 			else
@@ -83,8 +85,8 @@ Result ProductionCoordinator::UpdateInternal()
 				}
 			}
 		}
-		
-		
+
+
 	}
 	return retVal;
 }

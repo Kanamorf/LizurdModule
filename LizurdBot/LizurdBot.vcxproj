@@ -74,6 +74,7 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="BuildingNames.h" />
     <ClInclude Include="BuildingPlacer.h" />
+    <ClInclude Include="ConstructionGoal.h" />
     <ClInclude Include="Coordinator.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Gateway.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="Notification.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="ProductionCoordinator.h" />
+    <ClInclude Include="ProductionGoal.h" />
     <ClInclude Include="ProductionOrder.h" />
     <ClInclude Include="RaceDescriptor.h" />
     <ClInclude Include="RectangleArray.h" />
@@ -100,6 +102,7 @@
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingPlacer.cpp" />
+    <ClCompile Include="ConstructionGoal.cpp" />
     <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="Dll.cpp" />
     <ClCompile Include="Gateway.cpp" />
@@ -110,6 +113,7 @@
     <ClCompile Include="Notification.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="ProductionCoordinator.cpp" />
+    <ClCompile Include="ProductionGoal.cpp" />
     <ClCompile Include="ProductionOrder.cpp" />
     <ClCompile Include="RaceDescriptor.cpp" />
     <ClCompile Include="ResourceCoordinator.cpp" />

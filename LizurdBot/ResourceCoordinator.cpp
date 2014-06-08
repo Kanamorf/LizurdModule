@@ -9,6 +9,7 @@
 
 
 #include "ResourceCoordinator.h"
+#include <sstream>
 
 using namespace Lizurd;
 
@@ -29,6 +30,9 @@ Result ResourceCoordinator::ProcessNotificationInternal(Notification &notificati
 	if(notification.GetAction() == Action::ResourceUpdate)
 	{
 		_totalResources = notification.GetResourceValue();
+		std::stringstream ss;
+		ss << "Total Resources: M:" << _totalResources.Minerals << " V:" << _totalResources.Vespene << " S:" << _totalResources.Supply;
+		Logger::GetInstance().Log(ResourceCoord, ss.str());
 		retVal = Result::Success;
 	}
 	if(notification.GetAction() == Action::ResourceRequest)
@@ -66,11 +70,19 @@ ResourceValue ResourceCoordinator::GetCurrentResources() const
 Result ResourceCoordinator::RequestResources(ResourceValue value)
 {
 	Result retVal = Result::Failure;
-	Logger::GetInstance().Log(ResourceCoord, "RequestResources");
+
+	std::stringstream ss;
+	ss << "RequestResources: M:" << value.Minerals << " V:" << value.Vespene << " S:" << value.Supply << " Current Resources M:" 
+		<< GetCurrentResources().Minerals << " V:" << GetCurrentResources().Vespene << " S:" << GetCurrentResources().Supply;
+	Logger::GetInstance().Log(ResourceCoord, ss.str());
 	if(GetCurrentResources() >= value)
 	{
 		Logger::GetInstance().Log(ResourceCoord, "RequestResources found enough");
 		_reservedResources += value;
+		std::stringstream ss1;
+		ss1 << "After Maths Resources: M:" << value.Minerals << " V:" << value.Vespene << " S:" << value.Supply << " Current Resources M:" 
+			<< GetCurrentResources().Minerals << " V:" << GetCurrentResources().Vespene << " S:" << GetCurrentResources().Supply;
+		Logger::GetInstance().Log(ResourceCoord, ss1.str());
 		retVal = Result::Success;
 	}
 	else
@@ -82,6 +94,10 @@ Result ResourceCoordinator::RequestResources(ResourceValue value)
 
 Result ResourceCoordinator::ReleaseResources(ResourceValue value)
 {
+	std::stringstream ss;
+	ss << "ReleaseResources: M:" << value.Minerals << " V:" << value.Vespene << " S:" << value.Supply << " Current Resources M:" 
+		<< GetCurrentResources().Minerals << " V:" << GetCurrentResources().Vespene << " S:" << GetCurrentResources().Supply;
+	Logger::GetInstance().Log(ResourceCoord, ss.str());
 	Result retVal = Result::Failure;
 	if(_reservedResources >= value)
 	{

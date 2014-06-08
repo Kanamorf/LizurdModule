@@ -25,6 +25,7 @@ namespace Lizurd
 			None,
 			RegisterUnit,
 			DeRegisterUnit,
+			MorphUnit,
 			ResourceUpdate,
 			RequestIdleUnit,
 			ResourceRequest,

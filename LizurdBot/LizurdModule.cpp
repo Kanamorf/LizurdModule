@@ -145,6 +145,16 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 {
 	Broodwar->sendText("A unit morphed.");
+	if (!Broodwar->isReplay())
+	{
+		if(unit->getPlayer() == Broodwar->self())
+		{
+			Notification notification(UnitDiscoveryCoord);
+			notification.SetAction(Action::MorphUnit);
+			notification.AddUnit(unit);
+			_gateway.RegisterNotification(notification);
+		}
+	}
 }
 
 void LizurdModule::onUnitRenegade(BWAPI::Unit unit)
