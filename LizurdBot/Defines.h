@@ -31,7 +31,8 @@ namespace Lizurd
 			ResourceRequest,
 			ResourceRelease,
 			CurrentResources,
-			GetNextProductionGoal
+			GetNextProductionGoal,
+			GetNextConstructionGoal
 		};
 	};
 

@@ -16,6 +16,7 @@ namespace Lizurd
 
 		void AddUnit(BWAPI::Unit);
 		BWAPI::Unit GetLastUnit();
+		BWAPI::Unit PeekUnit() const;
 		size_t UnitSize() const;
 		std::string GetTarget() const { return _target; }
 		void SetTarget(const std::string &target) { _target = target; }

@@ -1,5 +1,7 @@
 #include "ConstructionGoal.h"
+#include "ConstructionOrder.h"
 #include "Logger.h"
+#include "BuildingPlacer.h"
 
 using namespace Lizurd;
 
@@ -23,7 +25,10 @@ ConstructionGoal::~ConstructionGoal(void)
 
 Order * ConstructionGoal::CreateOrder(const BWAPI::Unit executingUnit) const 
 {
-	Order *order = nullptr;
-	Logger::GetInstance().Log("ConstructionGoal", "CreateOrder. Code not implemented yet.");
+	BWAPI::TilePosition position = BuildingPlacer::GetInstance().getBuildLocationNear(executingUnit->getTilePosition(), _goalType, 10);
+	ConstructionOrder *order = new ConstructionOrder("ConstructionOrder", executingUnit, TaskPriority::Medium );
+	order->SetResultUnit(_goalType);
+	order->SetCost(_cost);
+	order->SetTilePosition(position);
 	return order;
 }

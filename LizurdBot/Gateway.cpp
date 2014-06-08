@@ -16,6 +16,7 @@
 #include "ZergDescriptor.h"
 #include "TerranDescriptor.h"
 #include "ProtossDescriptor.h"
+#include "ConstructionCoordinator.h"
 
 using namespace Lizurd;
 
@@ -55,6 +56,7 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 		_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
 		_coordinators.insert(std::pair<std::string, Coordinator*>(ProductionCoord, new ProductionCoordinator(*this)));
 		_coordinators.insert(std::pair<std::string, Coordinator*>(StrategyCoord, new StrategyCoordinator(*this)));
+		_coordinators.insert(std::pair<std::string, Coordinator*>(ConstructionCoord, new ConstructionCoordinator(*this)));
 	}
 	return retVal;
 }

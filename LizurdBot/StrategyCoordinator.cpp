@@ -37,6 +37,16 @@ Result Lizurd::StrategyCoordinator::ProcessNotificationInternal(Notification &no
 			retVal = Result::Success;
 		}
 	}
+	else if(notification.GetAction() == Action::GetNextConstructionGoal)
+	{
+		Goal* goal = _strategy->GetNextBuildingGoal();
+		if(goal != nullptr)
+		{
+			notification.SetGoal(goal);
+			retVal = Result::Success;
+		}
+	}
+	
 	return retVal;
 }
 

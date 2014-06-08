@@ -18,7 +18,7 @@ namespace Lizurd
 	private:
 		void RegisterWorker(Notification &notification);
 		void DeRegisterWorker(Notification &notification);
-
+		Result FindIdleUnit(Notification &notification);
 
 		std::vector<BWAPI::Unit> _workers;
 	};

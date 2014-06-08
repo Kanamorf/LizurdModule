@@ -49,11 +49,20 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 	else if(notification.GetAction() == Action::RequestIdleUnit)
 	{
 		Logger::GetInstance().Log(UnitDiscoveryCoord, "Running  Action::RequestIdleUnit");
-		BWAPI::Unit unit = FindIdleUnit(notification);
-		if(unit != nullptr)
+		if(notification.GetUnitType() == _gateway.GetRaceDescriptor().GetWorkerType())
 		{
-			notification.AddUnit(unit);
-			retVal = Result::Success;
+			Logger::GetInstance().Log(UnitDiscoveryCoord, "Running  Action::RequestIdleUnit, the requested unit is a worker go look in worker coordinator.");
+			notification.SetTarget(WorkerCoord);
+			retVal = _gateway.RegisterNotification(notification);
+		}
+		else
+		{
+			BWAPI::Unit unit = FindIdleUnit(notification);
+			if(unit != nullptr)
+			{
+				notification.AddUnit(unit);
+				retVal = Result::Success;
+			}
 		}
 	}
 

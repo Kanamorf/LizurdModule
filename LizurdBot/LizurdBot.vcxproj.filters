@@ -132,6 +132,10 @@
     <ClInclude Include="TerranCommandCentre.h">
       <Filter>Races\Terran\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="ConstructionCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructionOrder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -215,5 +219,9 @@
     <ClCompile Include="TerranCommandCentre.cpp">
       <Filter>Races\Terran\Buildings</Filter>
     </ClCompile>
+    <ClCompile Include="ConstructionCoordinator.cpp">
+      <Filter>Coordinators</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructionOrder.cpp" />
   </ItemGroup>
 </Project>
