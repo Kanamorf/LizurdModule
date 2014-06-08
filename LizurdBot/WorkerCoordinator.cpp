@@ -118,7 +118,6 @@ Result WorkerCoordinator::FindIdleUnit(Notification &notification)
 			if ((*it)->isGatheringMinerals())
 			{
 				Logger::GetInstance().Log(GetName(), "FindIdleUnit: Grabbing none idle");
-				(*it)->returnCargo();
 				notification.AddUnit(*it);
 				retVal = Result::Success;
 				break;

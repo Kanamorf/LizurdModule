@@ -90,7 +90,7 @@ bool BuildingPlacer::canBuildHereWithSpace(BWAPI::TilePosition position, BWAPI::
 					return false;
 	}
 
-	if (position.x>3)
+	/*if (position.x>3)
 	{
 		int startx2=startx-2;
 		if (startx2<0) startx2=0;
@@ -113,7 +113,7 @@ bool BuildingPlacer::canBuildHereWithSpace(BWAPI::TilePosition position, BWAPI::
 					}
 				}
 			}
-	}
+	}*/
 	return true;
 }
 BWAPI::TilePosition BuildingPlacer::getBuildLocation(BWAPI::UnitType type) const

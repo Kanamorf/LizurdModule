@@ -156,7 +156,6 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 
 void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 {
-	Broodwar->sendText("A unit morphed.");
 	if(_initialised == Result::Success)
 	{
 		if (!Broodwar->isReplay())
