@@ -20,7 +20,7 @@ UnitDiscoveryCoordinator::~UnitDiscoveryCoordinator(void)
 {
 }
 
-Result UnitDiscoveryCoordinator::UpdateInternal()
+Result UnitDiscoveryCoordinator::UpdateInternal(int frameNo)
 { 
 	return Result::Failure;
 }

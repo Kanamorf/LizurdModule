@@ -36,3 +36,20 @@ bool ZergHatchery::CanBuild(BWAPI::UnitType type)
 {
 	return true;
 }
+
+Result ZergHatchery::Update(int frameNo)
+{
+	if(_isComplete == false)
+	{
+		if(frameNo < _buildTime)
+		{
+			//The only way to get here is if the Hatchery is the one we start with
+			_isComplete = true;
+		}
+		if(_startTime > 0 && _startTime + _buildTime >= frameNo)
+		{
+			_isComplete = true;
+		}
+	}
+	return Result::Success;
+}

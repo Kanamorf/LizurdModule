@@ -16,10 +16,10 @@ namespace Lizurd
 		virtual ~Coordinator(void);
 
 		virtual Result ProcessNotificationInternal(Notification &notification) = 0;
-		virtual Result UpdateInternal() = 0;
+		virtual Result UpdateInternal(int frameNo) = 0;
 		virtual Result AfterUpdateInternal() = 0;
 		virtual void DrawDebugInfo(){}
-		Result Update();
+		Result Update(int frameNo);
 		std::string GetName() const { return _name; }
 		inline bool operator==(const Coordinator & m) const { return m._name == _name; }
 

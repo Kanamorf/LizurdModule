@@ -28,9 +28,14 @@ namespace Lizurd
 		virtual Order* CreateBuildOrder(BWAPI::TilePosition position) =0;
 		virtual bool CanBuild(BWAPI::UnitType type) =0;
 		BWAPI::Unit GetUnderLying() const {return _building; }
+		virtual Result Update(int frameNo);
+		bool IsComplete() const { return _isComplete; }
 
+	protected:
+		int _startTime;
+		int _buildTime;
+		bool _isComplete;
 	private:
-
 		BWAPI::Unit _building;
 		Base &_parentBase;
 		std::vector<BWAPI::UnitType> _preconditions;
@@ -38,7 +43,6 @@ namespace Lizurd
 		unsigned int _quantityPerBase;
 		std::string _name;
 		ResourceValue _cost;
-		int _startTime;
-		int _buildTime;
+		
 	};
 }

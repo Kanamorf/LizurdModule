@@ -19,7 +19,7 @@ Result ConstructionCoordinator::ProcessNotificationInternal(Notification &notifi
 	return Result::Failure;
 }
 
-Result ConstructionCoordinator::UpdateInternal()
+Result ConstructionCoordinator::UpdateInternal(int frameNo)
 {
 	Result retVal = Result::Failure;
 	// first we need to check we have a goal;

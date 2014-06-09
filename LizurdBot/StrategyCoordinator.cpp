@@ -15,7 +15,7 @@ StrategyCoordinator::~StrategyCoordinator(void)
 {
 }
 
-Result Lizurd::StrategyCoordinator::UpdateInternal()
+Result Lizurd::StrategyCoordinator::UpdateInternal(int frameNo)
 {
 	return Result::Failure;
 }

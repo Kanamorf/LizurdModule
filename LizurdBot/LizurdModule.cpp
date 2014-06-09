@@ -39,7 +39,7 @@ void LizurdModule::onFrame()
 		if(Broodwar->getFrameCount()%FRAMESPERAI == 0)
 		{
 			Logger::GetInstance().Log("LizurdModule", "Starting Update");
-			_gateway.Update();
+			_gateway.Update(Broodwar->getFrameCount());
 		}
 		if(Broodwar->getFrameCount() > FRAMESPERAI)
 		{

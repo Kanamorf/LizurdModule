@@ -51,7 +51,7 @@ Result ResourceCoordinator::ProcessNotificationInternal(Notification &notificati
 	return retVal;
 }
 
-Result ResourceCoordinator::UpdateInternal()
+Result ResourceCoordinator::UpdateInternal(int frameNo)
 {
 	return Result::Failure;
 }

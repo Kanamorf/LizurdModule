@@ -14,10 +14,10 @@ Coordinator::~Coordinator(void)
 }
 
 
-Result Coordinator::Update()
+Result Coordinator::Update(int frameNo)
 {
 	Result retVal = Result::Failure;
-	if(UpdateInternal() == Result::Success)
+	if(UpdateInternal(frameNo) == Result::Success)
 		retVal = AfterUpdateInternal();
 	return retVal;
 }

@@ -16,6 +16,7 @@ namespace Lizurd
 		virtual BWAPI::UnitType GetType() const override;
 		virtual Order* CreateBuildOrder(BWAPI::TilePosition position) override;
 		virtual bool CanBuild(BWAPI::UnitType type) override;
+		virtual Result Update(int frameNo) override;
 	};
 
 }

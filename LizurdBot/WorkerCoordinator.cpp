@@ -23,7 +23,7 @@ WorkerCoordinator::~WorkerCoordinator(void)
 {
 }
 
-Result WorkerCoordinator::UpdateInternal()
+Result WorkerCoordinator::UpdateInternal(int frameNo)
 { 
 	std::vector<BWAPI::Unit> morphedWorkers;
 	for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)

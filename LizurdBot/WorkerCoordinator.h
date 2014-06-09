@@ -12,7 +12,7 @@ namespace Lizurd
 		~WorkerCoordinator(void);
 
 		virtual Result ProcessNotificationInternal(Notification &notification) override;
-		virtual Result UpdateInternal() override;
+		virtual Result UpdateInternal(int frameNo) override;
 		virtual Result AfterUpdateInternal() override;
 
 	private:

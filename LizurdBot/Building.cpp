@@ -10,7 +10,8 @@ Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::st
 	_cost(cost),
 	_name(name),
 	_startTime(0),
-	_buildTime(0)
+	_buildTime(0),
+	_isComplete(false)
 {
 }
 
@@ -20,7 +21,8 @@ Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::st
 	_cost(cost),
 	_name(name),
 	_startTime(0),
-	_buildTime(buildTime)
+	_buildTime(buildTime),
+	_isComplete(false)
 {
 }
 
@@ -84,6 +86,15 @@ BWAPI::Player Building::GetPlayer() const
 	if(_building)
 		player = _building->getPlayer();
 	return player;
+}
+
+Result Building::Update(int frameNo)
+{
+	if(_isComplete == false && _startTime > 0 && _startTime + _buildTime >= frameNo)
+	{
+		_isComplete = true;
+	}
+	return Result::Success;
 }
 
 

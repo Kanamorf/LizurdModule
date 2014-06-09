@@ -61,12 +61,12 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 	return retVal;
 }
 
-Result Gateway::Update()
+Result Gateway::Update(int frameNo)
 {
 	Result retVal = Result::Failure;
 	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
 	{
-		it->second->Update();
+		it->second->Update(frameNo);
 	}
 	std::vector<Order*> completeOrders;
 	for(std::vector<Order*>::iterator it = _orders.begin(); it != _orders.end(); ++it)

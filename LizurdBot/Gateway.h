@@ -28,7 +28,7 @@ namespace Lizurd
 		~Gateway(void);
 
 		Result Initialise(BWAPI::Game *game, BWAPI::Race race);
-		Result Update();
+		Result Update(int frameNo);
 		Result RegisterNotification(Notification &notification) const;
 		RaceDescriptor &GetRaceDescriptor() const { return *_raceDescriptor; }
 		void DrawDebugInfo();

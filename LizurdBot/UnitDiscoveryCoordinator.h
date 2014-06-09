@@ -15,7 +15,7 @@ namespace Lizurd
 
 
 		virtual Result ProcessNotificationInternal(Notification &notification) override;
-		virtual Result UpdateInternal() override;
+		virtual Result UpdateInternal(int frameNo) override;
 		virtual Result AfterUpdateInternal() override;
 		virtual void DrawDebugInfo() override;
 

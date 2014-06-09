@@ -26,7 +26,7 @@ Result ProductionCoordinator::ProcessNotificationInternal(Notification &notifica
 	return Result::Failure;
 }
 
-Result ProductionCoordinator::UpdateInternal()
+Result ProductionCoordinator::UpdateInternal(int frameNo)
 {
 	Result retVal = Result::Failure;
 	// first we need to check we have a goal;
