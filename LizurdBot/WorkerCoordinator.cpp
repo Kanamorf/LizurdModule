@@ -9,6 +9,7 @@
 
 #include "WorkerCoordinator.h"
 #include "GatherOrder.h"
+#include "RaceDescriptor.h"
 
 using namespace Lizurd;
 
@@ -24,13 +25,24 @@ WorkerCoordinator::~WorkerCoordinator(void)
 
 Result WorkerCoordinator::UpdateInternal()
 { 
+	std::vector<BWAPI::Unit> morphedWorkers;
 	for(std::vector<BWAPI::Unit>::iterator it = _workers.begin(); it != _workers.end(); ++it)
 	{
+		if(((*it)->getType() != _gateway.GetRaceDescriptor().GetWorkerType()))
+		{
+			// Zerg specific code is bad.....
+			morphedWorkers.push_back(*it);
+			continue;
+		}
 		if((*it)->isIdle())
 		{
 			GatherOrder *order = new GatherOrder(*it);
 			_gateway.AddOrder(order);
 		}
+	}
+	for(std::vector<BWAPI::Unit>::iterator it = morphedWorkers.begin(); it != morphedWorkers.end(); ++it)
+	{
+		VectorRemove(_workers, *it);
 	}
 	return Result::Success;
 }
