@@ -77,12 +77,7 @@ Result ResourceCoordinator::RequestResources(ResourceValue value)
 	Logger::GetInstance().Log(ResourceCoord, ss.str());
 	if(GetCurrentResources().IsAffordable(value))
 	{
-		Logger::GetInstance().Log(ResourceCoord, "RequestResources found enough");
 		_reservedResources += value;
-		std::stringstream ss1;
-		ss1 << "After Maths Resources: M:" << value.Minerals << " V:" << value.Vespene << " S:" << value.Supply << " Current Resources M:" 
-			<< GetCurrentResources().Minerals << " V:" << GetCurrentResources().Vespene << " S:" << GetCurrentResources().Supply;
-		Logger::GetInstance().Log(ResourceCoord, ss1.str());
 		retVal = Result::Success;
 	}
 	else

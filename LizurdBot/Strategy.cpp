@@ -78,10 +78,3 @@ Goal* Strategy::GetNextBuildingGoal()
 	return goal;
 }
 
-void Lizurd::Strategy::RegisterNewUnit(BWAPI::UnitType type)
-{
-	std::stringstream ss;
-	ss << "Registering new unit: " << type.getName();
-	Logger::GetInstance().CriticalLog("Strategy", ss.str());
-	++_buildings[type];
-}

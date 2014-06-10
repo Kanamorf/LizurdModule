@@ -16,6 +16,8 @@ namespace Lizurd
 
 	private:
 		Goal* _currentGoal;
+		Goal* _savedGoal;
+		bool _buildingSupply;
 	};
 
 }

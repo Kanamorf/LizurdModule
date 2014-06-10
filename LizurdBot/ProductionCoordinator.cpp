@@ -3,6 +3,7 @@
 // Buildings are built by the ConstructionCoordinator.
 
 #include "ProductionCoordinator.h"
+#include "RaceDescriptor.h"
 #include "ProductionOrder.h"
 #include "Goal.h"
 #include "Logger.h"
@@ -12,7 +13,9 @@ using namespace Lizurd;
 
 ProductionCoordinator::ProductionCoordinator(Gateway &gateway) :
 	Coordinator(gateway, ProductionCoord),
-	_currentGoal(nullptr)
+	_currentGoal(nullptr),
+	_savedGoal(nullptr),
+	_buildingSupply(false)
 {
 }
 
@@ -29,16 +32,36 @@ Result ProductionCoordinator::ProcessNotificationInternal(Notification &notifica
 Result ProductionCoordinator::UpdateInternal(int frameNo)
 {
 	Result retVal = Result::Failure;
-	// first we need to check we have a goal;
+
+	// check we have enough supply
+	Notification notification(ResourceCoord);
+	notification.SetAction(Action::CurrentResources);
+	_gateway.RegisterNotification(notification);
+	ResourceValue value =notification.GetResourceValue();
+
+	// If we are running at greater than 80% make more supply 
+	if((float)value.Supply >= (float)((float)value.MaxSupply * 0.8))
+	{
+		// save the goal we have currently
+		_savedGoal = _currentGoal;
+		_currentGoal = _gateway.GetRaceDescriptor().GetSupplyGoal();
+		_buildingSupply = true;
+	}
+
+	// if we have no goal grab the saved goal
+	if(_currentGoal == nullptr)
+	{
+		_currentGoal = _savedGoal;
+		_savedGoal = nullptr;
+	}
+
+	// if we still don't have a goal go get a new one
 	if(_currentGoal == nullptr || _currentGoal->GetExecutingUnitType() == BWAPI::UnitTypes::Enum::None)
 	{
-
-		Logger::GetInstance().Log(ProductionCoord, "Looking for a goal.");
 		Notification notification(StrategyCoord);
 		notification.SetAction(Action::GetNextProductionGoal);
 		if(_gateway.RegisterNotification(notification) == Result::Success)
 		{
-			Logger::GetInstance().Log(ProductionCoord, "Found a goal.");
 			_currentGoal = notification.GetGoal();
 		}
 	}
@@ -57,7 +80,6 @@ Result ProductionCoordinator::UpdateInternal(int frameNo)
 			notification.SetUnitType(_currentGoal->GetExecutingUnitType());
 			if(_gateway.RegisterNotification(notification) == Result::Success)
 			{
-				Logger::GetInstance().Log(ProductionCoord, "Found a unit to execute the goal.");
 				BWAPI::Unit executingUnit = notification.GetLastUnit();
 				if(executingUnit != nullptr)
 				{
@@ -67,7 +89,8 @@ Result ProductionCoordinator::UpdateInternal(int frameNo)
 					_currentGoal->DecrementTotal();
 					if(_currentGoal->IsComplete())
 					{
-						Logger::GetInstance().Log(ProductionCoord, _currentGoal->GetGoalType() + " is complete, removing.");
+						if(_currentGoal->GetGoalType() == _gateway.GetRaceDescriptor().GetSupplyType())
+							_buildingSupply = false;
 						//current goal is complete so remove it
 						delete _currentGoal;
 						_currentGoal = nullptr;

@@ -55,7 +55,7 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 		Logger::GetInstance().Log(UnitDiscoveryCoord, "Running  Action::RequestIdleUnit");
 		if(notification.GetUnitType() == _gateway.GetRaceDescriptor().GetWorkerType())
 		{
-			Logger::GetInstance().Log(UnitDiscoveryCoord, "Running  Action::RequestIdleUnit, the requested unit is a worker go look in worker coordinator.");
+			//Running  Action::RequestIdleUnit, the requested unit is a worker go look in worker coordinator.
 			notification.SetTarget(WorkerCoord);
 			retVal = _gateway.RegisterNotification(notification);
 		}

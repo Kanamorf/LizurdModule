@@ -27,13 +27,14 @@ namespace Lizurd
 		void AddOrUpdate(const StrategyType &type, Goal* add);
 		Goal* GetNextUnitGoal();
 		Goal* GetNextBuildingGoal();
-		void RegisterNewUnit(BWAPI::UnitType type);
+		bool UnitGoalIsEmpty() const { return _unitStrategy.empty(); }
+		bool BuildingGoalIsEmpty() const { return _buildingStrategy.empty(); }
 	private:
 		std::string _name;
 		GoalQueue _buildingStrategy;
 		GoalQueue _unitStrategy;
 		GoalQueue _upgrateStrategy;
-		std::map<BWAPI::UnitType, int> _buildings;
+		
 		
 	};
 }
