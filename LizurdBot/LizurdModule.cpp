@@ -24,6 +24,14 @@ void LizurdModule::onStart()
 
 void LizurdModule::onEnd(bool isWinner)
 {
+	if (!Broodwar->isReplay())
+	{
+		std::stringstream ss;
+		ss << "*** Game over: Average FPS : " << Broodwar->getAverageFPS();
+		Logger::GetInstance().Log("LizurdModule", ss.str());
+
+
+	}
 	// Called when the game ends
 	if ( isWinner )
 	{
