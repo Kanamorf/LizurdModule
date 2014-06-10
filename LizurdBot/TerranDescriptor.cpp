@@ -30,7 +30,3 @@ Goal* Lizurd::TerranDescriptor::GetSupplyGoal() const
 	return nullptr;
 }
 
-Building* TerranDescriptor::GetBuildingByType(const BWAPI::UnitType &type) const 
-{
-	return nullptr;
-}

@@ -1,5 +1,6 @@
 #include "ZergDescriptor.h"
 #include "ZergHatchery.h"
+#include "ZergSpawningPool.h"
 #include "Base.h"
 #include "Logger.h"
 #include "Strategy.h"
@@ -21,8 +22,9 @@ Base* ZergDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit)
 {
 	Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre");
 	Base *pBase = new Base();
-	ZergHatchery *pHhatchery = new ZergHatchery(unit, *pBase);
+	ZergHatchery *pHhatchery = new ZergHatchery(unit, pBase);
 	pBase->SetCommandCentre(pHhatchery);
+	pBase->Initialise();
 	return pBase;
 }
 
@@ -43,12 +45,21 @@ Goal* Lizurd::ZergDescriptor::GetSupplyGoal() const
 	return new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Overlord, GoalState::Extend, ResourceValue(100, 0, 0));
 }
 
-Building* ZergDescriptor::GetBuildingByType(const BWAPI::UnitType &type) const 
+Building* Lizurd::ZergDescriptor::ConvertUnitToBuilding(BWAPI::Unit unit) const 
 {
-	Building *building = nullptr;
-	if(type == BWAPI::UnitTypes::Zerg_Spawning_Pool)
+	Building* building = nullptr;
+	switch(unit->getType())
 	{
-		//building = new ZergSpawningPool()
+	case BWAPI::UnitTypes::Enum::Zerg_Hatchery:
+		building = new ZergHatchery(unit);
+		break;
+	case BWAPI::UnitTypes::Enum::Zerg_Spawning_Pool:
+		building = new ZergSpawningPool(unit);
+		break;
+	default:
+		//nothing to do
+		break;
 	}
 	return building;
 }
+

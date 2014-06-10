@@ -2,7 +2,12 @@
 
 using namespace Lizurd;
 
-ZergHatchery::ZergHatchery(BWAPI::Unit building, Base &base) :
+ZergHatchery::ZergHatchery(BWAPI::Unit building) :
+	Building(building, nullptr, ResourceValue(300, 0, 0), ZergHatcheryName)
+{
+
+}
+ZergHatchery::ZergHatchery(BWAPI::Unit building, Base *base) :
 	Building(building, base, ResourceValue(300, 0, 0), ZergHatcheryName)
 {
 }

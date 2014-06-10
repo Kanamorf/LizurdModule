@@ -7,7 +7,8 @@ namespace Lizurd
 		public Building
 	{
 	public:
-		ZergSpawningPool(BWAPI::Unit building, Base &base);
+		ZergSpawningPool(BWAPI::Unit building);
+		ZergSpawningPool(BWAPI::Unit building, Base* base);
 		~ZergSpawningPool(void);
 
 		virtual Order* ProduceUnit(BWAPI::UnitType type)  override;

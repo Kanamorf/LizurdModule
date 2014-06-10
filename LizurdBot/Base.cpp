@@ -40,6 +40,28 @@ bool Base::AddUnit(BWAPI::Unit unit)
 }
 
 
+bool Lizurd::Base::AddBuilding(Building* building)
+{
+	bool success = false;
+	if(building->GetUnit()->exists())
+	{
+		BuildingMap::iterator it = _buildingMap.find(building->GetUnit()->getType());
+		if(it == _buildingMap.end()) 
+		{
+			BuildingVector *buildings = new BuildingVector();
+			buildings->push_back(building);
+			_buildingMap.insert(make_pair(building->GetUnit()->getType(), buildings));
+		}
+		else 
+		{
+			it->second->push_back(building);
+		}
+		success = true;
+	}
+	return success;
+}
+
+
 void Base::DrawDebugInfo()
 {
 	if(_commandCentre != nullptr)
@@ -48,12 +70,28 @@ void Base::DrawDebugInfo()
 		int y = -60;
 		BWAPI::Color playerColor = BWAPI::Broodwar->self()->getColor();
 		BWAPI::Broodwar->drawCircleMap(_commandCentre->GetPosition().x, _commandCentre->GetPosition().y, 80, playerColor);
+		if(_minerals.size() > 0)
+		{
+			int count = 0;
+			for(BWAPI::Unitset::iterator it = _minerals.begin(); it != _minerals.end(); ++it)
+			{
+				BWAPI::Broodwar->drawCircleMap((*it)->getPosition().x -3, (*it)->getPosition().y-3, 20, playerColor);
+				BWAPI::Broodwar->drawLineMap((*it)->getPosition().x, (*it)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
+			}
+			BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Buildings: %u", count);
+			y += 10;
+		}
 		if(_buildingMap.size() > 0)
 		{
 			int count = 0;
 			for(BuildingMap::const_iterator it = _buildingMap.begin(); it != _buildingMap.end(); ++it)
 			{
 				count += (*it).second->size();
+				for(BuildingVector::const_iterator u = (*it).second->begin(); u != (*it).second->end(); ++u)
+				{
+					BWAPI::Broodwar->drawCircleMap((*u)->GetUnit()->getPosition().x -3, (*u)->GetUnit()->getPosition().y-3, 20, playerColor);
+					BWAPI::Broodwar->drawLineMap((*u)->GetUnit()->getPosition().x, (*u)->GetUnit()->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
+				}
 			}
 			BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Buildings: %u", count);
 			y += 10;
@@ -200,6 +238,10 @@ bool Lizurd::Base::RemoveUnitByPointer(BWAPI::Unit unit)
 	return retVal;
 }
 
+void Base::Initialise()
+{
+	_minerals = _commandCentre->GetUnit()->getUnitsInRadius(1024, BWAPI::Filter::IsMineralField);
+}
 
 bool Base::RemoveBuildingByPointer(const BWAPI::Unit unit)
 {

@@ -14,6 +14,5 @@ namespace Lizurd
 			virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) override;
 			virtual Strategy* GetDefaultStrategy() const override;
 			virtual Goal* GetSupplyGoal() const override;
-			virtual Building* GetBuildingByType(const BWAPI::UnitType &type) const override;
 	};
 }

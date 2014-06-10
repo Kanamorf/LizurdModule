@@ -107,7 +107,16 @@ Result UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 		}
 		else
 		{
-			_localBuildings.push_back(unit);
+			Base* pBase = FindClosestFriendlyBase(unit);
+			if(pBase == nullptr)
+			{
+				// the unit is a building so convert it to something we can use.
+				_localBuildings.push_back(unit);
+			}
+			else
+			{
+				pBase->AddUnit(unit);	
+			}
 		}
 		retVal = Result::Success;
 	}

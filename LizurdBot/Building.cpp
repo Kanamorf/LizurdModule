@@ -4,7 +4,18 @@
 
 using namespace Lizurd;
 
-Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::string name):
+
+Building::Building(BWAPI::Unit building):
+	_building(building),
+	_parentBase(nullptr),
+	_cost(ResourceValue::Zero()),
+	_startTime(0),
+	_buildTime(0),
+	_isComplete(false)
+{
+}
+
+Building::Building(BWAPI::Unit building, Base* base, ResourceValue cost, std::string name):
 	_building(building),
 	_parentBase(base),
 	_cost(cost),
@@ -15,7 +26,7 @@ Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::st
 {
 }
 
-Building::Building(BWAPI::Unit building, Base &base, ResourceValue cost, std::string name, int buildTime):
+Building::Building(BWAPI::Unit building, Base* base, ResourceValue cost, std::string name, int buildTime):
 	_building(building),
 	_parentBase(base),
 	_cost(cost),

@@ -33,8 +33,3 @@ Goal* ProtossDescriptor::GetSupplyGoal() const
 {
 	return nullptr;
 }
-
-Building* ProtossDescriptor::GetBuildingByType(const BWAPI::UnitType &type) const 
-{
-	return nullptr;
-}

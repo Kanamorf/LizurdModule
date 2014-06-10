@@ -2,7 +2,14 @@
 
 using namespace Lizurd;
 
-ZergSpawningPool::ZergSpawningPool(BWAPI::Unit building, Base &base):
+Lizurd::ZergSpawningPool::ZergSpawningPool(BWAPI::Unit building):
+	Building(building, nullptr, ResourceValue(200, 0, 0), ZergSpawningPoolName, 1200)
+{
+
+}
+
+
+ZergSpawningPool::ZergSpawningPool(BWAPI::Unit building, Base *base):
 	Building(building, base, ResourceValue(200, 0, 0), ZergSpawningPoolName, 1200)
 {
 }

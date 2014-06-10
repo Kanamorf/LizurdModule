@@ -2,6 +2,7 @@
 #include "BWAPI.h"
 
 #include <vector>
+#include <set>
 
 namespace Lizurd
 {
@@ -20,10 +21,12 @@ namespace Lizurd
 		Base(void);
 		~Base(void);
 
+		void Initialise();
 		void SetCommandCentre(Building* commandCentre) { _commandCentre = commandCentre; }
 		Building& GetCommandCentre() const { return *_commandCentre; }
 		void DrawDebugInfo();
 		bool AddUnit(BWAPI::Unit unit);
+		bool AddBuilding(Building* building);
 		bool RemoveUnit(BWAPI::Unit unit);
 		void SetRaceDescriptor(RaceDescriptor *descriptor) { _descriptor = descriptor; }
 		RaceDescriptor& GetRaceDescriptor() const { return *_descriptor; }
@@ -39,6 +42,8 @@ namespace Lizurd
 		BuildingMap _buildingMap;
 		UnitMap _unitMap;
 		RaceDescriptor *_descriptor;
+		BWAPI::Unitset _minerals;
+		BWAPI::Unitset _geysers;
 	};
 
 }

@@ -6,7 +6,7 @@ namespace Lizurd
 		public Building
 	{
 	public:
-		TerranCommandCentre(BWAPI::Unit building, Base &base);
+		TerranCommandCentre(BWAPI::Unit building, Base *base);
 		~TerranCommandCentre(void);
 	};
 }

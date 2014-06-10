@@ -8,7 +8,8 @@ namespace Lizurd
 		public Building
 	{
 	public:
-		ZergHatchery(BWAPI::Unit building, Base &base);
+		ZergHatchery(BWAPI::Unit building);
+		ZergHatchery(BWAPI::Unit building, Base *base);
 		~ZergHatchery(void);
 
 		virtual Order* ProduceUnit(BWAPI::UnitType type)  override;
