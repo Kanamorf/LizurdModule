@@ -22,7 +22,11 @@ UnitDiscoveryCoordinator::~UnitDiscoveryCoordinator(void)
 
 Result UnitDiscoveryCoordinator::UpdateInternal(int frameNo)
 { 
-	return Result::Failure;
+	for(BaseVector::iterator it = _bases.begin(); it != _bases.end(); ++it)
+	{
+		(*it)->Update(frameNo);
+	}
+	return Result::Success;
 }
 
 Result UnitDiscoveryCoordinator::AfterUpdateInternal()
@@ -110,12 +114,16 @@ Result UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 			Base* pBase = FindClosestFriendlyBase(unit);
 			if(pBase == nullptr)
 			{
-				// the unit is a building so convert it to something we can use.
 				_localBuildings.push_back(unit);
 			}
 			else
 			{
-				pBase->AddUnit(unit);	
+				// the unit is a building so convert it to something we can use.
+				Building* building = _gateway.GetRaceDescriptor().ConvertUnitToBuilding(unit);
+				building->SetBase(pBase);
+				building->SetStartTime(notification.GetFrame());
+				if(building != nullptr)
+					pBase->AddBuilding(building);	
 			}
 		}
 		retVal = Result::Success;
@@ -203,7 +211,8 @@ Base* UnitDiscoveryCoordinator::FindClosestFriendlyBase(const BWAPI::Unit unit) 
 Result UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
 {
 	Result retVal = Result::Failure;
-	Base* pBase = _gateway.GetRaceDescriptor().CreateBaseFromCommandCentre(unit);
+	Base* pBase = new Base(_gateway);
+	_gateway.GetRaceDescriptor().CreateBaseFromCommandCentre(unit, pBase);
 	pBase->SetRaceDescriptor(&_gateway.GetRaceDescriptor());
 	_bases.push_back(pBase);
 
@@ -215,6 +224,27 @@ Result UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
 		{
 			pBase->AddUnit(*it);
 			attachedUnit.push_back(*it);
+			retVal = Result::Success;
+		}
+	}
+	for(UnitVector::iterator it = _localBuildings.begin(); it != _localBuildings.end(); ++it)
+	{
+		Base* pBase = FindClosestFriendlyBase(*it);
+		if(pBase && (*it)->exists())
+		{
+			Building* building = _gateway.GetRaceDescriptor().ConvertUnitToBuilding(*it);
+			if(building != nullptr)
+			{
+				pBase->AddBuilding(building);
+				building->SetBase(pBase);
+				attachedUnit.push_back(*it);
+			}
+			else
+			{
+				std::stringstream ss;
+				ss << "Found an unknown building type. " << (*it)->getType();
+				Logger::GetInstance().Log(UnitDiscoveryCoord, ss.str());
+			}
 			retVal = Result::Success;
 		}
 	}

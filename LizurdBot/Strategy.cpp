@@ -1,5 +1,6 @@
 #include "Strategy.h"
 #include "Logger.h"
+#include <sstream>
 
 using namespace Lizurd;
 
@@ -75,4 +76,12 @@ Goal* Strategy::GetNextBuildingGoal()
 		_buildingStrategy.pop();
 	}
 	return goal;
+}
+
+void Lizurd::Strategy::RegisterNewUnit(BWAPI::UnitType type)
+{
+	std::stringstream ss;
+	ss << "Registering new unit: " << type.getName();
+	Logger::GetInstance().CriticalLog("Strategy", ss.str());
+	++_buildings[type];
 }

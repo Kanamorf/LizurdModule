@@ -3,9 +3,10 @@
 #include "Building.h"
 #include "Logger.h"
 
-using Lizurd::Base;
+using namespace Lizurd;
 
-Base::Base(void)
+Base::Base(const Gateway &gateway):
+	_gateway(gateway)
 {
 }
 
@@ -78,8 +79,6 @@ void Base::DrawDebugInfo()
 				BWAPI::Broodwar->drawCircleMap((*it)->getPosition().x -3, (*it)->getPosition().y-3, 20, playerColor);
 				BWAPI::Broodwar->drawLineMap((*it)->getPosition().x, (*it)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
 			}
-			BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Buildings: %u", count);
-			y += 10;
 		}
 		if(_buildingMap.size() > 0)
 		{
@@ -238,8 +237,25 @@ bool Lizurd::Base::RemoveUnitByPointer(BWAPI::Unit unit)
 	return retVal;
 }
 
+void Lizurd::Base::Update(int frameNo)
+{
+	if(_buildingMap.size() > 0)
+	{
+		int count = 0;
+		for(BuildingMap::const_iterator it = _buildingMap.begin(); it != _buildingMap.end(); ++it)
+		{
+			BuildingVector *buildings = it->second;
+			for(BuildingVector::iterator bu = buildings->begin(); bu != buildings->end(); ++bu)
+			{
+				(*bu)->Update(frameNo);
+			}
+		}
+	}
+}
+
 void Base::Initialise()
 {
+	Logger::GetInstance().Log("Base", "Initialise");
 	_minerals = _commandCentre->GetUnit()->getUnitsInRadius(1024, BWAPI::Filter::IsMineralField);
 }
 

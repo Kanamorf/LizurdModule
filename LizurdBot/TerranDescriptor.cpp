@@ -14,9 +14,8 @@ TerranDescriptor::~TerranDescriptor(void)
 {
 }
 
-Base* TerranDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit) 
+void TerranDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit, Base *base) 
 {
-	return nullptr;
 }
 
 Strategy* TerranDescriptor::GetDefaultStrategy() const

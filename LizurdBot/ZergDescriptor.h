@@ -12,7 +12,7 @@ namespace Lizurd
 		~ZergDescriptor(void);
 		virtual BWAPI::UnitType GetCommandCenterType() const override { return BWAPI::UnitTypes::Zerg_Hatchery; }
 		virtual BWAPI::UnitType GetWorkerType() const override  { return BWAPI::UnitTypes::Zerg_Drone; }
-		virtual Base* CreateBaseFromCommandCentre(BWAPI::Unit unit) override;
+		virtual void CreateBaseFromCommandCentre(BWAPI::Unit unit, Base *base) override;
 		virtual Strategy* GetDefaultStrategy() const override;
 		virtual Goal* GetSupplyGoal() const override;
 		virtual Building* ConvertUnitToBuilding(BWAPI::Unit unit) const override;

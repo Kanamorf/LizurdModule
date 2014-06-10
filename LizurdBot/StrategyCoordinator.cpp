@@ -46,7 +46,12 @@ Result Lizurd::StrategyCoordinator::ProcessNotificationInternal(Notification &no
 			retVal = Result::Success;
 		}
 	}
-	
+	else if(notification.GetAction() == Action::NewBuildingFinished)
+	{
+		_strategy->RegisterNewUnit(notification.GetUnitType());
+		retVal = Result::Success;
+		
+	}
 	return retVal;
 }
 

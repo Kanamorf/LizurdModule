@@ -18,14 +18,18 @@ ZergDescriptor::~ZergDescriptor(void)
 {
 }
 
-Base* ZergDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit) 
+void ZergDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit, Base *base) 
 {
-	Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre");
-	Base *pBase = new Base();
-	ZergHatchery *pHhatchery = new ZergHatchery(unit, pBase);
-	pBase->SetCommandCentre(pHhatchery);
-	pBase->Initialise();
-	return pBase;
+	if(base != nullptr)
+	{
+		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre");
+		ZergHatchery *pHhatchery = new ZergHatchery(unit, base);
+		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre 1");
+		base->SetCommandCentre(pHhatchery);
+		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre 2");
+		base->Initialise();
+		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre 3");
+	}
 }
 
 Strategy* Lizurd::ZergDescriptor::GetDefaultStrategy() const

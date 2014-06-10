@@ -30,6 +30,7 @@ namespace Lizurd
 		BWAPI::UnitType GetUnitType() const { return _type; }
 		void SetUnitType(BWAPI::UnitType type) { _type = type; }
 		void SetFrame(int frame) { _frame = frame; }
+		int GetFrame() const { return _frame; }
 	private:
 		BWAPI::UnitType _type;
 		std::string _target;

@@ -101,9 +101,13 @@ BWAPI::Player Building::GetPlayer() const
 
 Result Building::Update(int frameNo)
 {
-	if(_isComplete == false && _startTime > 0 && _startTime + _buildTime >= frameNo)
+	if(_isComplete == false && _startTime > 0 && frameNo >= _startTime + _buildTime)
 	{
 		_isComplete = true;
+		Notification notification(StrategyCoord);
+		notification.SetAction(Action::NewBuildingFinished);
+		notification.SetUnitType(_building->getType());
+		_parentBase->GetGateway().RegisterNotification(notification);
 	}
 	return Result::Success;
 }

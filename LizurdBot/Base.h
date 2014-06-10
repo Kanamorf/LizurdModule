@@ -1,5 +1,6 @@
 #pragma once
 #include "BWAPI.h"
+#include "Gateway.h"
 
 #include <vector>
 #include <set>
@@ -18,7 +19,7 @@ namespace Lizurd
 	class Base
 	{
 	public:
-		Base(void);
+		Base(const Gateway &gateway);
 		~Base(void);
 
 		void Initialise();
@@ -35,6 +36,8 @@ namespace Lizurd
 		bool RemoveUnitByType(BWAPI::Unit unit);
 		bool RemoveUnitByPointer(BWAPI::Unit unit);
 		bool RemoveBuildingByPointer(const BWAPI::Unit unit);
+		const Gateway& GetGateway() const { return _gateway; }
+		void Update(int frameNo);
 
 	private:
 
@@ -44,6 +47,7 @@ namespace Lizurd
 		RaceDescriptor *_descriptor;
 		BWAPI::Unitset _minerals;
 		BWAPI::Unitset _geysers;
+		const Gateway & _gateway;
 	};
 
 }

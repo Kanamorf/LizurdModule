@@ -17,10 +17,9 @@ ProtossDescriptor::~ProtossDescriptor(void)
 }
 
 
-Base* ProtossDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit) 
+void ProtossDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit, Base *base) 
 {
 	Logger::GetInstance().Log("ProtossDescriptor", "CreateBaseFromCommandCentre");
-	return nullptr;
 }
 
 Strategy* ProtossDescriptor::GetDefaultStrategy() const

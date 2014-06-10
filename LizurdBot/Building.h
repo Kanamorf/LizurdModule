@@ -33,6 +33,7 @@ namespace Lizurd
 		bool IsComplete() const { return _isComplete; }
 		void SetBase(Base* base) { _parentBase = base; } 
 		const BWAPI::Unit GetUnit() const { return _building; }
+		void SetStartTime(int frameNo) { _startTime = frameNo; }
 
 	protected:
 		int _startTime;
