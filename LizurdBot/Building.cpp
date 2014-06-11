@@ -104,7 +104,7 @@ Result Building::Update(int frameNo)
 	if(_isComplete == false && _startTime > 0 && frameNo >= _startTime + _buildTime)
 	{
 		_isComplete = true;
-		Notification notification(StrategyCoord);
+		Notification notification(Coordinators::StrategyCoordinator);
 		notification.SetAction(Action::NewBuildingFinished);
 		notification.SetUnitType(_building->getType());
 		_parentBase->GetGateway().RegisterNotification(notification);

@@ -32,7 +32,7 @@ Gateway::~Gateway(void)
 	{
 		delete _raceDescriptor;
 	}
-	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
+	for(std::map<Coordinators, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
 	{
 		if(it->second != nullptr)
 			delete it->second;
@@ -51,12 +51,12 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 	if(retVal == Result::Success)
 	{
 		_game = game;
-		_coordinators.insert(std::pair<std::string, Coordinator*>(UnitDiscoveryCoord, new UnitDiscoveryCoordinator(*this)));
-		_coordinators.insert(std::pair<std::string, Coordinator*>(WorkerCoord, new WorkerCoordinator(*this)));
-		_coordinators.insert(std::pair<std::string, Coordinator*>(ResourceCoord, new ResourceCoordinator(*this)));
-		_coordinators.insert(std::pair<std::string, Coordinator*>(ProductionCoord, new ProductionCoordinator(*this)));
-		_coordinators.insert(std::pair<std::string, Coordinator*>(StrategyCoord, new StrategyCoordinator(*this)));
-		_coordinators.insert(std::pair<std::string, Coordinator*>(ConstructionCoord, new ConstructionCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::UnitDiscoveryCoordinator, new UnitDiscoveryCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::WorkerCoordinator, new WorkerCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ResourceCoordinator, new ResourceCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ProductionCoordinator, new ProductionCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::StrategyCoordinator, new StrategyCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ConstructionCoordinator, new ConstructionCoordinator(*this)));
 	}
 	return retVal;
 }
@@ -64,7 +64,7 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 Result Gateway::Update(int frameNo)
 {
 	Result retVal = Result::Failure;
-	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
+	for(std::map<Coordinators, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
 	{
 		it->second->Update(frameNo);
 	}
@@ -77,7 +77,7 @@ Result Gateway::Update(int frameNo)
 			completeOrders.push_back(*it);
 			if((*it)->GetCost() > ResourceValue::Zero())
 			{
-				Notification notification(ResourceCoord);
+				Notification notification(Coordinators::ResourceCoordinator);
 				notification.SetAction(Action::ResourceRelease);
 				notification.SetResourceValue((*it)->GetCost());
 				RegisterNotification(notification);
@@ -93,7 +93,7 @@ Result Gateway::Update(int frameNo)
 	}
 
 	ResourceValue update(GetGame().self()->minerals(), GetGame().self()->gas(), GetGame().self()->supplyUsed(), GetGame().self()->supplyTotal());
-	Notification notification(ResourceCoord);
+	Notification notification(Coordinators::ResourceCoordinator);
 	notification.SetAction(Action::ResourceUpdate);
 	notification.SetResourceValue(update);
 	RegisterNotification(notification);
@@ -104,8 +104,8 @@ Result Gateway::Update(int frameNo)
 Result Gateway::RegisterNotification(Notification &notification) const
 {
 	Result retVal = Result::Failure;
-	std::string target = notification.GetTarget();
-	std::map<std::string, Coordinator*>::const_iterator found = _coordinators.find(target);
+	Coordinators target = notification.GetTarget();
+	std::map<Coordinators, Coordinator*>::const_iterator found = _coordinators.find(target);
 	if(found != _coordinators.end())
 	{
 		retVal = found->second->ProcessNotificationInternal(notification);
@@ -120,7 +120,7 @@ void Gateway::AddOrder(Order *order)
 
 void Gateway::DrawDebugInfo()
 {
-	for(std::map<std::string, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
+	for(std::map<Coordinators, Coordinator*>::iterator it = _coordinators.begin(); it != _coordinators.end(); ++it)
 	{
 		it->second->DrawDebugInfo();
 	}

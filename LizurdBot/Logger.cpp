@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream>
+
 #include <ctime>
 #include <sstream>
 #include <BWAPI.h>
@@ -23,6 +23,8 @@ Logger::Logger(void)
 	ss << "Release\\";
 	ss << "StarCraftLog " + GetTime() + ".txt";
 	_logFileName = ss.str();
+	
+	_logfile.open ( _logFileName.c_str(), ios::out | ios::app);
 }
 
 /// <summary>
@@ -30,6 +32,7 @@ Logger::Logger(void)
 /// </summary>
 Logger::~Logger(void)
 {
+	_logfile.close();
 }
 
 /// <summary>
@@ -51,21 +54,17 @@ Logger& Logger::GetInstance()
 /// <param name="log">The string to log.</param>
 void Logger::Log(const std::string &source, const string &log)
 {
-	ofstream logfile;
+	
+	_logfile << std::setw(11) << std::setfill(' ') << std::left << GetTime() << " ";
+	_logfile  << std::setw(35) << std::setfill(' ') << std::left  << source  << std::right << log << endl;
 
-	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
-	logfile << std::setw(11) << std::setfill(' ') << std::left << GetTime() << " ";
-	logfile  << std::setw(35) << std::setfill(' ') << std::left  << source  << std::right << log << endl;
-	logfile.close();
 }
 
 void Logger::CriticalLog(const std::string &source, const string &log)
 {
-	ofstream logfile;
-	logfile.open ( _logFileName.c_str(), ios::out | ios::app);
-	logfile << GetTime() << " ";
-	logfile << "[" << source << "]" << std::setw(20) << " " << log << endl << endl;
-	logfile.close();
+	_logfile << GetTime() << " ";
+	_logfile << "[" << source << "]" << std::setw(20) << " " << log << endl << endl;
+
 	BWAPI::Broodwar->sendText(log.c_str());
 }
 

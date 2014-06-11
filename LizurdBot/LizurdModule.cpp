@@ -52,7 +52,7 @@ void LizurdModule::onFrame()
 		if(Broodwar->getFrameCount() > FRAMESPERAI)
 		{
 			Broodwar->drawBox(BWAPI::CoordinateType::Screen, 320, 0, 420, 20, BWAPI::Colors::Blue);
-			Notification notification(ResourceCoord);
+			Notification notification(Coordinators::ResourceCoordinator);
 			notification.SetAction(Action::CurrentResources);
 			if(_gateway.RegisterNotification(notification) == Result::Success)
 			{
@@ -137,7 +137,7 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 		{
 			if(unit->getPlayer() == Broodwar->self())
 			{
-				Notification notification(UnitDiscoveryCoord);
+				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::RegisterUnit);
 				notification.AddUnit(unit);
 				_gateway.RegisterNotification(notification);
@@ -154,7 +154,7 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 		{
 			if(unit->getPlayer() == Broodwar->self())
 			{
-				Notification notification(UnitDiscoveryCoord);
+				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::DeRegisterUnit);
 				notification.AddUnit(unit);
 				_gateway.RegisterNotification(notification);
@@ -171,7 +171,7 @@ void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 		{
 			if(unit->getPlayer() == Broodwar->self())
 			{
-				Notification notification(UnitDiscoveryCoord);
+				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::MorphUnit);
 				notification.AddUnit(unit);
 				notification.SetFrame(Broodwar->getFrameCount());
@@ -192,4 +192,9 @@ void LizurdModule::onSaveGame(std::string gameName)
 
 void LizurdModule::onUnitComplete(BWAPI::Unit unit)
 {
+}
+
+Lizurd::LizurdModule::~LizurdModule(void)
+{
+	Logger::CleanUp();
 }

@@ -12,15 +12,15 @@ namespace Lizurd
 	{
 	public:
 
-		Notification(std::string target);
+		Notification(Coordinators target);
 		~Notification(void);
 
 		void AddUnit(BWAPI::Unit);
 		BWAPI::Unit GetLastUnit();
 		BWAPI::Unit PeekUnit() const;
 		size_t UnitSize() const;
-		std::string GetTarget() const { return _target; }
-		void SetTarget(const std::string &target) { _target = target; }
+		Coordinators GetTarget() const { return _target; }
+		void SetTarget(const Coordinators &target) { _target = target; }
 		void SetAction(const Action &action) { _action = action; }
 		Action GetAction() const { return _action; }
 		void SetResourceValue(const ResourceValue &value) { _value = value; }
@@ -33,7 +33,7 @@ namespace Lizurd
 		int GetFrame() const { return _frame; }
 	private:
 		BWAPI::UnitType _type;
-		std::string _target;
+		Coordinators _target;
 		std::vector<BWAPI::Unit> _units;
 		Action _action;
 		ResourceValue _value;

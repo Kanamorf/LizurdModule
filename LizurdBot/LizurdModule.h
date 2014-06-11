@@ -10,7 +10,7 @@ namespace Lizurd
 	{
 	public:
 		LizurdModule(void){};
-		~LizurdModule(void){};
+		~LizurdModule(void);
 
 		virtual void onStart();
 		virtual void onEnd(bool isWinner) override;

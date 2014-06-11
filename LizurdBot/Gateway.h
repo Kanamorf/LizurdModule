@@ -40,7 +40,7 @@ namespace Lizurd
 		BWAPI::Game &GetGame() const { return *_game; }
 
 	private:
-		std::map<std::string, Coordinator*> _coordinators;
+		std::map<Coordinators, Coordinator*> _coordinators;
 		std::vector<Order*> _orders;
 		RaceDescriptor *_raceDescriptor;
 		BWAPI::Game *_game;

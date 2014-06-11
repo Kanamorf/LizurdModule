@@ -56,7 +56,7 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 		if(notification.GetUnitType() == _gateway.GetRaceDescriptor().GetWorkerType())
 		{
 			//Running  Action::RequestIdleUnit, the requested unit is a worker go look in worker coordinator.
-			notification.SetTarget(WorkerCoord);
+			notification.SetTarget(Coordinators::WorkerCoordinator);
 			retVal = _gateway.RegisterNotification(notification);
 		}
 		else
@@ -92,7 +92,7 @@ Result UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 		{
 			if(unit->getType().isWorker())
 			{	
-				notification.SetTarget(WorkerCoord);
+				notification.SetTarget(Coordinators::WorkerCoordinator);
 				notification.SetAction(Action::RegisterUnit);
 				notification.AddUnit(unit);
 				retVal = _gateway.RegisterNotification(notification);
@@ -150,7 +150,7 @@ Result UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 		{
 			if(unit->getType().isWorker())
 			{
-				notification.SetTarget(WorkerCoord);
+				notification.SetTarget(Coordinators::WorkerCoordinator);
 				_gateway.RegisterNotification(notification);
 			}
 			else

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <fstream>
 
 namespace Lizurd
 {
@@ -15,13 +16,14 @@ namespace Lizurd
 		void Log(const std::string &source, const std::string &log);
 		void CriticalLog(const std::string &source, const std::string &log);
 		std::string GetTime();
-
+		static void CleanUp();
 	private:
 		Logger(void);
 		~Logger(void);
 		static Logger* _instance;
 		std::string _logFileName;
-		static void CleanUp();
+		
+		std::ofstream _logfile;
 	};
 
 }

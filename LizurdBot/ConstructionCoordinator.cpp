@@ -27,7 +27,7 @@ Result ConstructionCoordinator::UpdateInternal(int frameNo)
 	{
 
 		Logger::GetInstance().Log(ConstructionCoord, "Looking for a goal.");
-		Notification notification(StrategyCoord);
+		Notification notification(Coordinators::StrategyCoordinator);
 		notification.SetAction(Action::GetNextConstructionGoal);
 		if(_gateway.RegisterNotification(notification) == Result::Success)
 		{
@@ -39,13 +39,13 @@ Result ConstructionCoordinator::UpdateInternal(int frameNo)
 	{
 		Logger::GetInstance().Log(ConstructionCoord, "We have a goal. " + _currentGoal->GetExecutingUnitType().getName());
 		// now we have a goal attempt to reserve some resources.
-		Notification notification(ResourceCoord);
+		Notification notification(Coordinators::ResourceCoordinator);
 		notification.SetAction(Action::ResourceRequest);
 		notification.SetResourceValue(_currentGoal->GetCost());
 		if(_gateway.RegisterNotification(notification) == Result::Success)
 		{
 			// next we need to get a unit to execute the order
-			notification.SetTarget(UnitDiscoveryCoord);
+			notification.SetTarget(Coordinators::UnitDiscoveryCoordinator);
 			notification.SetAction(Action::RequestIdleUnit);
 			notification.SetUnitType(_currentGoal->GetExecutingUnitType());
 			if(_gateway.RegisterNotification(notification) == Result::Success)
@@ -69,7 +69,7 @@ Result ConstructionCoordinator::UpdateInternal(int frameNo)
 			else
 			{
 				// we failed to find a unit to build so release the reservation.
-				notification.SetTarget(ResourceCoord);
+				notification.SetTarget(Coordinators::ResourceCoordinator);
 				notification.SetAction(Action::ResourceRelease);
 				notification.SetResourceValue(_currentGoal->GetCost());
 				if(_gateway.RegisterNotification(notification) != Result::Success)

@@ -1,8 +1,8 @@
 #include "Notification.h"
 
-using Lizurd::Notification;
+using namespace Lizurd;
 
-Notification::Notification(std::string target) :
+Notification::Notification(Coordinators target) :
 	_target(target)
 {
 }

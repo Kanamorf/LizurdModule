@@ -18,6 +18,18 @@ namespace Lizurd
 			Low
 		};
 	};
+	struct CoordinatorDef
+	{
+		enum type
+		{
+			ResourceCoordinator,
+			ConstructionCoordinator,
+			ProductionCoordinator,
+			WorkerCoordinator,
+			UnitDiscoveryCoordinator,
+			StrategyCoordinator
+		};
+	};
 	struct ActionDef
 	{
 		enum type
@@ -72,4 +84,5 @@ namespace Lizurd
 	typedef TypeSafeEnum<ResultDef> Result;
 	typedef TypeSafeEnum<GoalStateDef> GoalState;
 	typedef TypeSafeEnum<GoalTypeDef> GoalType;
+	typedef TypeSafeEnum<CoordinatorDef> Coordinators;
 }
