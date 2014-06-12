@@ -20,6 +20,7 @@ void LizurdModule::onStart()
 	}
 	Logger::GetInstance().Log("LizurdModule", "We are playing: " + race.getName());
 	Broodwar->setLocalSpeed(10);
+	Broodwar->enableFlag(Flag::UserInput);
 }
 
 void LizurdModule::onEnd(bool isWinner)
@@ -62,9 +63,9 @@ void LizurdModule::onFrame()
 				ss << "M: " << notification.GetResourceValue().Minerals << " V: " << notification.GetResourceValue().Vespene << " S: " << (notification.GetResourceValue().Supply /2 );
 				Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
 
-	#ifdef _DEBUG
-				_gateway.DrawDebugInfo();
-	#endif
+#ifdef _DEBUG
+				Gateway::GetInstance().DrawDebugInfo();
+#endif
 			}
 		}
 	}
@@ -115,6 +116,19 @@ void LizurdModule::onNukeDetect(BWAPI::Position target)
 
 void LizurdModule::onUnitDiscover(BWAPI::Unit unit)
 {
+	Broodwar->sendText("Discovered %s", unit->getType().getName().c_str());
+
+	if (!Broodwar->isReplay())
+	{
+		Notification notification(Coordinators::UnitDiscoveryCoordinator);
+		if ( Broodwar->self()->isEnemy(unit->getPlayer()))
+			notification.SetAction(Action::RegisterEnemyUnit);
+		else if(unit->getType() == BWAPI::UnitTypes::Resource_Vespene_Geyser)
+			notification.SetAction(Action::RegisterVespeneGeyser);
+
+		notification.AddUnit(unit);
+		Gateway::GetInstance().RegisterNotification(notification);
+	}
 }
 
 void LizurdModule::onUnitEvade(BWAPI::Unit unit)
@@ -138,7 +152,7 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 			if(unit->getPlayer() == Broodwar->self())
 			{
 				Notification notification(Coordinators::UnitDiscoveryCoordinator);
-				notification.SetAction(Action::RegisterUnit);
+				notification.SetAction(Action::RegisterOwnUnit);
 				notification.AddUnit(unit);
 				Gateway::GetInstance().RegisterNotification(notification);
 			}

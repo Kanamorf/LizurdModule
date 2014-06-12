@@ -20,7 +20,9 @@ namespace Lizurd
 		virtual void DrawDebugInfo() override;
 
 	private:
-		Result RegisterUnit(Notification &notification);
+		Result RegisterOwnUnit(Notification &notification);
+		Result RegisterEnemyUnit(Notification &notification);
+		Result RegisterVespeneGeyser(Notification &notification);
 		Result MorphUnit(Notification &notification);
 		Result CreateNewBase(BWAPI::Unit unit);
 		Result DeRegisterUnit(Notification &notification);
@@ -31,6 +33,8 @@ namespace Lizurd
 		BaseVector _bases;
 		std::vector<BWAPI::Unit> _orphanedUnits;
 		std::vector<BWAPI::Unit> _localBuildings;
+		BWAPI::Unitset _enemyUnits;
+		std::vector<BWAPI::Unit> _vespeneGas;
 	};
 
 }

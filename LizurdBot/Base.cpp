@@ -110,6 +110,14 @@ void Base::DrawDebugInfo()
 			}
 			BWAPI::Broodwar->drawTextMap(_commandCentre->GetPosition().x+x, _commandCentre->GetPosition().y+y, "Units: %u", count);
 		}
+		if(_unitMap.size() > 0)
+		{
+			for(BWAPI::Unitset::iterator u = _geysers.begin(); u != _geysers.end(); ++u)
+			{
+				BWAPI::Broodwar->drawCircleMap((*u)->getPosition().x -3, (*u)->getPosition().y-3, 20, playerColor);
+				BWAPI::Broodwar->drawLineMap((*u)->getPosition().x, (*u)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
+			}
+		}
 	}
 }
 
@@ -253,10 +261,17 @@ void Lizurd::Base::Update(int frameNo)
 	}
 }
 
+bool Base::AddGeyser(BWAPI::Unit unit)
+{
+	_geysers.insert(unit);
+	return true;
+}
+
 void Base::Initialise()
 {
 	Logger::GetInstance().Log("Base", "Initialise");
 	_minerals = _commandCentre->GetUnit()->getUnitsInRadius(1024, BWAPI::Filter::IsMineralField);
+	_geysers = _commandCentre->GetUnit()->getUnitsInRadius(1024, BWAPI::Filter::IsRefinery);
 }
 
 bool Base::RemoveBuildingByPointer(const BWAPI::Unit unit)

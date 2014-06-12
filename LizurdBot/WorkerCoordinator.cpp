@@ -56,7 +56,7 @@ Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification
 {
 	Result retVal = Result::Failure;
 
-	if(notification.GetAction() == Action::RegisterUnit)
+	if(notification.GetAction() == Action::RegisterOwnUnit)
 	{
 		RegisterWorker(notification);
 		retVal = Result::Success;

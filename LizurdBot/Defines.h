@@ -35,7 +35,9 @@ namespace Lizurd
 		enum type
 		{
 			None,
-			RegisterUnit,
+			RegisterOwnUnit,
+			RegisterEnemyUnit,
+			RegisterVespeneGeyser,
 			DeRegisterUnit,
 			MorphUnit,
 			ResourceUpdate,

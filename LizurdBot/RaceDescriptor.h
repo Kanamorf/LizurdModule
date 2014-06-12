@@ -24,6 +24,7 @@ namespace Lizurd
 		virtual BWAPI::UnitType GetSupplyType() const = 0;
 		virtual void CreateBaseFromCommandCentre(BWAPI::Unit unit, Base *base) = 0;
 		virtual BWAPI::UnitType GetWorkerType() const = 0;
+		virtual BWAPI::UnitType GetGasCollectorType() const = 0;
 		virtual Strategy* GetDefaultStrategy() const = 0;
 		virtual Goal* GetSupplyGoal() const =0;
 		virtual Building* ConvertUnitToBuilding(BWAPI::Unit unit) const =0;

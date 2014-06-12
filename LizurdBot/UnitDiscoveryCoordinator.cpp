@@ -22,6 +22,17 @@ UnitDiscoveryCoordinator::~UnitDiscoveryCoordinator(void)
 
 Result UnitDiscoveryCoordinator::UpdateInternal(int frameNo)
 { 
+	UnitVector attachedGas;
+	for(UnitVector::iterator it = _vespeneGas.begin(); it != _vespeneGas.end(); ++it)
+	{
+		Base* pBase = FindClosestFriendlyBase(*it);
+		if(pBase && (*it)->exists())
+		{
+			pBase->AddUnit(*it);
+			attachedGas.push_back(*it);
+		}
+	}
+	LizurdModule::VectorRemove(_vespeneGas, attachedGas);
 	for(BaseVector::iterator it = _bases.begin(); it != _bases.end(); ++it)
 	{
 		(*it)->Update(frameNo);
@@ -38,9 +49,17 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 {
 	Result retVal = Result::Failure;
 
-	if(notification.GetAction() == Action::RegisterUnit)
+	if(notification.GetAction() == Action::RegisterOwnUnit)
 	{
-		retVal = RegisterUnit(notification);
+		retVal = RegisterOwnUnit(notification);
+	}
+	else if(notification.GetAction() == Action::RegisterVespeneGeyser)
+	{
+		retVal = RegisterVespeneGeyser(notification);
+	}
+	else if(notification.GetAction() == Action::RegisterEnemyUnit)
+	{
+		retVal = RegisterEnemyUnit(notification);
 	}
 	else if(notification.GetAction() == Action::DeRegisterUnit)
 	{
@@ -77,7 +96,7 @@ Result UnitDiscoveryCoordinator::ProcessNotificationInternal(Notification &notif
 /// Registers the unit in preparation for the next update.
 /// </summary>
 /// <param name="unit">The unit.</param>
-Result UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
+Result UnitDiscoveryCoordinator::RegisterOwnUnit(Notification &notification)
 {
 	Result retVal = Result::Failure;
 	if(notification.UnitSize() == 1)
@@ -93,7 +112,7 @@ Result UnitDiscoveryCoordinator::RegisterUnit(Notification &notification)
 			if(unit->getType().isWorker())
 			{	
 				notification.SetTarget(Coordinators::WorkerCoordinator);
-				notification.SetAction(Action::RegisterUnit);
+				notification.SetAction(Action::RegisterOwnUnit);
 				notification.AddUnit(unit);
 				retVal = _gateway.RegisterNotification(notification);
 			}
@@ -192,15 +211,14 @@ Base* UnitDiscoveryCoordinator::FindClosestFriendlyBase(const BWAPI::Unit unit) 
 
 		for(BaseVector::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
 		{
-			if(unit->getPlayer() != (*it)->GetCommandCentre().GetPlayer())
+			if(unit->getPlayer()->getType() == BWAPI::PlayerTypes::None || unit->getPlayer() == (*it)->GetCommandCentre().GetPlayer())
 			{
-				break;
-			}
-			int distance = (*it)->GetCommandCentre().GetDistance(unit);
-			if(distance < smallestDistance)
-			{
-				smallestDistance = distance;
-				foundUnit = (*it);
+				int distance = (*it)->GetCommandCentre().GetDistance(unit);
+				if(distance < smallestDistance)
+				{
+					smallestDistance = distance;
+					foundUnit = (*it);
+				}
 			}
 		}
 	}
@@ -227,6 +245,20 @@ Result UnitDiscoveryCoordinator::CreateNewBase(BWAPI::Unit unit)
 			retVal = Result::Success;
 		}
 	}
+
+	UnitVector attachedGas;
+	for(UnitVector::iterator it = _vespeneGas.begin(); it != _vespeneGas.end(); ++it)
+	{
+		Base* pBase = FindClosestFriendlyBase(*it);
+		if(pBase && (*it)->exists())
+		{
+			pBase->AddUnit(*it);
+			attachedGas.push_back(*it);
+			retVal = Result::Success;
+		}
+	}
+	LizurdModule::VectorRemove(_vespeneGas, attachedGas);
+
 	for(UnitVector::iterator it = _localBuildings.begin(); it != _localBuildings.end(); ++it)
 	{
 		Base* pBase = FindClosestFriendlyBase(*it);
@@ -284,9 +316,26 @@ Result UnitDiscoveryCoordinator::MorphUnit(Notification &notification)
 		if(success == true)
 		{
 			notification.AddUnit(unit);
-			retVal = RegisterUnit(notification);
+			retVal = RegisterOwnUnit(notification);
 		}
 	}
 	return retVal;
+}
+
+Result UnitDiscoveryCoordinator::RegisterEnemyUnit(Notification &notification)
+{
+	_enemyUnits.insert(notification.GetLastUnit());
+	return Result::Success;
+}
+
+Result UnitDiscoveryCoordinator::RegisterVespeneGeyser(Notification &notification)
+{
+	BWAPI::Unit unit = notification.GetLastUnit();
+	Base* pBase = FindClosestFriendlyBase(unit);
+	if(pBase && unit->exists())
+		pBase->AddUnit(unit);
+	else
+		_vespeneGas.push_back(unit);
+	return Result::Success;
 }
 

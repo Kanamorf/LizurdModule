@@ -27,6 +27,7 @@ namespace Lizurd
 		Building& GetCommandCentre() const { return *_commandCentre; }
 		void DrawDebugInfo();
 		bool AddUnit(BWAPI::Unit unit);
+		bool AddGeyser(BWAPI::Unit unit);
 		bool AddBuilding(Building* building);
 		bool RemoveUnit(BWAPI::Unit unit);
 		void SetRaceDescriptor(RaceDescriptor *descriptor) { _descriptor = descriptor; }

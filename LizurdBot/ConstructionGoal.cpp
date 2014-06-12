@@ -2,6 +2,8 @@
 #include "ConstructionOrder.h"
 #include "Logger.h"
 #include "BuildingPlacer.h"
+#include "Gateway.h"
+#include "RaceDescriptor.h"
 
 using namespace Lizurd;
 
@@ -25,8 +27,14 @@ ConstructionGoal::~ConstructionGoal(void)
 
 Order * ConstructionGoal::CreateOrder(const BWAPI::Unit executingUnit) const 
 {
-	//if(_goalType == )
-	BWAPI::TilePosition position = BuildingPlacer::GetInstance().getBuildLocationNear(executingUnit->getTilePosition(), _goalType);
+	BWAPI::TilePosition position = BWAPI::TilePositions::None;
+	if(_goalType == Gateway::GetInstance().GetRaceDescriptor().GetGasCollectorType())
+	{
+		BWAPI::Unit unit = executingUnit->getClosestUnit(BWAPI::Filter::IsRefinery);
+		position = unit->getTilePosition();
+	}
+	else
+		position = BuildingPlacer::GetInstance().getBuildLocationNear(executingUnit->getTilePosition(), _goalType);
 	ConstructionOrder *order = new ConstructionOrder("ConstructionOrder", executingUnit, TaskPriority::Medium );
 	order->SetResultUnit(_goalType);
 	order->SetCost(_cost);
