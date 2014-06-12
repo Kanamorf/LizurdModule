@@ -24,8 +24,12 @@ namespace Lizurd
 	class Gateway
 	{
 	public:
-		Gateway(void);
-		~Gateway(void);
+
+		//Only one Logger so don't copy
+		Gateway(const Gateway& gateway) {}         
+		Gateway& operator=(const Gateway&);      
+		static Gateway& GetInstance();
+		
 
 		Result Initialise(BWAPI::Game *game, BWAPI::Race race);
 		Result Update(int frameNo);
@@ -35,7 +39,8 @@ namespace Lizurd
 		void AddOrder(Order *order);
 
 	private:
-
+		Gateway(void);
+		~Gateway(void);
 		// GetGame is private as nothing apart from the gateway should be talking to the game.
 		BWAPI::Game &GetGame() const { return *_game; }
 
@@ -44,6 +49,7 @@ namespace Lizurd
 		std::vector<Order*> _orders;
 		RaceDescriptor *_raceDescriptor;
 		BWAPI::Game *_game;
+		static Gateway* _instance;
 	};
 
 }

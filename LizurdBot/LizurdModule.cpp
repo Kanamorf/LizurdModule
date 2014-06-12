@@ -13,7 +13,7 @@ void LizurdModule::onStart()
 {
 	//Initialise everything once we know what race we are playing
 	BWAPI::Race race = Broodwar->self()->getRace();
-	_initialised = _gateway.Initialise(BroodwarPtr, race);
+	_initialised = Gateway::GetInstance().Initialise(BroodwarPtr, race);
 	if(_initialised != Result::Success)
 	{
 		Broodwar->sendText("Failed to initialise the bot, most likely as it only works with Zerg.");
@@ -47,14 +47,14 @@ void LizurdModule::onFrame()
 		if(Broodwar->getFrameCount()%FRAMESPERAI == 0)
 		{
 			Logger::GetInstance().Log("LizurdModule", "Starting Update");
-			_gateway.Update(Broodwar->getFrameCount());
+			Gateway::GetInstance().Update(Broodwar->getFrameCount());
 		}
 		if(Broodwar->getFrameCount() > FRAMESPERAI)
 		{
 			Broodwar->drawBox(BWAPI::CoordinateType::Screen, 320, 0, 420, 20, BWAPI::Colors::Blue);
 			Notification notification(Coordinators::ResourceCoordinator);
 			notification.SetAction(Action::CurrentResources);
-			if(_gateway.RegisterNotification(notification) == Result::Success)
+			if(Gateway::GetInstance().RegisterNotification(notification) == Result::Success)
 			{
 				std::stringstream ss;
 				//																														  (the internal supply is twice the displayed supply)
@@ -140,7 +140,7 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::RegisterUnit);
 				notification.AddUnit(unit);
-				_gateway.RegisterNotification(notification);
+				Gateway::GetInstance().RegisterNotification(notification);
 			}
 		}
 	}
@@ -157,7 +157,7 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::DeRegisterUnit);
 				notification.AddUnit(unit);
-				_gateway.RegisterNotification(notification);
+				Gateway::GetInstance().RegisterNotification(notification);
 			}
 		}
 	}
@@ -175,7 +175,7 @@ void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 				notification.SetAction(Action::MorphUnit);
 				notification.AddUnit(unit);
 				notification.SetFrame(Broodwar->getFrameCount());
-				_gateway.RegisterNotification(notification);
+				Gateway::GetInstance().RegisterNotification(notification);
 			}
 		}
 	}

@@ -20,6 +20,8 @@
 
 using namespace Lizurd;
 
+Gateway* Gateway::_instance = 0;
+
 Gateway::Gateway(void):
 	_raceDescriptor(nullptr)
 {
@@ -37,6 +39,19 @@ Gateway::~Gateway(void)
 		if(it->second != nullptr)
 			delete it->second;
 	}
+}
+
+/// <summary>
+/// Gets the instance.
+/// </summary>
+/// <returns>The instance of the logger class</returns>
+Gateway& Gateway::GetInstance()
+{
+	if(_instance == 0)
+	{
+		_instance = new Gateway();
+	}
+	return *_instance;
 }
 
 Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)

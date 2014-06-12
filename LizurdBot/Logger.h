@@ -10,7 +10,7 @@ namespace Lizurd
 	public:
 
 		//Only one Logger so don't copy
-		Logger(const Logger& blackboard) {}         
+		Logger(const Logger& logger) {}         
 		Logger& operator=(const Logger&);      
 		static Logger& GetInstance();
 		void Log(const std::string &source, const std::string &log);

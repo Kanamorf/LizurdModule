@@ -47,7 +47,6 @@ namespace Lizurd
 		}
 
 	private:
-		Gateway _gateway;
 		Result _initialised;
 	};
 

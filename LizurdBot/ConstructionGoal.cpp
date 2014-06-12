@@ -25,6 +25,7 @@ ConstructionGoal::~ConstructionGoal(void)
 
 Order * ConstructionGoal::CreateOrder(const BWAPI::Unit executingUnit) const 
 {
+	//if(_goalType == )
 	BWAPI::TilePosition position = BuildingPlacer::GetInstance().getBuildLocationNear(executingUnit->getTilePosition(), _goalType);
 	ConstructionOrder *order = new ConstructionOrder("ConstructionOrder", executingUnit, TaskPriority::Medium );
 	order->SetResultUnit(_goalType);
