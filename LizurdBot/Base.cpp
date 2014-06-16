@@ -104,6 +104,7 @@ void Base::DrawDebugInfo()
 				for(UnitVector::const_iterator u = (*it).second->begin(); u != (*it).second->end(); ++u)
 				{
 					BWAPI::Broodwar->drawCircleMap((*u)->getPosition().x -3, (*u)->getPosition().y-3, 20, playerColor);
+					BWAPI::Broodwar->drawTextMap((*u)->getPosition().x-1, (*u)->getPosition().y+1, "%u", (*u)->getID());
 					BWAPI::Broodwar->drawLineMap((*u)->getPosition().x, (*u)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
 				}
 
