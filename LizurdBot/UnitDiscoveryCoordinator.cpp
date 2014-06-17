@@ -139,10 +139,12 @@ Result UnitDiscoveryCoordinator::RegisterOwnUnit(Notification &notification)
 			{
 				// the unit is a building so convert it to something we can use.
 				Building* building = _gateway.GetRaceDescriptor().ConvertUnitToBuilding(unit);
-				building->SetBase(pBase);
-				building->SetStartTime(notification.GetFrame());
 				if(building != nullptr)
+				{
+					building->SetBase(pBase);
+					building->SetStartTime(notification.GetFrame());
 					pBase->AddBuilding(building);	
+				}
 			}
 		}
 		retVal = Result::Success;

@@ -50,6 +50,7 @@ namespace Lizurd
 		RaceDescriptor *_raceDescriptor;
 		BWAPI::Game *_game;
 		static Gateway* _instance;
+		Coordinator *_strategyCoordinator;
 	};
 
 }

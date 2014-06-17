@@ -70,7 +70,7 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::WorkerCoordinator, new WorkerCoordinator(*this)));
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ResourceCoordinator, new ResourceCoordinator(*this)));
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ProductionCoordinator, new ProductionCoordinator(*this)));
-		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::StrategyCoordinator, new StrategyCoordinator(*this)));
+		_strategyCoordinator = new StrategyCoordinator(*this);
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ConstructionCoordinator, new ConstructionCoordinator(*this)));
 	}
 	return retVal;
@@ -83,6 +83,7 @@ Result Gateway::Update(int frameNo)
 	{
 		it->second->Update(frameNo);
 	}
+	_strategyCoordinator->Update(frameNo);
 	std::vector<Order*> completeOrders;
 	for(std::vector<Order*>::iterator it = _orders.begin(); it != _orders.end(); ++it)
 	{
@@ -120,11 +121,20 @@ Result Gateway::RegisterNotification(Notification &notification) const
 {
 	Result retVal = Result::Failure;
 	Coordinators target = notification.GetTarget();
-	std::map<Coordinators, Coordinator*>::const_iterator found = _coordinators.find(target);
-	if(found != _coordinators.end())
+
+	// send everything to the strategy coordinator first so it can be counted
+	retVal = _strategyCoordinator->ProcessNotificationInternal(notification);
+
+	if(target != Coordinators::StrategyCoordinator)
 	{
-		retVal = found->second->ProcessNotificationInternal(notification);
+		std::map<Coordinators, Coordinator*>::const_iterator found = _coordinators.find(target);
+		if(found != _coordinators.end())
+		{
+			retVal = found->second->ProcessNotificationInternal(notification);
+		}
 	}
+
+	
 	return retVal;
 }
 

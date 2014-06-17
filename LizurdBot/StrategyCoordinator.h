@@ -22,6 +22,7 @@ namespace Lizurd
 		float RandomFloat(float a, float b);
 		Strategy *_strategy;
 		std::map<BWAPI::UnitType, int> _buildings;
+		std::map<BWAPI::UnitType, int> _units;
 	};
 
 }

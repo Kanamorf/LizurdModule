@@ -116,7 +116,8 @@ void LizurdModule::onNukeDetect(BWAPI::Position target)
 
 void LizurdModule::onUnitDiscover(BWAPI::Unit unit)
 {
-	Broodwar->sendText("Discovered %s", unit->getType().getName().c_str());
+	std::string type = unit->getType().getName();
+	Broodwar->sendText("Discovered %s", type.c_str());
 
 	if (!Broodwar->isReplay())
 	{
@@ -125,8 +126,10 @@ void LizurdModule::onUnitDiscover(BWAPI::Unit unit)
 			notification.SetAction(Action::RegisterEnemyUnit);
 		else if(unit->getType() == BWAPI::UnitTypes::Resource_Vespene_Geyser)
 			notification.SetAction(Action::RegisterVespeneGeyser);
-
+		else
+			notification.SetAction(Action::RegisterOwnUnit);
 		notification.AddUnit(unit);
+		notification.SetUnitType(unit->getType());
 		Gateway::GetInstance().RegisterNotification(notification);
 	}
 }

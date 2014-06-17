@@ -104,7 +104,7 @@ void Base::DrawDebugInfo()
 				for(UnitVector::const_iterator u = (*it).second->begin(); u != (*it).second->end(); ++u)
 				{
 					BWAPI::Broodwar->drawCircleMap((*u)->getPosition().x -3, (*u)->getPosition().y-3, 20, playerColor);
-					BWAPI::Broodwar->drawTextMap((*u)->getPosition().x-1, (*u)->getPosition().y+1, "%u", (*u)->getID());
+					BWAPI::Broodwar->drawTextMap((*u)->getPosition().x-1, (*u)->getPosition().y+1, "x:%u, y:%u", (*u)->getPosition().x, (*u)->getPosition().y);
 					BWAPI::Broodwar->drawLineMap((*u)->getPosition().x, (*u)->getPosition().y, _commandCentre->GetPosition().x, _commandCentre->GetPosition().y, playerColor);
 				}
 
@@ -264,8 +264,13 @@ void Lizurd::Base::Update(int frameNo)
 
 bool Base::AddGeyser(BWAPI::Unit unit)
 {
-	_geysers.insert(unit);
-	return true;
+	bool retVal = false;
+	if(unit->isVisible())
+	{
+		_geysers.insert(unit);
+		retVal = true;
+	}
+	return retVal;
 }
 
 void Base::Initialise()

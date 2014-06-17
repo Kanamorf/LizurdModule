@@ -31,6 +31,14 @@ Result Lizurd::StrategyCoordinator::UpdateInternal(int frameNo)
 		float inc = 0.0f;
 		for(std::map<BWAPI::UnitType, float>::iterator it = units.begin(); it != units.end(); ++it)
 		{
+			// we want 3 times as many workers as we have mineral fields
+			// this will need to be modified to count mineral fields we own, not just ones
+			// we have found
+			float modifier = 1.0f;
+			if(it->first == _gateway.GetRaceDescriptor().GetWorkerType())
+			{
+				//float fields = _units[BWAPI::UnitTypes::Resource_Mineral_Field];
+			}
 			inc += it->second;
 			if(random <= inc)
 			{
@@ -42,6 +50,7 @@ Result Lizurd::StrategyCoordinator::UpdateInternal(int frameNo)
 				}
 			}
 		}
+		
 	}
 	return Result::Success;
 }
@@ -54,29 +63,52 @@ Result Lizurd::StrategyCoordinator::AfterUpdateInternal()
 Result Lizurd::StrategyCoordinator::ProcessNotificationInternal(Notification &notification)
 {
 	Result retVal = Result::Failure;
-	if(notification.GetAction() == Action::GetNextProductionGoal)
+	if(notification.GetTarget() != Coordinators::StrategyCoordinator)
 	{
-		Goal* goal = _strategy->GetNextUnitGoal();
-		if(goal != nullptr)
+		if(notification.GetUnitType() == BWAPI::UnitTypes::Resource_Mineral_Field)
 		{
-			notification.SetGoal(goal);
-			retVal = Result::Success;
+			int i = 0;
 		}
-	}
-	else if(notification.GetAction() == Action::GetNextConstructionGoal)
-	{
-		Goal* goal = _strategy->GetNextBuildingGoal();
-		if(goal != nullptr)
-		{
-			notification.SetGoal(goal);
-			retVal = Result::Success;
-		}
-	}
-	else if(notification.GetAction() == Action::NewBuildingFinished)
-	{
-		RegisterNewUnit(notification.GetUnitType());
-		retVal = Result::Success;
 
+		// All notifications come via strategy coordinator so we can count stuff
+		switch(notification.GetAction().Underlying())
+		{
+		case Action::RegisterOwnUnit:
+			
+			++_units[notification.GetUnitType()];
+			break;
+		case Action::DeRegisterUnit :
+			--_units[notification.GetUnitType()];
+			break;
+		}
+	}
+	else
+	{
+		//This notification was actually for the strategy coordinator
+		if(notification.GetAction() == Action::GetNextProductionGoal)
+		{
+			Goal* goal = _strategy->GetNextUnitGoal();
+			if(goal != nullptr)
+			{
+				notification.SetGoal(goal);
+				retVal = Result::Success;
+			}
+		}
+		else if(notification.GetAction() == Action::GetNextConstructionGoal)
+		{
+			Goal* goal = _strategy->GetNextBuildingGoal();
+			if(goal != nullptr)
+			{
+				notification.SetGoal(goal);
+				retVal = Result::Success;
+			}
+		}
+		else if(notification.GetAction() == Action::NewBuildingFinished)
+		{
+			RegisterNewUnit(notification.GetUnitType());
+			retVal = Result::Success;
+
+		}
 	}
 	return retVal;
 }
