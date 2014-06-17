@@ -4,6 +4,7 @@
 #include "BuildingPlacer.h"
 #include "Gateway.h"
 #include "RaceDescriptor.h"
+#include "BWAPI.h"
 
 using namespace Lizurd;
 
@@ -30,8 +31,18 @@ Order * ConstructionGoal::CreateOrder(const BWAPI::Unit executingUnit) const
 	BWAPI::TilePosition position = BWAPI::TilePositions::None;
 	if(_goalType == Gateway::GetInstance().GetRaceDescriptor().GetGasCollectorType())
 	{
-		BWAPI::Unit unit = executingUnit->getClosestUnit(BWAPI::Filter::IsRefinery);
-		position = unit->getTilePosition();
+		BWAPI::Unit found = nullptr;
+		BWAPI::Unitset units = executingUnit->getUnitsInRadius(1024);
+		for(BWAPI::Unitset::iterator it = units.begin(); it != units.end(); ++it)
+		{
+			if((*it)->getType() == BWAPI::UnitTypes::Resource_Vespene_Geyser)
+			{
+				found = *it;
+				break;
+			}
+		}
+		if(found != nullptr)
+			position = found->getTilePosition();
 	}
 	else
 		position = BuildingPlacer::GetInstance().getBuildLocationNear(executingUnit->getTilePosition(), _goalType);

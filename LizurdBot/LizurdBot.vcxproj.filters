@@ -144,6 +144,9 @@
     <ClInclude Include="ZergSpawningPool.h">
       <Filter>Races\Zerg\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="ZergExtractor.h">
+      <Filter>Races\Zerg\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -237,6 +240,9 @@
       <Filter>Orders</Filter>
     </ClCompile>
     <ClCompile Include="ZergSpawningPool.cpp">
+      <Filter>Races\Zerg\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="ZergExtractor.cpp">
       <Filter>Races\Zerg\Buildings</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "ZergDescriptor.h"
 #include "ZergHatchery.h"
 #include "ZergSpawningPool.h"
+#include "ZergExtractor.h"
 #include "Base.h"
 #include "Logger.h"
 #include "Strategy.h"
@@ -24,11 +25,8 @@ void ZergDescriptor::CreateBaseFromCommandCentre(BWAPI::Unit unit, Base *base)
 	{
 		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre");
 		ZergHatchery *pHhatchery = new ZergHatchery(unit, base);
-		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre 1");
 		base->SetCommandCentre(pHhatchery);
-		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre 2");
 		base->Initialise();
-		Logger::GetInstance().Log("ZergDescriptor", "CreateBaseFromCommandCentre 3");
 	}
 }
 
@@ -38,9 +36,9 @@ Strategy* Lizurd::ZergDescriptor::GetDefaultStrategy() const
 	Strategy* strategy = new Strategy();
 	strategy->SetName(DefaultStrategy);
 	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Spawning_Pool, GoalState::Replace, ResourceValue(200,0,0)));
+	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Extractor, GoalState::Extend, ResourceValue(50,0,0)));
 	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Hatchery, GoalState::Extend, ResourceValue(300,0,0)));
 	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Drone, GoalState::Replace, ResourceValue(50, 0, 2), 1.0, 3));
-	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Overlord, GoalState::Extend, ResourceValue(100, 0, 0)));
 	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Drone, GoalState::Extend, ResourceValue(50, 0, 2), 1.0, 5));
 	return strategy;
 }
@@ -60,6 +58,9 @@ Building* Lizurd::ZergDescriptor::ConvertUnitToBuilding(BWAPI::Unit unit) const
 		break;
 	case BWAPI::UnitTypes::Enum::Zerg_Spawning_Pool:
 		building = new ZergSpawningPool(unit);
+		break;
+		case BWAPI::UnitTypes::Enum::Zerg_Extractor:
+		building = new ZergExtractor(unit);
 		break;
 	default:
 		//nothing to do

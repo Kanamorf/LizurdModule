@@ -64,7 +64,7 @@ void LizurdModule::onFrame()
 				Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
 
 #ifdef _DEBUG
-				Gateway::GetInstance().DrawDebugInfo();
+				//Gateway::GetInstance().DrawDebugInfo();
 #endif
 			}
 		}
@@ -116,9 +116,6 @@ void LizurdModule::onNukeDetect(BWAPI::Position target)
 
 void LizurdModule::onUnitDiscover(BWAPI::Unit unit)
 {
-	std::string type = unit->getType().getName();
-	Broodwar->sendText("Discovered %s", type.c_str());
-
 	if (!Broodwar->isReplay())
 	{
 		Notification notification(Coordinators::UnitDiscoveryCoordinator);

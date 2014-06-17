@@ -105,6 +105,7 @@
     <ClInclude Include="UnitDiscoveryCoordinator.h" />
     <ClInclude Include="WorkerCoordinator.h" />
     <ClInclude Include="ZergDescriptor.h" />
+    <ClInclude Include="ZergExtractor.h" />
     <ClInclude Include="ZergHatchery.h" />
     <ClInclude Include="ZergSpawningPool.h" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClCompile Include="UnitDiscoveryCoordinator.cpp" />
     <ClCompile Include="WorkerCoordinator.cpp" />
     <ClCompile Include="ZergDescriptor.cpp" />
+    <ClCompile Include="ZergExtractor.cpp" />
     <ClCompile Include="ZergHatchery.cpp" />
     <ClCompile Include="ZergSpawningPool.cpp" />
   </ItemGroup>

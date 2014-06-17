@@ -91,7 +91,7 @@ Result Gateway::Update(int frameNo)
 		if(success)
 		{
 			completeOrders.push_back(*it);
-			if((*it)->GetCost() > ResourceValue::Zero())
+			if((*it)->GetCost() > ResourceValue::Zero() && (*it)->GetIsInstantSpend())
 			{
 				Notification notification(Coordinators::ResourceCoordinator);
 				notification.SetAction(Action::ResourceRelease);

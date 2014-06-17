@@ -6,11 +6,12 @@ using namespace Lizurd;
 ProductionOrder::ProductionOrder(std::string name, TaskPriority priority):
 	Order(name, priority)
 {
-
+	isInstantSpend = true;
 }
 ProductionOrder::ProductionOrder(std::string name, BWAPI::Unit executor, TaskPriority priority):
 	Order(name, executor, priority)
 {
+	isInstantSpend = true;
 }
 
 

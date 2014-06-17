@@ -15,7 +15,7 @@ ProductionCoordinator::ProductionCoordinator(Gateway &gateway) :
 	Coordinator(gateway, ProductionCoord),
 	_currentGoal(nullptr),
 	_savedGoal(nullptr),
-	_buildingSupply(false)
+	_supplyStarted(0)
 {
 }
 
@@ -39,13 +39,14 @@ Result ProductionCoordinator::UpdateInternal(int frameNo)
 	_gateway.RegisterNotification(notification);
 	ResourceValue value =notification.GetResourceValue();
 
-	// If we are running at greater than 80% make more supply 
-	if((float)value.Supply >= (float)((float)value.MaxSupply * 0.8))
+	// If we are running at greater than 90% make more supply 
+	float percent = (float)((float)value.MaxSupply * 0.95);
+	if(value.MaxSupply > 0 && (float)value.Supply >= percent  && frameNo > _supplyStarted + 800)
 	{
 		// save the goal we have currently
 		_savedGoal = _currentGoal;
 		_currentGoal = _gateway.GetRaceDescriptor().GetSupplyGoal();
-		_buildingSupply = true;
+		_supplyStarted = frameNo;
 	}
 
 	// if we have no goal grab the saved goal
@@ -90,8 +91,6 @@ Result ProductionCoordinator::UpdateInternal(int frameNo)
 					_currentGoal->DecrementTotal();
 					if(_currentGoal->IsComplete())
 					{
-						if(_currentGoal->GetGoalType() == _gateway.GetRaceDescriptor().GetSupplyType())
-							_buildingSupply = false;
 						//current goal is complete so remove it
 						delete _currentGoal;
 						_currentGoal = nullptr;

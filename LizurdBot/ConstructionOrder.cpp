@@ -7,11 +7,12 @@ using namespace Lizurd;
 ConstructionOrder::ConstructionOrder(std::string name, TaskPriority priority):
 	Order(name, priority)
 {
-
+	isInstantSpend = false;
 }
 ConstructionOrder::ConstructionOrder(std::string name, BWAPI::Unit executor, TaskPriority priority):
 	Order(name, executor, priority)
 {
+	isInstantSpend = false;
 }
 
 

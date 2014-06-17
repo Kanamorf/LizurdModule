@@ -34,7 +34,7 @@ namespace Lizurd
 		void SetBase(Base* base) { _parentBase = base; } 
 		const BWAPI::Unit GetUnit() const { return _building; }
 		void SetStartTime(int frameNo) { _startTime = frameNo; }
-
+		ResourceValue GetCost() const { return _cost; }
 	protected:
 		int _startTime;
 		int _buildTime;

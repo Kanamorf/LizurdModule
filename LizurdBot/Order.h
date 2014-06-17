@@ -41,12 +41,14 @@ namespace Lizurd
 		virtual bool IsReady() const { return  false; };
 		virtual bool Execute() =0;
 		virtual BWAPI::TilePosition GetPredictedPosition() const { return BWAPI::TilePositions::None; };
+		bool GetIsInstantSpend() { return isInstantSpend; }
+
 
 	protected:
 		std::string _name;
 		TaskPriority _priority;
 		BWAPI::Unit _executor;
-		
+		bool isInstantSpend;
 		BWAPI::TilePosition _predictedPosition;
 		bool _isUnique;
 	private:	
@@ -55,6 +57,7 @@ namespace Lizurd
 		ResourceValue _cost;
 		int _instanceId;
 		static int _instanceCount;
+		
 
 	};
 

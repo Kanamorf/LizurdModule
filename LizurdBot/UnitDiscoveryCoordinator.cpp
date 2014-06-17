@@ -144,6 +144,10 @@ Result UnitDiscoveryCoordinator::RegisterOwnUnit(Notification &notification)
 					building->SetBase(pBase);
 					building->SetStartTime(notification.GetFrame());
 					pBase->AddBuilding(building);	
+					Notification not(Coordinators::ResourceCoordinator);
+					not.SetAction(Action::ResourceRelease);
+					not.SetResourceValue(building->GetCost());
+					Gateway::GetInstance().RegisterNotification(not);
 				}
 			}
 		}
