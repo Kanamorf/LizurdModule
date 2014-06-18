@@ -19,8 +19,11 @@ namespace Lizurd
 		void RegisterWorker(Notification &notification);
 		void DeRegisterWorker(Notification &notification);
 		Result FindIdleUnit(Notification &notification);
+		void ProcessNewGasCollector(Notification &notification);
 
 		std::vector<BWAPI::Unit> _workers;
+		int _gatheringGas;
+		BWAPI::Unitset _extractors;
 	};
 
 }

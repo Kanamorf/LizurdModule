@@ -64,7 +64,7 @@ void LizurdModule::onFrame()
 				Broodwar->drawText(BWAPI::CoordinateType::Screen, 330, 5, ss.str().c_str());
 
 #ifdef _DEBUG
-				//Gateway::GetInstance().DrawDebugInfo();
+				Gateway::GetInstance().DrawDebugInfo();
 #endif
 			}
 		}
@@ -118,16 +118,14 @@ void LizurdModule::onUnitDiscover(BWAPI::Unit unit)
 {
 	if (!Broodwar->isReplay())
 	{
-		Notification notification(Coordinators::UnitDiscoveryCoordinator);
-		if ( Broodwar->self()->isEnemy(unit->getPlayer()))
-			notification.SetAction(Action::RegisterEnemyUnit);
-		else if(unit->getType() == BWAPI::UnitTypes::Resource_Vespene_Geyser)
+		if(unit->getType() == BWAPI::UnitTypes::Resource_Vespene_Geyser)
+		{
+			Notification notification(Coordinators::UnitDiscoveryCoordinator);
 			notification.SetAction(Action::RegisterVespeneGeyser);
-		else
-			notification.SetAction(Action::RegisterOwnUnit);
-		notification.AddUnit(unit);
-		notification.SetUnitType(unit->getType());
-		Gateway::GetInstance().RegisterNotification(notification);
+			notification.AddUnit(unit);
+			notification.SetUnitType(unit->getType());
+			Gateway::GetInstance().RegisterNotification(notification);
+		}
 	}
 }
 
@@ -154,6 +152,7 @@ void LizurdModule::onUnitCreate(BWAPI::Unit unit)
 				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::RegisterOwnUnit);
 				notification.AddUnit(unit);
+				notification.SetUnitType(unit->getType());
 				Gateway::GetInstance().RegisterNotification(notification);
 			}
 		}
@@ -171,6 +170,7 @@ void LizurdModule::onUnitDestroy(BWAPI::Unit unit)
 				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::DeRegisterUnit);
 				notification.AddUnit(unit);
+				notification.SetUnitType(unit->getType());
 				Gateway::GetInstance().RegisterNotification(notification);
 			}
 		}
@@ -188,6 +188,7 @@ void LizurdModule::onUnitMorph(BWAPI::Unit unit)
 				Notification notification(Coordinators::UnitDiscoveryCoordinator);
 				notification.SetAction(Action::MorphUnit);
 				notification.AddUnit(unit);
+				notification.SetUnitType(unit->getType());
 				notification.SetFrame(Broodwar->getFrameCount());
 				Gateway::GetInstance().RegisterNotification(notification);
 			}

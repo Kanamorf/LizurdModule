@@ -107,6 +107,7 @@ Result Building::Update(int frameNo)
 		Notification notification(Coordinators::StrategyCoordinator);
 		notification.SetAction(Action::NewBuildingFinished);
 		notification.SetUnitType(_building->getType());
+		notification.AddUnit(_building);
 		_parentBase->GetGateway().RegisterNotification(notification);
 	}
 	return Result::Success;

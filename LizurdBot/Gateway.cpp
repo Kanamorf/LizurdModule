@@ -149,4 +149,5 @@ void Gateway::DrawDebugInfo()
 	{
 		it->second->DrawDebugInfo();
 	}
+	_strategyCoordinator->DrawDebugInfo();
 }

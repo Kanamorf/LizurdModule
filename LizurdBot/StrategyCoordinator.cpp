@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "ProductionGoal.h"
+#include <sstream>
 
 using namespace Lizurd;
 
@@ -12,8 +13,6 @@ StrategyCoordinator::StrategyCoordinator(Gateway &gateway) :
 {
 	LoadDefaultStrategy();
 	srand(static_cast<unsigned int>(time(NULL)));
-	// We start the game with a command centre
-	++_buildings[_gateway.GetRaceDescriptor().GetCommandCenterType()];
 }
 
 
@@ -63,22 +62,38 @@ Result Lizurd::StrategyCoordinator::AfterUpdateInternal()
 Result Lizurd::StrategyCoordinator::ProcessNotificationInternal(Notification &notification)
 {
 	Result retVal = Result::Failure;
-	if(notification.GetTarget() != Coordinators::StrategyCoordinator)
+	if(notification.GetTarget() != Coordinators::StrategyCoordinator && notification.IsRegistered() == false)
 	{
-		if(notification.GetUnitType() == BWAPI::UnitTypes::Resource_Mineral_Field)
-		{
-			int i = 0;
-		}
-
+		notification.SetIsRegistered();
+		BWAPI::UnitType type = notification.GetUnitType();
 		// All notifications come via strategy coordinator so we can count stuff
 		switch(notification.GetAction().Underlying())
 		{
 		case Action::RegisterOwnUnit:
-			
-			++_units[notification.GetUnitType()];
+			if(type.isBuilding())
+				++_buildings[type];
+			else
+				++_units[type];
 			break;
 		case Action::DeRegisterUnit :
-			--_units[notification.GetUnitType()];
+			if(type.isBuilding())
+				--_buildings[type];
+			else
+				--_units[type];
+			break;
+		case Action::MorphUnit :
+			BWAPI::UnitType preMorph = _gateway.GetRaceDescriptor().GetPreMorphType(type);
+			if(preMorph != BWAPI::UnitTypes::None)
+			{
+				if(preMorph.isBuilding())
+					--_buildings[preMorph];
+				else
+					--_units[preMorph];
+				if(type.isBuilding() == false)
+					// dont register building yet as it is useless until its built
+					//++_buildings[type];
+					++_units[type];
+			}
 			break;
 		}
 	}
@@ -105,7 +120,19 @@ Result Lizurd::StrategyCoordinator::ProcessNotificationInternal(Notification &no
 		}
 		else if(notification.GetAction() == Action::NewBuildingFinished)
 		{
-			RegisterNewUnit(notification.GetUnitType());
+			BWAPI::UnitType type = notification.GetUnitType();
+			RegisterNewUnit(type);
+			if(type == _gateway.GetRaceDescriptor().GetGasCollectorType())
+			{
+				Notification newGas(Coordinators::WorkerCoordinator);
+				newGas.SetAction(Action::NewGasCollector);
+				// hacky fix this
+				BWAPI::Unit u = notification.GetLastUnit();
+				notification.AddUnit(u);
+				newGas.AddUnit(u);
+				newGas.SetIsRegistered();
+				_gateway.RegisterNotification(newGas);
+			}
 			retVal = Result::Success;
 
 		}
@@ -132,4 +159,25 @@ void StrategyCoordinator::RegisterNewUnit(BWAPI::UnitType type)
 	ss << "Registering new unit: " << type.getName();
 	Logger::GetInstance().CriticalLog("Strategy", ss.str());
 	++_buildings[type];
+}
+
+
+void StrategyCoordinator::DrawDebugInfo()
+{
+	int x = 5;
+
+	for(std::map<BWAPI::UnitType, int>::iterator it = _buildings.begin(); it != _buildings.end(); ++it)
+	{
+		std::stringstream ss;
+		ss << it->first.getName() << " " << it->second;
+		BWAPI::Broodwar->drawText(BWAPI::CoordinateType::Screen, 5, x, ss.str().c_str());
+		x += 10;
+	}
+	for(std::map<BWAPI::UnitType, int>::iterator it = _units.begin(); it != _units.end(); ++it)
+	{
+		std::stringstream ss;
+		ss << it->first.getName() << " " << it->second;
+		BWAPI::Broodwar->drawText(BWAPI::CoordinateType::Screen, 5, x, ss.str().c_str());
+		x += 10;
+	}
 }

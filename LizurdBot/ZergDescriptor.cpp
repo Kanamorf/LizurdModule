@@ -111,3 +111,20 @@ float ZergDescriptor::GetBuildableUnits(const std::map<BWAPI::UnitType, int> &bu
 	return total;
 }
 
+BWAPI::UnitType ZergDescriptor::GetPreMorphType(BWAPI::UnitType type) const
+{
+	BWAPI::UnitType morphType = BWAPI::UnitTypes::None;
+	if(type.isBuilding())
+	{
+		morphType = BWAPI::UnitTypes::Zerg_Drone;
+	}
+	else if(type == BWAPI::UnitTypes::Zerg_Egg)
+	{
+		morphType = BWAPI::UnitTypes::Zerg_Larva;
+	}
+	else
+	{
+		morphType = BWAPI::UnitTypes::Zerg_Egg;
+	}
+	return morphType;
+}

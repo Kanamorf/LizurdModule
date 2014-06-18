@@ -7,6 +7,7 @@
 namespace
 {
 	const std::string GATHERORDER = "GatherOrder";
+	const std::string GASORDER = "GasOrder";
 	const std::string VESPENEORDER = "VespeneOrder";
 	const std::string SCOUTORDER = "ScoutOrder";
 	const std::string ATTACKORDER = "AttackOrder";

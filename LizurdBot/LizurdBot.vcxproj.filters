@@ -147,6 +147,9 @@
     <ClInclude Include="ZergExtractor.h">
       <Filter>Races\Zerg\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="GasOrder.h">
+      <Filter>Orders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="ZergExtractor.cpp">
       <Filter>Races\Zerg\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="GasOrder.cpp">
+      <Filter>Orders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

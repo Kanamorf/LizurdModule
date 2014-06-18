@@ -3,14 +3,14 @@
 using namespace Lizurd;
 
 ZergExtractor::ZergExtractor(BWAPI::Unit building):
-	Building(building, nullptr, ResourceValue(50, 0, 0), ZergExtractorName, 1200)
+	Building(building, nullptr, ResourceValue(50, 0, 0), ZergExtractorName, 600)
 {
 
 }
 
 
 ZergExtractor::ZergExtractor(BWAPI::Unit building, Base *base):
-	Building(building, base, ResourceValue(50, 0, 0), ZergExtractorName, 1200)
+	Building(building, base, ResourceValue(50, 0, 0), ZergExtractorName, 600)
 {
 }
 

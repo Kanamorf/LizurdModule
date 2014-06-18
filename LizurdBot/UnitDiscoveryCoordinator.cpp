@@ -194,13 +194,13 @@ Result UnitDiscoveryCoordinator::DeRegisterUnit(Notification &notification)
 
 void UnitDiscoveryCoordinator::DrawDebugInfo()
 {
-	for(std::vector<Base*>::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
+	/*for(std::vector<Base*>::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
 	{
 		if(*it)
 		{
 			(*it)->DrawDebugInfo();
 		}
-	}
+	}*/
 }
 
 /// <summary>

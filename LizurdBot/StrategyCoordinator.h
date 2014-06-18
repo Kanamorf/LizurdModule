@@ -16,6 +16,7 @@ namespace Lizurd
 		virtual Result UpdateInternal(int frameNo) override;
 		virtual Result AfterUpdateInternal() override;
 		void RegisterNewUnit(BWAPI::UnitType type);
+		virtual void DrawDebugInfo() override;
 
 	private:
 		void LoadDefaultStrategy();

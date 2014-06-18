@@ -31,6 +31,8 @@ namespace Lizurd
 		void SetUnitType(BWAPI::UnitType type) { _type = type; }
 		void SetFrame(int frame) { _frame = frame; }
 		int GetFrame() const { return _frame; }
+		void SetIsRegistered() { _registered = true; }
+		bool IsRegistered() const { return _registered; }
 	private:
 		BWAPI::UnitType _type;
 		Coordinators _target;
@@ -39,6 +41,7 @@ namespace Lizurd
 		ResourceValue _value;
 		Goal* _goal;
 		int _frame;
+		bool _registered;
 	};
 
 }

@@ -10,11 +10,13 @@
 #include "WorkerCoordinator.h"
 #include "GatherOrder.h"
 #include "RaceDescriptor.h"
+#include "GasOrder.h"
 
 using namespace Lizurd;
 
 WorkerCoordinator::WorkerCoordinator(Gateway &gateway) :
-	Coordinator(gateway, WorkerCoord)
+	Coordinator(gateway, WorkerCoord),
+	_gatheringGas(0)
 {
 }
 
@@ -49,7 +51,16 @@ Result WorkerCoordinator::UpdateInternal(int frameNo)
 
 Result WorkerCoordinator::AfterUpdateInternal()
 {
-	return Result::Failure;
+	if(_extractors.size() > 0 && _gatheringGas < _extractors.size() * 3)
+	{
+		Notification notification(Coordinators::WorkerCoordinator);
+		FindIdleUnit(notification);
+		GasOrder *order = new GasOrder(notification.GetLastUnit());		
+		order->SetExtractor(_extractors[0]);
+		_gateway.AddOrder(order);
+		++_gatheringGas;
+	}
+	return Result::Success;
 }
 
 Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification)
@@ -70,6 +81,11 @@ Result WorkerCoordinator::ProcessNotificationInternal(Notification &notification
 	{
 		Logger::GetInstance().Log(GetName(), "Action::RequestIdleUnit");
 		retVal = FindIdleUnit(notification);
+	}
+	else if(notification.GetAction() == Action::NewGasCollector)
+	{
+		Logger::GetInstance().Log(GetName(), "Action::NewGasCollector");
+		ProcessNewGasCollector(notification);
 	}
 	return retVal;
 }
@@ -137,4 +153,22 @@ Result WorkerCoordinator::FindIdleUnit(Notification &notification)
 		}
 	}
 	return retVal;
+}
+
+
+void WorkerCoordinator::ProcessNewGasCollector(Notification &notification)
+{
+	BWAPI::Unit extractor = notification.GetLastUnit();
+	if(extractor != nullptr)
+	{
+		FindIdleUnit(notification);
+		BWAPI::Unit unit = notification.GetLastUnit();
+		if(unit != nullptr)
+		{
+			GasOrder *order = new GasOrder(unit);
+			order->SetExtractor(extractor);
+			_gateway.AddOrder(order);
+		}
+		_extractors.push_back(extractor);
+	}
 }

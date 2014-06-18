@@ -82,6 +82,7 @@
     <ClInclude Include="ConstructionOrder.h" />
     <ClInclude Include="Coordinator.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="GasOrder.h" />
     <ClInclude Include="Gateway.h" />
     <ClInclude Include="GatherOrder.h" />
     <ClInclude Include="Goal.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="ConstructionOrder.cpp" />
     <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="Dll.cpp" />
+    <ClCompile Include="GasOrder.cpp" />
     <ClCompile Include="Gateway.cpp" />
     <ClCompile Include="GatherOrder.cpp" />
     <ClCompile Include="Goal.cpp" />

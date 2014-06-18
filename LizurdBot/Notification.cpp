@@ -3,7 +3,8 @@
 using namespace Lizurd;
 
 Notification::Notification(Coordinators target) :
-	_target(target)
+	_target(target),
+	_registered(false)
 {
 }
 

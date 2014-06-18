@@ -47,7 +47,8 @@ namespace Lizurd
 			CurrentResources,
 			GetNextProductionGoal,
 			GetNextConstructionGoal,
-			NewBuildingFinished
+			NewBuildingFinished,
+			NewGasCollector
 		};
 	};
 
