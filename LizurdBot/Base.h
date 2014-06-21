@@ -23,8 +23,8 @@ namespace Lizurd
 		~Base(void);
 
 		void Initialise();
-		void SetCommandCentre(Building* commandCentre) { _commandCentre = commandCentre; }
-		Building& GetCommandCentre() const { return *_commandCentre; }
+		void SetCommandCentre(Building* commandCentre);
+		Building* GetCommandCentre() const { return _commandCentre; }
 		void DrawDebugInfo();
 		bool AddUnit(BWAPI::Unit unit);
 		bool AddGeyser(BWAPI::Unit unit);
@@ -39,6 +39,7 @@ namespace Lizurd
 		bool RemoveBuildingByPointer(const BWAPI::Unit unit);
 		const Gateway& GetGateway() const { return _gateway; }
 		void Update(int frameNo);
+		BWAPI::Player GetPlayer() const { return _player; }
 
 	private:
 
@@ -49,6 +50,7 @@ namespace Lizurd
 		BWAPI::Unitset _minerals;
 		BWAPI::Unitset _geysers;
 		const Gateway & _gateway;
+		BWAPI::Player _player;
 	};
 
 }

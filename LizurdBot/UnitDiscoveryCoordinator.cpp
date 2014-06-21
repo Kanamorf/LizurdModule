@@ -226,9 +226,9 @@ Base* UnitDiscoveryCoordinator::FindClosestFriendlyBase(const BWAPI::Unit unit) 
 
 		for(BaseVector::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
 		{
-			if(unit->getPlayer()->getType() == BWAPI::PlayerTypes::None || unit->getPlayer() == (*it)->GetCommandCentre().GetPlayer())
+			if((*it)->GetCommandCentre() != nullptr && (unit->getPlayer()->getType() == BWAPI::PlayerTypes::None || unit->getPlayer() == (*it)->GetPlayer()))
 			{
-				int distance = (*it)->GetCommandCentre().GetDistance(unit);
+				int distance = (*it)->GetCommandCentre()->GetDistance(unit);
 				if(distance < smallestDistance)
 				{
 					smallestDistance = distance;

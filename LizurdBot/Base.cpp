@@ -262,6 +262,15 @@ void Lizurd::Base::Update(int frameNo)
 	}
 }
 
+void Base::SetCommandCentre(Building* commandCentre)
+{
+	_commandCentre = commandCentre;
+	if(_commandCentre != nullptr)
+	{
+		_player = _commandCentre->GetPlayer();
+	}
+}
+
 bool Base::AddGeyser(BWAPI::Unit unit)
 {
 	bool retVal = false;
