@@ -40,8 +40,8 @@ Result ProductionCoordinator::UpdateInternal(int frameNo)
 	ResourceValue value =notification.GetResourceValue();
 
 	// If we are running at greater than 90% make more supply 
-	float percent = (float)((float)value.MaxSupply * 0.95);
-	if(value.MaxSupply > 0 && (float)value.Supply >= percent  && frameNo > _supplyStarted + 800)
+	float percent = (float)((float)value.MaxSupply * 0.8);
+	if(value.MaxSupply > 0 && (float)value.Supply >= percent  && frameNo > _supplyStarted + 1200)
 	{
 		// save the goal we have currently
 		_savedGoal = _currentGoal;

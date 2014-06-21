@@ -106,6 +106,14 @@ Result UnitDiscoveryCoordinator::RegisterOwnUnit(Notification &notification)
 		if(unit->getType() == _gateway.GetRaceDescriptor().GetCommandCenterType())
 		{
 			CreateNewBase(unit);
+			// don't release the cost of the command centre you start with
+			if(notification.GetFrame() > 100)
+			{
+				Notification not(Coordinators::ResourceCoordinator);
+				not.SetAction(Action::ResourceRelease);
+				not.SetResourceValue(ResourceValue(300, 0 ,0));
+				Gateway::GetInstance().RegisterNotification(not);
+			}
 		}
 		else if(unit->getType().isBuilding() == false)
 		{
@@ -144,6 +152,7 @@ Result UnitDiscoveryCoordinator::RegisterOwnUnit(Notification &notification)
 					building->SetBase(pBase);
 					building->SetStartTime(notification.GetFrame());
 					pBase->AddBuilding(building);	
+					BWAPI::Broodwar->sendText("Releasing building m:%d v:%d", building->GetCost().Minerals, building->GetCost().Vespene);
 					Notification not(Coordinators::ResourceCoordinator);
 					not.SetAction(Action::ResourceRelease);
 					not.SetResourceValue(building->GetCost());
@@ -196,10 +205,10 @@ void UnitDiscoveryCoordinator::DrawDebugInfo()
 {
 	/*for(std::vector<Base*>::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
 	{
-		if(*it)
-		{
-			(*it)->DrawDebugInfo();
-		}
+	if(*it)
+	{
+	(*it)->DrawDebugInfo();
+	}
 	}*/
 }
 
