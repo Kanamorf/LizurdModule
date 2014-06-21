@@ -108,6 +108,7 @@
     <ClInclude Include="ZergDescriptor.h" />
     <ClInclude Include="ZergExtractor.h" />
     <ClInclude Include="ZergHatchery.h" />
+    <ClInclude Include="ZergHydraliskDen.h" />
     <ClInclude Include="ZergSpawningPool.h" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@
     <ClCompile Include="ZergDescriptor.cpp" />
     <ClCompile Include="ZergExtractor.cpp" />
     <ClCompile Include="ZergHatchery.cpp" />
+    <ClCompile Include="ZergHydraliskDen.cpp" />
     <ClCompile Include="ZergSpawningPool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

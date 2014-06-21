@@ -150,6 +150,9 @@
     <ClInclude Include="GasOrder.h">
       <Filter>Orders</Filter>
     </ClInclude>
+    <ClInclude Include="ZergHydraliskDen.h">
+      <Filter>Races\Zerg\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="GasOrder.cpp">
       <Filter>Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="ZergHydraliskDen.cpp">
+      <Filter>Races\Zerg\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

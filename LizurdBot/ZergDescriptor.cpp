@@ -1,6 +1,7 @@
 #include "ZergDescriptor.h"
 #include "ZergHatchery.h"
 #include "ZergSpawningPool.h"
+#include "ZergHydraliskDen.h"
 #include "ZergExtractor.h"
 #include "Base.h"
 #include "Logger.h"
@@ -38,6 +39,7 @@ Strategy* Lizurd::ZergDescriptor::GetDefaultStrategy() const
 	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Spawning_Pool, GoalState::Replace, ResourceValue(200,0,0)));
 	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Extractor, GoalState::Extend, ResourceValue(50,0,0)));
 	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Hatchery, GoalState::Extend, ResourceValue(300,0,0)));
+	strategy->AddOrUpdate(StrategyType::BuildingStrategy, new ConstructionGoal(BWAPI::UnitTypes::Zerg_Drone, BWAPI::UnitTypes::Zerg_Hydralisk_Den, GoalState::Extend, ResourceValue(100,50,0)));
 	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Drone, GoalState::Replace, ResourceValue(50, 0, 2), 1.0, 3));
 	strategy->AddOrUpdate(StrategyType::UnitStrategy, new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Drone, GoalState::Extend, ResourceValue(50, 0, 2), 1.0, 5));
 	return strategy;
@@ -59,8 +61,11 @@ Building* Lizurd::ZergDescriptor::ConvertUnitToBuilding(BWAPI::Unit unit) const
 	case BWAPI::UnitTypes::Enum::Zerg_Spawning_Pool:
 		building = new ZergSpawningPool(unit);
 		break;
-		case BWAPI::UnitTypes::Enum::Zerg_Extractor:
+	case BWAPI::UnitTypes::Enum::Zerg_Extractor:
 		building = new ZergExtractor(unit);
+		break;
+	case BWAPI::UnitTypes::Enum::Zerg_Hydralisk_Den:
+		building = new ZergHydraliskDen(unit);
 		break;
 	default:
 		//nothing to do
@@ -83,6 +88,9 @@ Goal* ZergDescriptor::GetGoal(const BWAPI::UnitType &type)
 	case BWAPI::UnitTypes::Enum::Zerg_Zergling:
 		goal = new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Zergling, GoalState::Extend, ResourceValue(50, 0, 2));
 		break;
+	case BWAPI::UnitTypes::Enum::Zerg_Hydralisk:
+		goal = new ProductionGoal(BWAPI::UnitTypes::Zerg_Larva, BWAPI::UnitTypes::Zerg_Hydralisk, GoalState::Extend, ResourceValue(75, 25, 2));
+		break;
 	}
 	return goal;
 }
@@ -104,6 +112,10 @@ float ZergDescriptor::GetBuildableUnits(const std::map<BWAPI::UnitType, int> &bu
 			break;
 		case BWAPI::UnitTypes::Enum::Zerg_Spawning_Pool:
 			units[BWAPI::UnitTypes::Zerg_Zergling] = 2.6f;
+			total += 2.6f;
+			break;
+		case BWAPI::UnitTypes::Enum::Zerg_Hydralisk_Den:
+			units[BWAPI::UnitTypes::Zerg_Hydralisk] = 3.0f;
 			total += 2.6f;
 			break;
 		}
