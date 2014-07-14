@@ -31,6 +31,7 @@ namespace Lizurd
 		virtual Building* ConvertUnitToBuilding(BWAPI::Unit unit) const =0;
 		virtual float GetBuildableUnits(const std::map<BWAPI::UnitType, int> &buildings, std::map<BWAPI::UnitType, float> &units) const =0;
 		virtual Goal* GetGoal(const BWAPI::UnitType &type) =0;
+		virtual bool IsMilitaryUnit(BWAPI::Unit unit) =0;
 
 		void AddOrUpdate(GoalQueue& goalMap, const Goal *add) const;
 		

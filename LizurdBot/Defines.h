@@ -26,6 +26,7 @@ namespace Lizurd
 			ConstructionCoordinator,
 			ProductionCoordinator,
 			WorkerCoordinator,
+			SquadCoordinator,
 			UnitDiscoveryCoordinator,
 			StrategyCoordinator
 		};

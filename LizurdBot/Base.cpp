@@ -204,7 +204,7 @@ bool Base::RemoveUnitByType(BWAPI::Unit unit)
 bool Lizurd::Base::RemoveUnitByPointer(BWAPI::Unit unit)
 {
 	bool retVal = false;
-	if(_commandCentre->GetUnderLying() == unit)
+	if(_commandCentre && _commandCentre->GetUnderLying() == unit)
 	{
 		Logger::GetInstance().Log("Base", "Removing a command centre from a base by pointer.");
 		delete _commandCentre;

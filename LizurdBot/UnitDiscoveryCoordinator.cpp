@@ -124,6 +124,13 @@ Result UnitDiscoveryCoordinator::RegisterOwnUnit(Notification &notification)
 				notification.AddUnit(unit);
 				retVal = _gateway.RegisterNotification(notification);
 			}
+			else
+			{
+				notification.SetTarget(Coordinators::SquadCoordinator);
+				notification.SetAction(Action::RegisterOwnUnit);
+				notification.AddUnit(unit);
+				retVal = _gateway.RegisterNotification(notification);
+			}
 			Base* pBase = FindClosestFriendlyBase(unit);
 			if(pBase == nullptr)
 			{
@@ -205,10 +212,10 @@ void UnitDiscoveryCoordinator::DrawDebugInfo()
 {
 	/*for(std::vector<Base*>::const_iterator it = _bases.begin(); it != _bases.end(); ++it)
 	{
-	if(*it)
-	{
-	(*it)->DrawDebugInfo();
-	}
+		if(*it)
+		{
+			(*it)->DrawDebugInfo();
+		}
 	}*/
 }
 

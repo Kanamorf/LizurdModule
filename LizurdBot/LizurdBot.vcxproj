@@ -73,6 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AttackOrder.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="BuildingNames.h" />
@@ -98,6 +99,7 @@
     <ClInclude Include="RectangleArray.h" />
     <ClInclude Include="ResourceCoordinator.h" />
     <ClInclude Include="ResourceValue.h" />
+    <ClInclude Include="SquadCoordinator.h" />
     <ClInclude Include="Strategy.h" />
     <ClInclude Include="StrategyCoordinator.h" />
     <ClInclude Include="TerranCommandCentre.h" />
@@ -112,6 +114,7 @@
     <ClInclude Include="ZergSpawningPool.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttackOrder.cpp" />
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingPlacer.cpp" />
@@ -135,6 +138,7 @@
     <ClCompile Include="RaceDescriptor.cpp" />
     <ClCompile Include="ResourceCoordinator.cpp" />
     <ClCompile Include="ResourceValue.cpp" />
+    <ClCompile Include="SquadCoordinator.cpp" />
     <ClCompile Include="Strategy.cpp" />
     <ClCompile Include="StrategyCoordinator.cpp" />
     <ClCompile Include="TerranCommandCentre.cpp" />

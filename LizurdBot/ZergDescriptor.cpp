@@ -74,6 +74,17 @@ Building* Lizurd::ZergDescriptor::ConvertUnitToBuilding(BWAPI::Unit unit) const
 	return building;
 }
 
+bool Lizurd::ZergDescriptor::IsMilitaryUnit(BWAPI::Unit unit)
+{
+	bool retVal = false;
+	BWAPI::UnitType type = unit->getType();
+	if(type != BWAPI::UnitTypes::Zerg_Overlord && type != BWAPI::UnitTypes::Zerg_Larva && type != BWAPI::UnitTypes::Zerg_Egg)
+	{
+		retVal = true;
+	}
+	return retVal;
+}
+
 Goal* ZergDescriptor::GetGoal(const BWAPI::UnitType &type)
 {
 	Goal *goal = nullptr;

@@ -17,6 +17,7 @@
 #include "TerranDescriptor.h"
 #include "ProtossDescriptor.h"
 #include "ConstructionCoordinator.h"
+#include "SquadCoordinator.h"
 
 using namespace Lizurd;
 
@@ -70,6 +71,7 @@ Result Gateway::Initialise(BWAPI::Game *game, BWAPI::Race race)
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::WorkerCoordinator, new WorkerCoordinator(*this)));
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ResourceCoordinator, new ResourceCoordinator(*this)));
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ProductionCoordinator, new ProductionCoordinator(*this)));
+		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::SquadCoordinator, new SquadCoordinator(*this)));
 		_strategyCoordinator = new StrategyCoordinator(*this);
 		_coordinators.insert(std::pair<Coordinators, Coordinator*>(Coordinators::ConstructionCoordinator, new ConstructionCoordinator(*this)));
 	}

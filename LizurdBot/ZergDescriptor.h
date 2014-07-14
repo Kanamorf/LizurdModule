@@ -21,6 +21,7 @@ namespace Lizurd
 		virtual Building* ConvertUnitToBuilding(BWAPI::Unit unit) const override;
 		virtual float GetBuildableUnits(const std::map<BWAPI::UnitType, int> &buildings, std::map<BWAPI::UnitType, float> &units) const override;
 		virtual Goal* GetGoal(const BWAPI::UnitType &type) override;
+		virtual bool IsMilitaryUnit(BWAPI::Unit unit) override;
 	};
 
 }

@@ -11,6 +11,7 @@ namespace
 	const std::string ResourceCoord = "ResourceCoordinator";
 	const std::string StrategyCoord = "StrategyCoordinator";
 	const std::string ProductionCoord = "ProductionCoordinator";
+	const std::string SquadCoord = "SquadCoordinator";
 	const std::string ConstructionCoord = "ConstructionCoordinator";
 }
 

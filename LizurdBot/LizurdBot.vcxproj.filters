@@ -153,6 +153,12 @@
     <ClInclude Include="ZergHydraliskDen.h">
       <Filter>Races\Zerg\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="SquadCoordinator.h">
+      <Filter>Coordinators</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackOrder.h">
+      <Filter>Orders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Coordinator.cpp">
@@ -256,6 +262,12 @@
     </ClCompile>
     <ClCompile Include="ZergHydraliskDen.cpp">
       <Filter>Races\Zerg\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="SquadCoordinator.cpp">
+      <Filter>Coordinators</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackOrder.cpp">
+      <Filter>Orders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
